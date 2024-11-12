@@ -1,10 +1,10 @@
-package com.example.demo;
+package com.sd.sls;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class SDStudentLoanServicesTests {
 
 	@Test
 	void contextLoads() {
