@@ -22,10 +22,20 @@ public class UserController {
 
 	@PostMapping("/register")
 	public ResponseEntity<String> registerUser(@RequestBody Map<String, Object> userValues) {
-		if (userBusinessService.registerUser(userValues).get(UserConstants.USER_REGISTERED) == true) {
-			return new ResponseEntity<>("User is registered", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>("User registeration failed", HttpStatus.NOT_FOUND);
+		Map<String, Boolean> resultMap =userBusinessService.registerUser(userValues); 
+		if (resultMap.containsKey(UserConstants.USER_REGISTERED)) 
+		{
+			return resultMap.get(UserConstants.USER_REGISTERED) == true
+					? new ResponseEntity<>("User is registered", HttpStatus.OK)
+					: new ResponseEntity<>("User registeration failed", HttpStatus.NOT_FOUND);
+		} 
+		else if (resultMap.containsKey(UserConstants.USER_ALREADY_REGISTERED))
+		{
+			return new ResponseEntity<>("User is already registered", HttpStatus.OK);
+		}
+		else
+		{
+			return new ResponseEntity<>("Bad Request", HttpStatus.BAD_REQUEST);
 		}
 	}
 }
