@@ -18,4 +18,9 @@ public class UserBusinessService implements IUserBusinessService {
 		return userBusinessLogic.registerUser(userValues);
 	}
 	
+	@Override
+	public boolean loginUser(String email, String password)
+	{
+		return userBusinessLogic.loginUser(email, password);
+	}
 }
