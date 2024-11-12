@@ -22,6 +22,10 @@ public class UserBusinessLogic implements IUserBusinessLogic{
 	{
 		Map<String, Boolean> returnMap = new HashMap<>();
 		User user = createUser(userValues);
+		if (checkIfUserAlreadyExists(user)) {
+			returnMap.put(UserConstants.USER_ALREADY_REGISTERED, true);
+			return returnMap;
+		}
 		if (userDAO.registerUser(user) == 1)
 		{
 			returnMap.put(UserConstants.USER_REGISTERED, true);
@@ -37,5 +41,9 @@ public class UserBusinessLogic implements IUserBusinessLogic{
 		user.setPassword(Objects.toString(userValues.get("password")));
 		user.setPhoneNumber(Long.valueOf(Objects.toString(userValues.get("phoneNumber"))));
 		return user;
+	}
+	
+	private boolean checkIfUserAlreadyExists(User user) {
+		return userDAO.checkIfUserAlreadyExists(user);
 	}
 }
