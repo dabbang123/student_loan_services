@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,5 +43,11 @@ public class UserController {
 		return userBusinessService.loginUser(userName, password) == true
 				? new ResponseEntity<>("User Logged In", HttpStatus.OK)
 				: new ResponseEntity<>("Invalid Credentials", HttpStatus.BAD_REQUEST);
+	}
+	
+	@GetMapping("/tesr")
+	public void test()
+	{
+		System.out.println("Running");
 	}
 }

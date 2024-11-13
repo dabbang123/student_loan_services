@@ -9,26 +9,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfig 
-{
-
+public class SecurityConfig {
+	@SuppressWarnings({ "removal", "deprecation" })
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception 
-	{
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf()
 			.disable()
-			.authorizeHttpRequests(authz -> authz.requestMatchers("/user/register", "/user/login")
+			.authorizeHttpRequests(authz -> authz.requestMatchers("/user/register", "/user/login", "/**")
 			.permitAll()
 			.anyRequest()
 			.authenticated())
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
 		return http.build();
 	}
-	
+
 	@Bean
-    public PasswordEncoder passwordEncoder() 
-	{
-        return new BCryptPasswordEncoder();
-    }
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 }
