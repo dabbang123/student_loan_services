@@ -18,6 +18,7 @@ public class DemoController {
 	public ResponseEntity<String> testMethod() {
 		if (demoService.testMethod()) 
 		{
+			System.out.println("Test");
 			return ResponseEntity.ok("Demo is Working");
 		} 
 		else 
