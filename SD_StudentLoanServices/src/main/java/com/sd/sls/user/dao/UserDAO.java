@@ -1,5 +1,9 @@
 package com.sd.sls.user.dao;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sd.sls.constants.ISQLStatements;
 import com.sd.sls.user.model.User;
+
 
 @Repository
 public class UserDAO implements IUserDAO {
@@ -29,8 +34,8 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public User findByUserName(String email) {
-		List<User> userList = jdbcTemplate.query(ISQLStatements.FIND_USER_BY_USERNAME, new BeanPropertyRowMapper<>(User.class), email);
+	public User findUserByEmail(String email) {
+		List<User> userList = jdbcTemplate.query(ISQLStatements.FIND_USER_BY_EMAIL, new BeanPropertyRowMapper<>(User.class), email);
 		return userList.size() > 0 ? userList.get(0) : null;
 	}
 }

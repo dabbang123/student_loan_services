@@ -1,5 +1,9 @@
 package com.sd.sls.user.bl;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,9 +43,10 @@ public class UserBusinessLogic implements IUserBusinessLogic{
 		return returnMap;
 	}
 	
+	@Override
 	public boolean loginUser(String email, String password) 
 	{
-		User user = userDAO.findByUserName(email);
+		User user = userDAO.findUserByEmail(email);
 		return user != null && passwordEncoder.matches(password, user.getPassword());
 	}
 	

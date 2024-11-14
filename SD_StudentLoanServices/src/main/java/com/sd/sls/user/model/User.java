@@ -1,5 +1,9 @@
 package com.sd.sls.user.model;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 public class User {
 	private int userId;
 
