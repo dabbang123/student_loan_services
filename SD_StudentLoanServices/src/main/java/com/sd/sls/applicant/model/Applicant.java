@@ -1,5 +1,7 @@
 package com.sd.sls.applicant.model;
 
+import java.io.Serializable;
+
 /*
  * @Author: Abhishek Vishwakarma
  */
@@ -8,8 +10,8 @@ import java.sql.Date;
 
 import com.sd.sls.user.model.User;
 
-public class Applicant {
-	
+public class Applicant implements Serializable  
+{	
 	private int applicantId;
 	
 	private User user;
