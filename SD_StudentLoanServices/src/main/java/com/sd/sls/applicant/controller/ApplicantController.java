@@ -36,12 +36,12 @@ public class ApplicantController {
 		if (resultMap.containsKey(ApplicantConstants.APPLICANT_REGISTERED)) 
 		{
 			return resultMap.get(ApplicantConstants.APPLICANT_REGISTERED) == true
-					? new ResponseEntity<>("Applicant is registered", HttpStatus.OK)
-					: new ResponseEntity<>("Applicant registeration failed", HttpStatus.NOT_FOUND);
+					? new ResponseEntity<>(ApplicantConstants.APPLICANT_REGISTERED_SUCCESSFULLY, HttpStatus.OK)
+					: new ResponseEntity<>(ApplicantConstants.APPLICANT_REGISTERED_FAILED, HttpStatus.NOT_FOUND);
 		}
 		else if (resultMap.containsKey(ApplicantConstants.APPLICANT_ALREADY_REGISTERED)) 
 		{
-			return new ResponseEntity<>("Applicant is already registered", HttpStatus.OK);
+			return new ResponseEntity<>(ApplicantConstants.APPLICANT_ALREADY_REGISTERED, HttpStatus.OK);
 		} 
 		else if (resultMap.containsKey(ApplicantConstants.NO_USER_FOUND))
 		{
@@ -49,17 +49,17 @@ public class ApplicantController {
 		}
 		else 
 		{
-			return new ResponseEntity<>("Bad Request", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(ApplicantConstants.BAD_REQUEST, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@PostMapping("/login")
 	public ResponseEntity<String> loginUser(@RequestBody Map<String, Object> userValues) {
-		String userName = Objects.toString(userValues.get("email"));
-		String password = Objects.toString(userValues.get("password"));
+		String userName = Objects.toString(userValues.get(ApplicantConstants.EMAIL));
+		String password = Objects.toString(userValues.get(ApplicantConstants.PASSWORD));
 		return userBusinessService.loginUser(userName, password) == true
-				? new ResponseEntity<>("Applicant Logged In", HttpStatus.OK)
-				: new ResponseEntity<>("Invalid Credentials", HttpStatus.BAD_REQUEST);
+				? new ResponseEntity<>(ApplicantConstants.APPLICANT_LOGGED_IN_SUCCESSFULLY, HttpStatus.OK)
+				: new ResponseEntity<>(ApplicantConstants.INVALID_CREDENTIALS, HttpStatus.BAD_REQUEST);
 	}
 	
 	@PostMapping("/submitapplication")

@@ -52,13 +52,13 @@ public class ApplicantBL implements IApplicantBL {
 			{
 				if (applicant.getUser() == null) 
 				{
-					if (userValues.containsKey("email") && userValues.containsKey("password") && userValues.containsKey("phoneNumber")) 
+					if (userValues.containsKey(ApplicantConstants.EMAIL) && userValues.containsKey(ApplicantConstants.PASSWORD) && userValues.containsKey(ApplicantConstants.PHONE_NUMBER)) 
 					{
 						User user = userBusinessLogic.createUser(userValues);
 						user.setUserName(applicant.getFirstName() + " " + applicant.getLastName());
 						if (userDAO.registerUser(user) == 1) 
 						{
-							user = userDAO.findUserByEmail(Objects.toString(userValues.get("email")));
+							user = userDAO.findUserByEmail(Objects.toString(userValues.get(ApplicantConstants.EMAIL)));
 							applicant.setUser(user);
 						}
 					} 
@@ -77,18 +77,17 @@ public class ApplicantBL implements IApplicantBL {
 		});
 
 		return returnMap;
-
 	}
 
 	private Applicant createApplicant(Map<String, Object> userValues) 
 	{
 		Applicant applicant = new Applicant();
-		User user = userDAO.findUserByEmail(Objects.toString(userValues.get("email")));
+		User user = userDAO.findUserByEmail(Objects.toString(userValues.get(ApplicantConstants.EMAIL)));
 		applicant.setUser(user == null ? null : user);
-		applicant.setFirstName(Objects.toString(userValues.get("firstName")));
-		applicant.setLastName(Objects.toString(userValues.get("lastName")));
-		String dateString = Objects.toString(userValues.get("dateOfBirth"));
-		DateTimeFormatter formatter = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd-MMM-yyyy").toFormatter(Locale.ENGLISH);
+		applicant.setFirstName(Objects.toString(userValues.get(ApplicantConstants.FIRST_NAME)));
+		applicant.setLastName(Objects.toString(userValues.get(ApplicantConstants.LAST_NAME)));
+		String dateString = Objects.toString(userValues.get(ApplicantConstants.DATE_OF_BIRTH));
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern(ApplicantConstants.DATE_PATTERN).toFormatter(Locale.ENGLISH);
 		java.sql.Date sqlDate = null;
 		try 
 		{
@@ -100,10 +99,10 @@ public class ApplicantBL implements IApplicantBL {
 			e.printStackTrace();
 		}
 		applicant.setDateOfBirth(sqlDate);
-		applicant.setAddress(Objects.toString(userValues.get("address")));
-		applicant.setEducationDetails(Objects.toString(userValues.get("educationDetails")));
-		applicant.setMembershipType(Objects.toString(userValues.get("membershipType")));
-		applicant.setEmail(Objects.toString(userValues.get("email")));
+		applicant.setAddress(Objects.toString(userValues.get(ApplicantConstants.ADDRESS)));
+		applicant.setEducationDetails(Objects.toString(userValues.get(ApplicantConstants.EDUCATION_DETAILS)));
+		applicant.setMembershipType(Objects.toString(userValues.get(ApplicantConstants.MEMBERSHIP_TYPE)));
+		applicant.setEmail(Objects.toString(userValues.get(ApplicantConstants.EMAIL)));
 		return applicant;
 	}
 
