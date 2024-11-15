@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import com.sd.sls.applicant.constants.ApplicantConstants;
 import com.sd.sls.applicant.dao.IApplicantDAO;
 import com.sd.sls.applicant.model.Applicant;
+import com.sd.sls.user.bl.IUserBusinessLogic;
 import com.sd.sls.user.dao.IUserDAO;
+import com.sd.sls.user.model.User;
 
 @Service
 public class ApplicantBL implements IApplicantBL {
@@ -28,6 +30,9 @@ public class ApplicantBL implements IApplicantBL {
 	@Autowired
 	private IUserDAO userDAO;
 	
+	@Autowired
+	private IUserBusinessLogic userBusinessLogic;
+	
 	@Override
 	public Map<String, Boolean> registerApplicant(Map<String, Object> userValues)
 	{
@@ -37,6 +42,25 @@ public class ApplicantBL implements IApplicantBL {
 		{
 			returnMap.put(ApplicantConstants.APPLICANT_ALREADY_REGISTERED, true);
 			return returnMap;
+		}
+		
+		if (applicant.getUser() == null)
+		{
+			if (userValues.containsKey("email") && userValues.containsKey("password") && userValues.containsKey("phoneNumber"))
+			{
+				User user = userBusinessLogic.createUser(userValues);
+				user.setUserName(applicant.getFirstName() + applicant.getLastName());
+				if (userDAO.registerUser(user) == 1)
+				{
+					user = userDAO.findUserByEmail(Objects.toString(userValues.get("email")));
+					applicant.setUser(user);
+				}
+			}
+			else
+			{
+				returnMap.put(ApplicantConstants.NO_USER_FOUND, true);
+				return returnMap;
+			}
 		}
 		
 		if (applicantDAO.registerApplicant(applicant) == 1)
@@ -50,7 +74,8 @@ public class ApplicantBL implements IApplicantBL {
 	private Applicant createApplicant (Map<String, Object> userValues)
 	{
 		Applicant applicant = new Applicant();
-		applicant.setUser(userDAO.findUserByEmail(Objects.toString(userValues.get("email"))));
+		User user = userDAO.findUserByEmail(Objects.toString(userValues.get("email")));
+		applicant.setUser(user == null ? null : user);
 		applicant.setFirstName(Objects.toString(userValues.get("firstName")));
 		applicant.setLastName(Objects.toString(userValues.get("lastName")));
 		String dateString = Objects.toString(userValues.get("dateOfBirth"));

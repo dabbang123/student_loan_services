@@ -43,6 +43,10 @@ public class ApplicantController {
 		{
 			return new ResponseEntity<>("Applicant is already registered", HttpStatus.OK);
 		} 
+		else if (resultMap.containsKey(ApplicantConstants.NO_USER_FOUND))
+		{
+			return new ResponseEntity<>(ApplicantConstants.NO_USER_FOUND, HttpStatus.OK);
+		}
 		else 
 		{
 			return new ResponseEntity<>("Bad Request", HttpStatus.BAD_REQUEST);

@@ -46,11 +46,12 @@ public class UserDAO implements IUserDAO {
 
 	private String buildUpdateQuery(User user) {
 		boolean first = true;
-		StringBuffer updateQuery = new StringBuffer("UPDATE \"USER\" SET ");
+		StringBuffer updateQuery = new StringBuffer(ISQLStatements.UPDATE_USER_PROFILE);
 		if (user.getEmail() != null) {
 			updateQuery.append("EMAIL = '").append(user.getEmail()).append("'");
 			first = false;
 		}
+		
 		if (user.getPassword() != null) {
 			if (!first) {
 				updateQuery.append(", ");

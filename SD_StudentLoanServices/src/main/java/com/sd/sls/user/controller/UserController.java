@@ -67,13 +67,13 @@ public class UserController {
 	@PutMapping("/updateprofile/{userId}")
 	public ResponseEntity<String> updateprofile(@PathVariable("userId") Long userId, @RequestBody Map<String, Object> userValues)
 	{
-		userValues.put("userId", userId);
+		userValues.put(UserConstants.USER_ID, userId);
 		Map<String, Boolean> resultMap = userBusinessService.updateprofile(userValues);
-		if (resultMap.containsKey("User Updated Successfully"))
+		if (resultMap.containsKey(UserConstants.USER_UPDATED_SUCCESSFULLY))
 		{
-			return ResponseEntity.ok("User Updated Successfully");
+			return ResponseEntity.ok(UserConstants.USER_UPDATED_SUCCESSFULLY);
 		}
-		return new ResponseEntity<>("User Updation Failed", HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(UserConstants.USER_UPDATION_FAILED, HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
 

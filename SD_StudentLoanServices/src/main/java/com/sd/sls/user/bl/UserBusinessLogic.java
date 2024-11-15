@@ -55,13 +55,13 @@ public class UserBusinessLogic implements IUserBusinessLogic {
 	{
 		Map<String, Boolean> returnMap = new HashMap<>();
 		User user = createUser(userValues);
-		user.setUserId(Integer.valueOf(Objects.toString(userValues.get("userId"))));
+		user.setUserId(Integer.valueOf(Objects.toString(userValues.get(UserConstants.USER_ID))));
 		int updateUser = userDAO.updateprofile(user);
 		if(updateUser == 1)
 		{
-			returnMap.put("User Updated Successfully", true);
+			returnMap.put(UserConstants.USER_UPDATED_SUCCESSFULLY, true);
 		}
-		returnMap.put("User Updation Failed", false);
+		returnMap.put(UserConstants.USER_UPDATION_FAILED, false);
 		
 		return returnMap;
 	}
@@ -72,7 +72,8 @@ public class UserBusinessLogic implements IUserBusinessLogic {
 		return userDAO.findUserByEmail(email);
 	}
 
-	private User createUser(Map<String, Object> userValues) 
+	@Override
+	public User createUser(Map<String, Object> userValues) 
 	{
 		User user = new User();
 		user.setUserName(userValues.get(UserConstants.USERNAME) == null ? null : Objects.toString(userValues.get(UserConstants.USERNAME)));

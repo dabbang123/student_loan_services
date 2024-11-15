@@ -17,4 +17,6 @@ public interface IUserBusinessLogic {
 	
 	public User findUserByEmail(String email);
 	
+	public User createUser(Map<String, Object> userValues);
+	
 }
