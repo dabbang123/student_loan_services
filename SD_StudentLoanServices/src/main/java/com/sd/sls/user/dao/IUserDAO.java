@@ -13,4 +13,5 @@ public interface IUserDAO {
 
 	public User findUserByEmail(String email);
 	
+	public int updateprofile(User user);
 }

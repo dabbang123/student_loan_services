@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import com.sd.sls.constants.ISQLStatements;
 import com.sd.sls.user.model.User;
 
-
 @Repository
 public class UserDAO implements IUserDAO {
 
@@ -35,7 +34,47 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public User findUserByEmail(String email) {
-		List<User> userList = jdbcTemplate.query(ISQLStatements.FIND_USER_BY_EMAIL, new BeanPropertyRowMapper<>(User.class), email);
+		List<User> userList = jdbcTemplate.query(ISQLStatements.FIND_USER_BY_EMAIL,
+				new BeanPropertyRowMapper<>(User.class), email);
 		return userList.size() > 0 ? userList.get(0) : null;
+	}
+
+	@Override
+	public int updateprofile(User user) {
+		return jdbcTemplate.update(buildUpdateQuery(user), user.getUserId());
+	}
+
+	private String buildUpdateQuery(User user) {
+		boolean first = true;
+		StringBuffer updateQuery = new StringBuffer("UPDATE \"USER\" SET ");
+		if (user.getEmail() != null) {
+			updateQuery.append("EMAIL = '").append(user.getEmail()).append("'");
+			first = false;
+		}
+		if (user.getPassword() != null) {
+			if (!first) {
+				updateQuery.append(", ");
+			}
+			updateQuery.append("PASSWORD = '").append(user.getPassword()).append("'");
+			first = false;
+		}
+
+		if (user.getUserName() != null) {
+			if (!first) {
+				updateQuery.append(", ");
+			}
+			updateQuery.append("USER_NAME = '").append(user.getUserName()).append("'");
+			first = false;
+		}
+
+		if (user.getPhoneNumber() != null) {
+			if (!first) {
+				updateQuery.append(", ");
+			}
+			updateQuery.append("PHONE_NUMBER = '").append(user.getPhoneNumber()).append("'");
+		}
+
+		updateQuery.append(" WHERE USER_ID = ?");
+		return updateQuery.toString();
 	}
 }

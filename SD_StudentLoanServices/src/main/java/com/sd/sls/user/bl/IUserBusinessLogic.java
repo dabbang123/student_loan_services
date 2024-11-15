@@ -13,4 +13,8 @@ public interface IUserBusinessLogic {
 
 	public boolean loginUser(String email, String password);
 	
+	public Map<String, Boolean> updateprofile(Map<String, Object> userValues);
+	
+	public User findUserByEmail(String email);
+	
 }

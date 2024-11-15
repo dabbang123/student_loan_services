@@ -17,16 +17,16 @@ import com.sd.sls.user.dao.IUserDAO;
 import com.sd.sls.user.model.User;
 
 @Service
-public class UserBusinessLogic implements IUserBusinessLogic{
+public class UserBusinessLogic implements IUserBusinessLogic {
 
 	@Autowired
 	private IUserDAO userDAO;
-	
+
 	@Autowired
-    private PasswordEncoder passwordEncoder;
-	
+	private PasswordEncoder passwordEncoder;
+
 	@Override
-	public Map<String, Boolean> registerUser (Map<String, Object> userValues)
+	public Map<String, Boolean> registerUser(Map<String, Object> userValues) 
 	{
 		Map<String, Boolean> returnMap = new HashMap<>();
 		User user = createUser(userValues);
@@ -35,32 +35,55 @@ public class UserBusinessLogic implements IUserBusinessLogic{
 			returnMap.put(UserConstants.USER_ALREADY_REGISTERED, true);
 			return returnMap;
 		}
-		
-		if (userDAO.registerUser(user) == 1)
+
+		if (userDAO.registerUser(user) == 1) 
 		{
 			returnMap.put(UserConstants.USER_REGISTERED, true);
 		}
 		return returnMap;
 	}
-	
+
 	@Override
 	public boolean loginUser(String email, String password) 
 	{
-		User user = userDAO.findUserByEmail(email);
+		User user = findUserByEmail(email);
 		return user != null && passwordEncoder.matches(password, user.getPassword());
 	}
-	
-	private User createUser(Map<String, Object> userValues)
+
+	@Override
+	public Map<String, Boolean> updateprofile(Map<String, Object> userValues) 
 	{
-		User user = new User();
-		user.setUserName(Objects.toString(userValues.get("userName")));
-		user.setEmail(Objects.toString(userValues.get("email")));
-		user.setPassword(passwordEncoder.encode(Objects.toString(userValues.get("password"))));
-		user.setPhoneNumber(Long.valueOf(Objects.toString(userValues.get("phoneNumber"))));
-		return user;
+		Map<String, Boolean> returnMap = new HashMap<>();
+		User user = createUser(userValues);
+		user.setUserId(Integer.valueOf(Objects.toString(userValues.get("userId"))));
+		int updateUser = userDAO.updateprofile(user);
+		if(updateUser == 1)
+		{
+			returnMap.put("User Updated Successfully", true);
+		}
+		returnMap.put("User Updation Failed", false);
+		
+		return returnMap;
 	}
 	
-	private boolean checkIfUserAlreadyExists(User user) {
+	@Override
+	public User findUserByEmail(String email)
+	{
+		return userDAO.findUserByEmail(email);
+	}
+
+	private User createUser(Map<String, Object> userValues) 
+	{
+		User user = new User();
+		user.setUserName(userValues.get(UserConstants.USERNAME) == null ? null : Objects.toString(userValues.get(UserConstants.USERNAME)));
+		user.setEmail(userValues.get(UserConstants.EMAIL) == null ? null : Objects.toString(userValues.get(UserConstants.EMAIL)));
+		user.setPassword(userValues.get(UserConstants.PASSWORD) == null ? null : passwordEncoder.encode(Objects.toString(userValues.get(UserConstants.PASSWORD))));
+		user.setPhoneNumber(userValues.get(UserConstants.PHONE_NUMBER) == null ? null : Long.valueOf(Objects.toString(userValues.get(UserConstants.PHONE_NUMBER))));
+		return user;
+	}
+
+	private boolean checkIfUserAlreadyExists(User user) 
+	{
 		return userDAO.checkIfUserAlreadyExists(user);
 	}
 }
