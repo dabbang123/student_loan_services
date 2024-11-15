@@ -1,5 +1,9 @@
 package com.sd.sls.applicant.model;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import java.sql.Date;
 
 import com.sd.sls.user.model.User;
@@ -22,12 +26,14 @@ public class Applicant {
 	
 	private String membershipType;
 	
+	private String email;
+	
 	public Applicant() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Applicant(int applicantId, User user, String firstName, String lastName, Date dateOfBirth, String address,
-			String educationDetails, String membershipType) {
+			String educationDetails, String membershipType, String email) {
 		super();
 		this.applicantId = applicantId;
 		this.user = user;
@@ -37,6 +43,7 @@ public class Applicant {
 		this.address = address;
 		this.educationDetails = educationDetails;
 		this.membershipType = membershipType;
+		this.email = email;
 	}
 
 	public int getApplicantId() {
@@ -103,10 +110,18 @@ public class Applicant {
 		this.membershipType = membershipType;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
 		return "Applicant [applicantId=" + applicantId + ", user=" + user + ", firstName=" + firstName + ", lastName="
 				+ lastName + ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", educationDetails="
-				+ educationDetails + ", membershipType=" + membershipType + "]";
+				+ educationDetails + ", membershipType=" + membershipType + ", email=" + email + "]";
 	}
 }

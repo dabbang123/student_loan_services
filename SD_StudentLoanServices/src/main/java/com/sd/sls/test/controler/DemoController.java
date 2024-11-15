@@ -1,5 +1,9 @@
 package com.sd.sls.test.controler;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +20,12 @@ public class DemoController {
 
 	@GetMapping("/test")
 	public ResponseEntity<String> testMethod() {
-		if (demoService.testMethod()) {
-			return new ResponseEntity<>("Demo is Working", HttpStatus.OK);
-		} else {
+		if (demoService.testMethod()) 
+		{
+			return ResponseEntity.ok("Demo is Working");
+		} 
+		else 
+		{
 			return new ResponseEntity<>("Demo Not Found", HttpStatus.BAD_REQUEST);
 		}
 
