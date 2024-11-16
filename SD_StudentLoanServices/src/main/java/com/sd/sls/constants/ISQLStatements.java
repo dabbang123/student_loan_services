@@ -16,4 +16,12 @@ public class ISQLStatements {
 	public final static String REGISTER_APPLICANT = "INSERT INTO APPLICANT(USER_ID, FIRST_NAME, LAST_NAME, DATE_OF_BIRTH, ADDRESS, EDUCATION_DETAILS, MEMBERSHIP_TYPE, EMAIL) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	public static final String CHECK_APPLICANT = "SELECT APPLICANT_ID AS \"applicantId\", USER_ID AS \"userId\", FIRST_NAME AS \"firstName\", LAST_NAME AS \"lastName\", DATE_OF_BIRTH AS \"dateOfBirth\", ADDRESS AS \"address\", EDUCATION_DETAILS AS \"educationDetails\", MEMBERSHIP_TYPE AS \"membershipType\", EMAIL AS \"email\" FROM APPLICANT WHERE FIRST_NAME = ? AND LAST_NAME = ? AND EMAIL = ?";
+	
+	public static final String FIND_APPLICANT_BY_NAME = "SELECT APPLICANT_ID AS \"applicantId\", USER_ID AS \"userId\", FIRST_NAME AS \"firstName\", LAST_NAME AS \"lastName\", DATE_OF_BIRTH AS \"dateOfBirth\", ADDRESS AS \"address\", EDUCATION_DETAILS AS \"educationDetails\", MEMBERSHIP_TYPE AS \"membershipType\", EMAIL AS \"email\" FROM APPLICANT WHERE FIRST_NAME = ? AND LAST_NAME = ?";
+	
+	public static final String SUBMIT_LOAN_APPLICATION = "INSERT INTO LOAN_APPLICATION (APPLICANT_ID, GUARANTOR_NAME, APPLICATION_DATE, APPLICATION_STATUS, LOAN_AMOUNT, PURPOSE, ASSIGNEE_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	
+	public static final String CHECK_LOAN_APPLICATION = "SELECT * FROM LOAN_APPLICATION WHERE APPLICANT_ID = ? AND APPLICATION_STATUS IN ('D', 'S')";
+	
+	public static final String GET_LOAN_APPLICATION = "SELECT APPLICATION_ID AS \"applicationId\", APPLICANT_ID AS \"applicantId\", GUARANTOR_NAME AS \"guarantorName\", APPLICATION_DATE AS \"applicationDate\", APPLICATION_STATUS AS \"status\", LOAN_AMOUNT AS \"loanAmount\", PURPOSE AS \"purpose\", ASSIGNEE_ID AS \"assigneeId\" FROM LOAN_APPLICATION WHERE APPLICANT_ID = ? AND LOAN_AMOUNT = ? AND APPLICATION_STATUS = 'DR'";
 }

@@ -22,8 +22,8 @@ import com.sd.sls.user.dao.IUserDAO;
 import com.sd.sls.user.model.User;
 
 @Service
-public class ApplicantBL implements IApplicantBL {
-
+public class ApplicantBL implements IApplicantBL 
+{
 	@Autowired
 	private IApplicantDAO applicantDAO;
 
@@ -58,7 +58,7 @@ public class ApplicantBL implements IApplicantBL {
 						user.setUserName(applicant.getFirstName() + " " + applicant.getLastName());
 						if (userDAO.registerUser(user) == 1) 
 						{
-							user = userDAO.findUserByEmail(Objects.toString(userValues.get(ApplicantConstants.EMAIL)));
+							user = userBusinessLogic.findUserByEmail(Objects.toString(userValues.get(ApplicantConstants.EMAIL)));
 							applicant.setUser(user);
 						}
 					} 
@@ -78,12 +78,19 @@ public class ApplicantBL implements IApplicantBL {
 
 		return returnMap;
 	}
+	
+	@Override
+	public Applicant getApplicantDetailsByName (String firstName, String lastName)
+	{
+		Applicant applicant = applicantDAO.getApplicantDetailsByName(firstName, lastName);
+		applicant.setUser(userBusinessLogic.findUserByEmail(applicant.getEmail()));
+		return applicant;
+	}
 
 	private Applicant createApplicant(Map<String, Object> userValues) 
 	{
 		Applicant applicant = new Applicant();
-		User user = userDAO.findUserByEmail(Objects.toString(userValues.get(ApplicantConstants.EMAIL)));
-		applicant.setUser(user == null ? null : user);
+		applicant.setUser(userBusinessLogic.findUserByEmail(Objects.toString(userValues.get(ApplicantConstants.EMAIL))));
 		applicant.setFirstName(Objects.toString(userValues.get(ApplicantConstants.FIRST_NAME)));
 		applicant.setLastName(Objects.toString(userValues.get(ApplicantConstants.LAST_NAME)));
 		String dateString = Objects.toString(userValues.get(ApplicantConstants.DATE_OF_BIRTH));

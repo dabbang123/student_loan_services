@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sd.sls.applicant.bs.IApplicantBS;
 import com.sd.sls.applicant.constants.ApplicantConstants;
+import com.sd.sls.loan.application.bs.ILoanApplicationBS;
 import com.sd.sls.user.service.IUserBusinessService;
 
 @RequestMapping("/applicant")
@@ -28,6 +29,9 @@ public class ApplicantController {
 	
 	@Autowired
 	private IUserBusinessService userBusinessService;
+	
+	@Autowired
+	private ILoanApplicationBS loanApplicationBS;
 	
 	@PostMapping("/register")
 	public ResponseEntity<String> registerApplicant(@RequestBody Map<String, Object> userValues) 
@@ -62,9 +66,10 @@ public class ApplicantController {
 				: new ResponseEntity<>(ApplicantConstants.INVALID_CREDENTIALS, HttpStatus.BAD_REQUEST);
 	}
 	
-	@PostMapping("/submitapplication")
+	@PostMapping("/submitApplication")
 	public ResponseEntity<String> submitApplication(@RequestBody Map<String, Object> userValues)
 	{
+		loanApplicationBS.submitApplication(userValues);
 		return ResponseEntity.ok("Submitted");
 	}
 
