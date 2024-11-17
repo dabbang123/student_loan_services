@@ -1,5 +1,9 @@
 package com.sd.sls.applicant.model;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import java.io.Serializable;
 
 /*

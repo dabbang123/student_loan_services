@@ -1,5 +1,9 @@
 package com.sd.sls.loan.application.dao;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +35,15 @@ public class LoanApplicationDAO implements ILoanApplicationDAO{
 	@Override
 	public LoanApplication getLoanApplication(int applicantName, Long loanAmount)
 	{
-		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_LOAN_APPLICATION, new BeanPropertyRowMapper<>(LoanApplication.class), new Object[] {applicantName, loanAmount});
+		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_LOAN_APPLICATION_FOR_DRAFT, new BeanPropertyRowMapper<>(LoanApplication.class), new Object[] {applicantName, loanAmount});
+		return loanApplicationList.size() > 0 ? loanApplicationList.get(0) : null;
+	}
+	
+	@Override
+	public LoanApplication getApplicationId (String name)
+	{
+		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_LOAN_APPLICATION_FOR_APPLICANT, new BeanPropertyRowMapper<>(LoanApplication.class), name);
+		
 		return loanApplicationList.size() > 0 ? loanApplicationList.get(0) : null;
 	}
 }

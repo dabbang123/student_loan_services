@@ -1,5 +1,9 @@
 package com.sd.sls.loan.application.constants;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 public class LoanApplicationConstants {
 	public final static String EXISTING_LOAN_EXISTS = " has already applied for a loan, Please complete that loan";
 	public final static String LOAN_SUBMITTED_SUCCESSFULLY = "Loan Application Submitted Successfully.\nYour Loan Application Id is: ";

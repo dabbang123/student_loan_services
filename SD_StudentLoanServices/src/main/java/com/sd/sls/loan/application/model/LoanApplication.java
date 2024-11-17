@@ -1,5 +1,9 @@
 package com.sd.sls.loan.application.model;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import java.io.Serializable;
 import java.sql.Date;
 

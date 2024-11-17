@@ -1,5 +1,9 @@
 package com.sd.sls.loan.application.status;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 public enum ApplicationStatus {
 	DRAFT("DR"), 
 	SUBMITTED("S"), 

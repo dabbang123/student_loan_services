@@ -1,5 +1,9 @@
 package com.sd.sls.loan.application.bs;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,4 +23,15 @@ public class LoanApplicationBS implements ILoanApplicationBS
 		return loanApplicationBL.submitApplication(userValues);
 	}
 
+	@Override
+	public Long getApplicationId (String name)
+	{
+		return loanApplicationBL.getApplicationId(name);
+	}
+	
+	@Override
+	public Map<String, Boolean> updateApplication(Map<String, Object> userValues)
+	{
+		return loanApplicationBL.updateApplication(userValues);
+	}
 }

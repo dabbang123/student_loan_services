@@ -1,5 +1,9 @@
 package com.sd.sls.guarantor.model;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import java.io.Serializable;
 
 import com.sd.sls.applicant.model.Applicant;

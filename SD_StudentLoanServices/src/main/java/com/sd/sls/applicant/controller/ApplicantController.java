@@ -10,6 +10,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,11 +72,16 @@ public class ApplicantController {
 	{
 		Map<String, Boolean> resultMap = loanApplicationBS.submitApplication(userValues);
 		String key = "";
-		resultMap.entrySet().stream().forEach(result -> result.getKey());
 		for (Map.Entry<String, Boolean> entry : resultMap.entrySet()) {
             key = entry.getKey();
         }
 		return ResponseEntity.ok(key);
+	}
+	
+	@GetMapping("/getApplicationId")
+	public ResponseEntity<Long> getApplicationId (String name)
+	{
+		return ResponseEntity.ok(loanApplicationBS.getApplicationId(name));
 	}
 
 }

@@ -60,6 +60,7 @@ public class UserBusinessLogic implements IUserBusinessLogic {
 		if(updateUser == 1)
 		{
 			returnMap.put(UserConstants.USER_UPDATED_SUCCESSFULLY, true);
+			return returnMap;
 		}
 		returnMap.put(UserConstants.USER_UPDATION_FAILED, false);
 		

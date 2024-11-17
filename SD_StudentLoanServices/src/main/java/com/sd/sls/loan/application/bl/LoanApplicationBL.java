@@ -1,5 +1,9 @@
 package com.sd.sls.loan.application.bl;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +44,20 @@ public class LoanApplicationBL implements ILoanApplicationBL
 			loanApplication = loanApplicationDAO.getLoanApplication(loanApplication.getApplicant().getApplicantId(), loanApplication.getLoanAmount());
 			returnMap.put(LoanApplicationConstants.LOAN_SUBMITTED_SUCCESSFULLY + loanApplication.getApplicationId(), true);
 		}
+		
+		return returnMap;
+	}
+	
+	@Override
+	public Long getApplicationId (String name)
+	{
+		return Long.valueOf(loanApplicationDAO.getApplicationId(name).getApplicationId());
+	}
+
+	@Override
+	public Map<String, Boolean> updateApplication(Map<String, Object> userValues) 
+	{
+		Map<String, Boolean> returnMap = new HashMap<String, Boolean>();
 		
 		return returnMap;
 	}
