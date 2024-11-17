@@ -1,5 +1,7 @@
 package com.sd.sls.loan.application.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -29,6 +31,7 @@ public class LoanApplicationDAO implements ILoanApplicationDAO{
 	@Override
 	public LoanApplication getLoanApplication(int applicantName, Long loanAmount)
 	{
-		return jdbcTemplate.queryForObject(ISQLStatements.GET_LOAN_APPLICATION, new BeanPropertyRowMapper<>(LoanApplication.class), new Object[] {applicantName, loanAmount});
+		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_LOAN_APPLICATION, new BeanPropertyRowMapper<>(LoanApplication.class), new Object[] {applicantName, loanAmount});
+		return loanApplicationList.size() > 0 ? loanApplicationList.get(0) : null;
 	}
 }

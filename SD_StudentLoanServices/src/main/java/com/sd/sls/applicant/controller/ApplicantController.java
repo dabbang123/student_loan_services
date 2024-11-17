@@ -69,8 +69,13 @@ public class ApplicantController {
 	@PostMapping("/submitApplication")
 	public ResponseEntity<String> submitApplication(@RequestBody Map<String, Object> userValues)
 	{
-		loanApplicationBS.submitApplication(userValues);
-		return ResponseEntity.ok("Submitted");
+		Map<String, Boolean> resultMap = loanApplicationBS.submitApplication(userValues);
+		String key = "";
+		resultMap.entrySet().stream().forEach(result -> result.getKey());
+		for (Map.Entry<String, Boolean> entry : resultMap.entrySet()) {
+            key = entry.getKey();
+        }
+		return ResponseEntity.ok(key);
 	}
 
 }

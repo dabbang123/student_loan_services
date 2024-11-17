@@ -37,7 +37,7 @@ public class LoanApplicationBL implements ILoanApplicationBL
 		if (loanApplicationDAO.submitApplication(loanApplication) == 1)
 		{
 			loanApplication = loanApplicationDAO.getLoanApplication(loanApplication.getApplicant().getApplicantId(), loanApplication.getLoanAmount());
-			returnMap.put("Loan Application Submitted Successfully.\n Your Loan Application is: " + loanApplication.getApplicationId(), true);
+			returnMap.put("Loan Application Submitted Successfully.\nYour Loan Application Id is: " + loanApplication.getApplicationId(), true);
 		}
 		
 		return returnMap;
