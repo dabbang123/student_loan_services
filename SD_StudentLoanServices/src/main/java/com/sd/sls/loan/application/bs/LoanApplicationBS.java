@@ -34,4 +34,10 @@ public class LoanApplicationBS implements ILoanApplicationBS
 	{
 		return loanApplicationBL.updateApplication(userValues);
 	}
+	
+	@Override
+	public String withdrawApplication (Long applicationId)
+	{
+		return loanApplicationBL.withdrawApplication(applicationId);
+	}
 }

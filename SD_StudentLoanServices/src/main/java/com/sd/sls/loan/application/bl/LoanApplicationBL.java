@@ -51,7 +51,8 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	@Override
 	public Long getApplicationId (String name)
 	{
-		return Long.valueOf(loanApplicationDAO.getApplicationId(name).getApplicationId());
+		LoanApplication application = loanApplicationDAO.getApplicationId(name);
+		return application == null ? null : Long.valueOf(application.getApplicationId());
 	}
 
 	@Override
@@ -65,6 +66,12 @@ public class LoanApplicationBL implements ILoanApplicationBL
 		}
 		
 		return "Application Updation Failed";
+	}
+	
+	@Override
+	public String withdrawApplication (Long applicationId)
+	{
+		return loanApplicationDAO.withdrawApplication(applicationId) == 1 ? "Loan Application Withdrawn" : "Loan Application Withdraw Failed";
 	}
 	
 	private LoanApplication createLoanApplication (Map<String, Object> userValues)

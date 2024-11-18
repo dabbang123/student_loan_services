@@ -12,4 +12,6 @@ public interface ILoanApplicationBL {
 	public Long getApplicationId (String name);
 	
 	public String updateApplication(Map<String, Object> userValues);
+	
+	public String withdrawApplication (Long applicationId);
 }

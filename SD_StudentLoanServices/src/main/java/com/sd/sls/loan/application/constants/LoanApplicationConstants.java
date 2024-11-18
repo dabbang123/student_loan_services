@@ -12,5 +12,7 @@ public class LoanApplicationConstants {
 	public final static String GUARANTOR = "guarantor";
 	public final static String LOAN_AMOUNT = "loanAmount";
 	public final static String PURPOSE = "purpose";
+	public final static String NO_LOAN_APPLICATION_FOUND = "No Loan Application found";
+	public final static String LOAN_APPLICATION_FOUND  = "Loan Application Id is ";
 
 }

@@ -9,7 +9,6 @@ import java.sql.Date;
 
 import com.sd.sls.applicant.model.Applicant;
 import com.sd.sls.guarantor.model.Guarantor;
-import com.sd.sls.loan.application.status.ApplicationStatus;
 
 public class LoanApplication implements Serializable 
 {

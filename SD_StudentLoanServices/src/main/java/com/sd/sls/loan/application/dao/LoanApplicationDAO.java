@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sd.sls.constants.ISQLStatements;
 import com.sd.sls.loan.application.model.LoanApplication;
+import com.sd.sls.loan.application.status.ApplicationStatus;
 
 @Repository
 public class LoanApplicationDAO implements ILoanApplicationDAO
@@ -50,6 +51,12 @@ public class LoanApplicationDAO implements ILoanApplicationDAO
 	public int updateApplication (LoanApplication application)
 	{
 		return jdbcTemplate.update(buildUpdateQuery(application), application.getApplicationId());
+	}
+	
+	@Override
+	public int withdrawApplication (Long applicationId)
+	{
+		return jdbcTemplate.update(ISQLStatements.WITHDRAW_LOAN_APPLICATION, new Object[] {ApplicationStatus.WITHDRAWN.getStatus(), applicationId});
 	}
 	
 	private String buildUpdateQuery(LoanApplication application) 
