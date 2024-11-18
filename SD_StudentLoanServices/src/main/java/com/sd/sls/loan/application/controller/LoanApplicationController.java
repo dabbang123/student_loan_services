@@ -46,7 +46,8 @@ public class LoanApplicationController
 	@PutMapping("/updateApplication/{applicationId}")
 	public ResponseEntity<String> updateApplication (@PathVariable("applicationId") Long applicationId, @RequestBody Map<String, Object> userValues)
 	{
-		return ResponseEntity.ok("");
+		userValues.put("applicationId", applicationId);
+		return ResponseEntity.ok(loanApplicationBS.updateApplication(userValues));
 	}
 
 }

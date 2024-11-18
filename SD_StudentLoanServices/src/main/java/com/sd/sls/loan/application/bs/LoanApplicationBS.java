@@ -30,7 +30,7 @@ public class LoanApplicationBS implements ILoanApplicationBS
 	}
 	
 	@Override
-	public Map<String, Boolean> updateApplication(Map<String, Object> userValues)
+	public String updateApplication(Map<String, Object> userValues)
 	{
 		return loanApplicationBL.updateApplication(userValues);
 	}

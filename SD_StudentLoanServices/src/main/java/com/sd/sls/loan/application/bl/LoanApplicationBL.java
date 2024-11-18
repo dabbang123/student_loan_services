@@ -55,11 +55,16 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	}
 
 	@Override
-	public Map<String, Boolean> updateApplication(Map<String, Object> userValues) 
+	public String updateApplication(Map<String, Object> userValues) 
 	{
-		Map<String, Boolean> returnMap = new HashMap<String, Boolean>();
+		LoanApplication application = createLoanApplication(userValues);
+		application.setApplicationId(Integer.valueOf(Objects.toString(userValues.get("applicationId"))));
+		if (loanApplicationDAO.updateApplication(application) == 1)
+		{
+			return "Application Updated Successfully";
+		}
 		
-		return returnMap;
+		return "Application Updation Failed";
 	}
 	
 	private LoanApplication createLoanApplication (Map<String, Object> userValues)

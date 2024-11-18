@@ -11,5 +11,5 @@ public interface ILoanApplicationBL {
 	
 	public Long getApplicationId (String name);
 	
-	public Map<String, Boolean> updateApplication(Map<String, Object> userValues);
+	public String updateApplication(Map<String, Object> userValues);
 }

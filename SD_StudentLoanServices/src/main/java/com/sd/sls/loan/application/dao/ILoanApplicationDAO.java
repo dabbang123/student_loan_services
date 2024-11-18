@@ -14,4 +14,6 @@ public interface ILoanApplicationDAO {
 	public LoanApplication getLoanApplication(int applicantName, Long loanAmount);
 	
 	public LoanApplication getApplicationId (String name);
+	
+	public int updateApplication (LoanApplication application);
 }

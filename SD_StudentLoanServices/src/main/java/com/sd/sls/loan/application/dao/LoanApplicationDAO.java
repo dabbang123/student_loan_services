@@ -15,8 +15,8 @@ import com.sd.sls.constants.ISQLStatements;
 import com.sd.sls.loan.application.model.LoanApplication;
 
 @Repository
-public class LoanApplicationDAO implements ILoanApplicationDAO{
-	
+public class LoanApplicationDAO implements ILoanApplicationDAO
+{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -43,7 +43,43 @@ public class LoanApplicationDAO implements ILoanApplicationDAO{
 	public LoanApplication getApplicationId (String name)
 	{
 		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_LOAN_APPLICATION_FOR_APPLICANT, new BeanPropertyRowMapper<>(LoanApplication.class), name);
-		
 		return loanApplicationList.size() > 0 ? loanApplicationList.get(0) : null;
+	}
+	
+	@Override
+	public int updateApplication (LoanApplication application)
+	{
+		return jdbcTemplate.update(buildUpdateQuery(application), application.getApplicationId());
+	}
+	
+	private String buildUpdateQuery(LoanApplication application) 
+	{
+		boolean first = true;
+		StringBuffer updateQuery = new StringBuffer("UPDATE LOAN_APPLICATION SET ");
+		
+		if (application.getGuarantor().getName() != null) {
+			updateQuery.append(" GUARANTOR_NAME = '").append(application.getGuarantor().getName()).append("'");
+			first = false;
+		}
+		
+		if (application.getPurpose() != null) {
+			if (!first) {
+				updateQuery.append(", ");
+			}
+			updateQuery.append(" PURPOSE = '").append(application.getPurpose()).append("'");
+			first = false;
+		}
+
+		if (application.getLoanAmount() != null) {
+			if (!first) {
+				updateQuery.append(", ");
+			}
+			updateQuery.append(" LOAN_AMOUNT = '").append(application.getLoanAmount()).append("'");
+			first = false;
+		}
+		
+		updateQuery.append(" WHERE APPLICATION_ID = ?");
+		
+		return updateQuery.toString();
 	}
 }

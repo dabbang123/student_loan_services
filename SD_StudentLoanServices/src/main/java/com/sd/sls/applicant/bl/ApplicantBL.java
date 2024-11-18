@@ -87,7 +87,10 @@ public class ApplicantBL implements IApplicantBL
 	public Applicant getApplicantDetailsByName (String firstName, String lastName)
 	{
 		Applicant applicant = applicantDAO.getApplicantDetailsByName(firstName, lastName);
-		applicant.setUser(userBusinessLogic.findUserByEmail(applicant.getEmail()));
+		if (applicant != null)
+		{
+			applicant.setUser(userBusinessLogic.findUserByEmail(applicant.getEmail()));
+		}
 		return applicant;
 	}
 
