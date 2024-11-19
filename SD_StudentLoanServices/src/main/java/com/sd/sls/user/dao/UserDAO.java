@@ -1,5 +1,9 @@
 package com.sd.sls.user.dao;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +33,49 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public User findByUserName(String email) {
-		List<User> userList = jdbcTemplate.query(ISQLStatements.FIND_USER_BY_USERNAME, new BeanPropertyRowMapper<>(User.class), email);
+	public User findUserByEmail(String email) {
+		List<User> userList = jdbcTemplate.query(ISQLStatements.FIND_USER_BY_EMAIL,
+				new BeanPropertyRowMapper<>(User.class), email);
 		return userList.size() > 0 ? userList.get(0) : null;
+	}
+
+	@Override
+	public int updateprofile(User user) {
+		return jdbcTemplate.update(buildUpdateQuery(user), user.getUserId());
+	}
+
+	private String buildUpdateQuery(User user) {
+		boolean first = true;
+		StringBuffer updateQuery = new StringBuffer(ISQLStatements.UPDATE_USER_PROFILE);
+		if (user.getEmail() != null) {
+			updateQuery.append("EMAIL = '").append(user.getEmail()).append("'");
+			first = false;
+		}
+		
+		if (user.getPassword() != null) {
+			if (!first) {
+				updateQuery.append(", ");
+			}
+			updateQuery.append("PASSWORD = '").append(user.getPassword()).append("'");
+			first = false;
+		}
+
+		if (user.getUserName() != null) {
+			if (!first) {
+				updateQuery.append(", ");
+			}
+			updateQuery.append("USER_NAME = '").append(user.getUserName()).append("'");
+			first = false;
+		}
+
+		if (user.getPhoneNumber() != null) {
+			if (!first) {
+				updateQuery.append(", ");
+			}
+			updateQuery.append("PHONE_NUMBER = '").append(user.getPhoneNumber()).append("'");
+		}
+
+		updateQuery.append(" WHERE USER_ID = ?");
+		return updateQuery.toString();
 	}
 }
