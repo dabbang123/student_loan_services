@@ -1,5 +1,7 @@
 package com.sd.sls.loan.application.controller;
 
+import java.util.HashMap;
+
 /*
  * @Author: Abhishek Vishwakarma
  */
@@ -45,19 +47,22 @@ public class LoanApplicationController
 	public ResponseEntity<String> getApplicationId (@RequestParam String email)
 	{
 		String applicationId = Objects.toString(loanApplicationBS.getApplicationId(email));
-		return ResponseEntity.ok(applicationId == "null" ? LoanApplicationConstants.NO_LOAN_APPLICATION_FOUND : LoanApplicationConstants.LOAN_APPLICATION_FOUND + applicationId);
+		return ResponseEntity.ok(applicationId == LoanApplicationConstants.NULL ? LoanApplicationConstants.NO_LOAN_APPLICATION_FOUND : LoanApplicationConstants.LOAN_APPLICATION_FOUND + applicationId);
 	}
 	
 	@PutMapping("/updateApplication/{applicationId}")
-	public ResponseEntity<String> updateApplication (@PathVariable("applicationId") Long applicationId, @RequestBody Map<String, Object> userValues)
+	public ResponseEntity<String> updateApplication (@PathVariable(LoanApplicationConstants.APPLICATION_ID) Long applicationId, @RequestBody Map<String, Object> userValues)
 	{
 		userValues.put("applicationId", applicationId);
 		return ResponseEntity.ok(loanApplicationBS.updateApplication(userValues));
 	}
 	
-//	@PutMapping("/withdrawApplication/{applicationId}")
-//	public ResponseEntity<String> withDrawApplication(@PathVariable("applicationId") Long applicationId)
-//	{
-//		return ResponseEntity.ok(loanApplicationBS.withdrawApplication(applicationId));
-//	}
+	@PutMapping("/withdrawApplication/{applicationId}")
+	public ResponseEntity<String> withdrawApplication(@PathVariable(LoanApplicationConstants.APPLICATION_ID) Long applicationId)
+	{
+		Map<String, Object> userValues = new HashMap<String, Object>();
+		userValues.put(LoanApplicationConstants.APPLICATION_ID, applicationId);
+		userValues.put(LoanApplicationConstants.ACTION, LoanApplicationConstants.WITHDRAW);
+		return ResponseEntity.ok(loanApplicationBS.withdrawApplication(userValues));
+	}
 }

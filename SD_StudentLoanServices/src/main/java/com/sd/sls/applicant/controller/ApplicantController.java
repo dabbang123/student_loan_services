@@ -92,18 +92,18 @@ public class ApplicantController {
 	}
 	
 	@PutMapping("/updateApplication/{applicationId}")
-	public ResponseEntity<String> updateApplication (@PathVariable("applicationId") Long applicationId, @RequestBody Map<String, Object> userValues)
+	public ResponseEntity<String> updateApplication (@PathVariable(ApplicantConstants.APPLICATION_ID) Long applicationId, @RequestBody Map<String, Object> userValues)
 	{
 		userValues.put("applicationId", applicationId);
 		return ResponseEntity.ok(loanApplicationBS.updateApplication(userValues));
 	}
 	
 	@PutMapping("/withdrawApplication/{applicationId}")
-	public ResponseEntity<String> withdrawApplication(@PathVariable("applicationId") Long applicationId)
+	public ResponseEntity<String> withdrawApplication(@PathVariable(ApplicantConstants.APPLICATION_ID) Long applicationId)
 	{
 		Map<String, Object> userValues = new HashMap<String, Object>();
-		userValues.put("applicationId", applicationId);
-		userValues.put("action", "withdraw");
+		userValues.put(ApplicantConstants.APPLICATION_ID, applicationId);
+		userValues.put(LoanApplicationConstants.ACTION, LoanApplicationConstants.WITHDRAW);
 		return ResponseEntity.ok(loanApplicationBS.withdrawApplication(userValues));
 	}
 }
