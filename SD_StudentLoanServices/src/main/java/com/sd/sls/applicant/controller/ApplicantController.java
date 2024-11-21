@@ -1,5 +1,7 @@
 package com.sd.sls.applicant.controller;
 
+import java.util.HashMap;
+
 /*
  * @Author: Abhishek Vishwakarma
  */
@@ -83,9 +85,9 @@ public class ApplicantController {
 	}
 	
 	@GetMapping("/getApplicationId")
-	public ResponseEntity<String> getApplicationId (@RequestParam String name)
+	public ResponseEntity<String> getApplicationId (@RequestParam String email)
 	{
-		String applicationId = Objects.toString(loanApplicationBS.getApplicationId(name));
+		String applicationId = Objects.toString(loanApplicationBS.getApplicationId(email));
 		return ResponseEntity.ok(applicationId == "null" ? LoanApplicationConstants.NO_LOAN_APPLICATION_FOUND : LoanApplicationConstants.LOAN_APPLICATION_FOUND + applicationId);
 	}
 	
@@ -97,8 +99,11 @@ public class ApplicantController {
 	}
 	
 	@PutMapping("/withdrawApplication/{applicationId}")
-	public ResponseEntity<String> withDrawApplication(@PathVariable("applicationId") Long applicationId)
+	public ResponseEntity<String> withdrawApplication(@PathVariable("applicationId") Long applicationId)
 	{
-		return ResponseEntity.ok(loanApplicationBS.withdrawApplication(applicationId));
+		Map<String, Object> userValues = new HashMap<String, Object>();
+		userValues.put("applicationId", applicationId);
+		userValues.put("action", "withdraw");
+		return ResponseEntity.ok(loanApplicationBS.withdrawApplication(userValues));
 	}
 }

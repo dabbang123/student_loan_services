@@ -41,9 +41,9 @@ public class LoanApplicationDAO implements ILoanApplicationDAO
 	}
 	
 	@Override
-	public LoanApplication getApplicationId (String name)
+	public LoanApplication getApplicationId (String email)
 	{
-		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_LOAN_APPLICATION_FOR_APPLICANT, new BeanPropertyRowMapper<>(LoanApplication.class), name);
+		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_LOAN_APPLICATION_FOR_APPLICANT, new BeanPropertyRowMapper<>(LoanApplication.class), email);
 		return loanApplicationList.size() > 0 ? loanApplicationList.get(0) : null;
 	}
 	
@@ -56,7 +56,7 @@ public class LoanApplicationDAO implements ILoanApplicationDAO
 	@Override
 	public int withdrawApplication (Long applicationId)
 	{
-		return jdbcTemplate.update(ISQLStatements.WITHDRAW_LOAN_APPLICATION, new Object[] {ApplicationStatus.WITHDRAWN.getStatus(), applicationId});
+		return jdbcTemplate.update(ISQLStatements.UPDATE_LOAN_APPLICATION_STATUS, new Object[] {ApplicationStatus.WITHDRAWN.getStatus(), applicationId});
 	}
 	
 	private String buildUpdateQuery(LoanApplication application) 

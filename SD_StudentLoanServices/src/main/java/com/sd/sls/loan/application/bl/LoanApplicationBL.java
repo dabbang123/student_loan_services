@@ -18,6 +18,7 @@ import com.sd.sls.loan.application.constants.LoanApplicationConstants;
 import com.sd.sls.loan.application.dao.ILoanApplicationDAO;
 import com.sd.sls.loan.application.model.LoanApplication;
 import com.sd.sls.loan.application.status.ApplicationStatus;
+import com.sd.sls.loan.application.status.context.ApplicationStatusContext;
 
 @Service
 public class LoanApplicationBL implements ILoanApplicationBL 
@@ -27,6 +28,9 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	
 	@Autowired
 	private IApplicantBL applicantBL;
+	
+	@Autowired
+	private ApplicationStatusContext applicationStatusContext;
 	
 	@Override
 	public Map<String, Boolean> submitApplication (Map<String, Object> userValues)
@@ -49,9 +53,9 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	}
 	
 	@Override
-	public Long getApplicationId (String name)
+	public Long getApplicationId (String email)
 	{
-		LoanApplication application = loanApplicationDAO.getApplicationId(name);
+		LoanApplication application = loanApplicationDAO.getApplicationId(email);
 		return application == null ? null : Long.valueOf(application.getApplicationId());
 	}
 
@@ -69,9 +73,11 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	}
 	
 	@Override
-	public String withdrawApplication (Long applicationId)
+	public String withdrawApplication (Map<String, Object> userValues)
 	{
-		return loanApplicationDAO.withdrawApplication(applicationId) == 1 ? "Loan Application Withdrawn" : "Loan Application Withdraw Failed";
+		//Using State Design Pattern to set the status of application to Withdraw State
+		applicationStatusContext.setState(userValues);
+		return applicationStatusContext.updateLoanApplicationStatus(Long.valueOf(Objects.toString(userValues.get("applicationId")))) == 1 ? "Loan Application Withdrawn" : "Loan Application Withdraw Failed";
 	}
 	
 	private LoanApplication createLoanApplication (Map<String, Object> userValues)

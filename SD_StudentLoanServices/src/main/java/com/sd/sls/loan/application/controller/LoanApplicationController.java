@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sd.sls.loan.application.bs.ILoanApplicationBS;
 import com.sd.sls.loan.application.constants.LoanApplicationConstants;
+import com.sd.sls.loan.application.status.context.ApplicationStatusContext;
+import com.sd.sls.loan.application.status.state.WithdrawState;
 
 @RequestMapping("/loanApplication")
 @RestController
@@ -40,9 +42,9 @@ public class LoanApplicationController
 	}
 	
 	@GetMapping("/getApplicationId")
-	public ResponseEntity<String> getApplicationId (@RequestParam String name)
+	public ResponseEntity<String> getApplicationId (@RequestParam String email)
 	{
-		String applicationId = Objects.toString(loanApplicationBS.getApplicationId(name));
+		String applicationId = Objects.toString(loanApplicationBS.getApplicationId(email));
 		return ResponseEntity.ok(applicationId == "null" ? LoanApplicationConstants.NO_LOAN_APPLICATION_FOUND : LoanApplicationConstants.LOAN_APPLICATION_FOUND + applicationId);
 	}
 	
@@ -53,9 +55,9 @@ public class LoanApplicationController
 		return ResponseEntity.ok(loanApplicationBS.updateApplication(userValues));
 	}
 	
-	@PutMapping("/withdrawApplication/{applicationId}")
-	public ResponseEntity<String> withDrawApplication(@PathVariable("applicationId") Long applicationId)
-	{
-		return ResponseEntity.ok(loanApplicationBS.withdrawApplication(applicationId));
-	}
+//	@PutMapping("/withdrawApplication/{applicationId}")
+//	public ResponseEntity<String> withDrawApplication(@PathVariable("applicationId") Long applicationId)
+//	{
+//		return ResponseEntity.ok(loanApplicationBS.withdrawApplication(applicationId));
+//	}
 }

@@ -24,9 +24,9 @@ public class LoanApplicationBS implements ILoanApplicationBS
 	}
 
 	@Override
-	public Long getApplicationId (String name)
+	public Long getApplicationId (String email)
 	{
-		return loanApplicationBL.getApplicationId(name);
+		return loanApplicationBL.getApplicationId(email);
 	}
 	
 	@Override
@@ -36,8 +36,8 @@ public class LoanApplicationBS implements ILoanApplicationBS
 	}
 	
 	@Override
-	public String withdrawApplication (Long applicationId)
+	public String withdrawApplication (Map<String, Object> userValues)
 	{
-		return loanApplicationBL.withdrawApplication(applicationId);
+		return loanApplicationBL.withdrawApplication(userValues);
 	}
 }
