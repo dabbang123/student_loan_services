@@ -29,6 +29,10 @@ public class ApplicationStatusContext
 	
 	public int updateLoanApplicationStatus(Long loanApplicationId)
 	{
+		if (applicationStatusState == null)
+		{
+			throw new IllegalStateException("Failure in Setting State");
+		}
 		return applicationStatusState.updateStatus(loanApplicationId);
 	}
 }

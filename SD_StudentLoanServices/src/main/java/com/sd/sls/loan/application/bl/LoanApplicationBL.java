@@ -75,7 +75,7 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	@Override
 	public String withdrawApplication (Map<String, Object> userValues)
 	{
-		//Using State Design Pattern to set the status of application to Withdraw State
+		//Using State Design Pattern to change the state and set the status of application to Withdraw State
 		applicationStatusContext.setState(userValues);
 		return applicationStatusContext.updateLoanApplicationStatus(Long.valueOf(Objects.toString(userValues.get(LoanApplicationConstants.APPLICATION_ID)))) == 1 ? LoanApplicationConstants.LOAN_APPLICATION_WITHDRAWN : LoanApplicationConstants.LOAN_APPLICATION_WITHDRAW_FAILED;
 	}
