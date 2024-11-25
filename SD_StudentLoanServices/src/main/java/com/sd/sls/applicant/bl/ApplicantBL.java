@@ -41,7 +41,7 @@ public class ApplicantBL implements IApplicantBL
 	private TransactionTemplate transactionTemplate;
 
 	@Override
-	public Map<String, Boolean> registerApplicant(Map<String, Object> userValues) {
+	public Map<String, Boolean> registerApplicantDraft(Map<String, Object> userValues) {
 		Map<String, Boolean> returnMap = new HashMap<>();
 		Applicant applicant = createApplicant(userValues);
 		if (checkIfApplicantAlreadyExists(applicant)) {
@@ -73,7 +73,7 @@ public class ApplicantBL implements IApplicantBL
 					}
 				}
 
-				if (applicantDAO.registerApplicant(applicant) == 1) 
+				if (applicantDAO.registerApplicantDraft(applicant) == 1) 
 				{
 					returnMap.put(ApplicantConstants.APPLICANT_REGISTERED, true);
 				}
@@ -84,9 +84,41 @@ public class ApplicantBL implements IApplicantBL
 	}
 	
 	@Override
+	public Map<String, Boolean> registerApplicant(Long userId) {
+		Map<String, Boolean> returnMap = new HashMap<>();
+		Applicant applicant = getApplicantDetailsByUserId(userId);
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				if ((applicantDAO.registerApplicant(applicant) == 1) && (applicantDAO.deleteApplicantFromDraft(applicant.getApplicantId()) == 1)) 
+				{
+					returnMap.put(ApplicantConstants.APPLICANT_REGISTERED, true);
+				}
+				else
+				{
+					returnMap.put(ApplicantConstants.APPLICANT_REGISTERED_FAILED, true);
+					return;
+				}
+			}
+		});
+		
+		return returnMap;
+	}
+	
+	@Override
 	public Applicant getApplicantDetailsByName (String firstName, String lastName)
 	{
 		Applicant applicant = applicantDAO.getApplicantDetailsByName(firstName, lastName);
+		if (applicant != null)
+		{
+			applicant.setUser(userBusinessLogic.findUserByEmail(applicant.getEmail()));
+		}
+		return applicant;
+	}
+	
+	private Applicant getApplicantDetailsByUserId(Long userId) {
+		Applicant applicant = applicantDAO.getApplicantDetailsByUserIdFromDraft(userId);
 		if (applicant != null)
 		{
 			applicant.setUser(userBusinessLogic.findUserByEmail(applicant.getEmail()));

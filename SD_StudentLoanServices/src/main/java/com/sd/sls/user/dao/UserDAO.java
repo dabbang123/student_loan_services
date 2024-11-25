@@ -38,6 +38,13 @@ public class UserDAO implements IUserDAO {
 				new BeanPropertyRowMapper<>(User.class), email);
 		return userList.size() > 0 ? userList.get(0) : null;
 	}
+	
+	@Override
+	public User findUserForNotification(String message)
+	{
+		List<User> userList = jdbcTemplate.query(ISQLStatements.GET_USER_FOR_NOTIFICATION, new BeanPropertyRowMapper<>(User.class), new Object[] {message});
+		return userList.size() > 0 ? userList.get(0) : null;
+	}
 
 	@Override
 	public int updateprofile(User user) {

@@ -24,13 +24,18 @@ public class ApplicantBS implements IApplicantBS, Subject {
 	private IApplicantBL applicantBL;
 
 	@Override
-	public Map<String, Boolean> registerApplicant(Map<String, Object> userValues) 
+	public Map<String, Boolean> registerApplicantDraft(Map<String, Object> userValues) 
 	{
-		Map<String, Boolean> registerApplicantMap = applicantBL.registerApplicant(userValues);
+		Map<String, Boolean> registerApplicantMap = applicantBL.registerApplicantDraft(userValues);
 		notifyObserver(userValues);
 		return registerApplicantMap;
 	}
 
+	public Map<String, Boolean> registerApplicant(Long userId)
+	{
+		return applicantBL.registerApplicant(userId);
+	}
+	
 	@Override
 	public void addObserver(Observer observer) 
 	{

@@ -15,7 +15,7 @@ import com.sd.sls.loan.application.status.state.IApplicationStatusState;
 @Component
 public class ApplicationStatusContext 
 {
-	@Autowired
+//	@Autowired
 	private IApplicationStatusState applicationStatusState;
 	
 	@Autowired

@@ -25,6 +25,8 @@ import com.sd.sls.applicant.bs.IApplicantBS;
 import com.sd.sls.applicant.constants.ApplicantConstants;
 import com.sd.sls.loan.application.bs.ILoanApplicationBS;
 import com.sd.sls.loan.application.constants.LoanApplicationConstants;
+import com.sd.sls.notification.bs.AdminNotificationService;
+import com.sd.sls.observer.dp.Subject;
 import com.sd.sls.user.service.IUserBusinessService;
 
 @RequestMapping("/applicant")
@@ -40,10 +42,19 @@ public class ApplicantController {
 	@Autowired
 	private ILoanApplicationBS loanApplicationBS;
 	
+	@Autowired
+	private Subject subject;
+
+	@Autowired
+	public ApplicantController(Subject subject, AdminNotificationService adminNotificationService) {
+		this.subject = subject;
+		this.subject.addObserver(adminNotificationService);
+	}
+	
 	@PostMapping("/register")
 	public ResponseEntity<String> registerApplicant(@RequestBody Map<String, Object> userValues) 
 	{
-		Map<String, Boolean> resultMap = applicantBS.registerApplicant(userValues);
+		Map<String, Boolean> resultMap = applicantBS.registerApplicantDraft(userValues);
 		if (resultMap.containsKey(ApplicantConstants.APPLICANT_REGISTERED)) 
 		{
 			return resultMap.get(ApplicantConstants.APPLICANT_REGISTERED) == true

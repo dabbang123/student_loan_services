@@ -7,7 +7,7 @@ package com.sd.sls.applicant.constants;
 public class ApplicantConstants {
 	public final static String APPLICANT_ALREADY_REGISTERED = "Applicant is already registered";
 	public final static String APPLICANT_REGISTERED = "Applicant registered";
-	public final static String APPLICANT_REGISTERED_SUCCESSFULLY = "Applicant registered successfully";
+	public final static String APPLICANT_REGISTERED_SUCCESSFULLY = "Applicant registered successfully\nAdmin has been notified, please wait for your registration approval";
 	public final static String APPLICANT_REGISTERED_FAILED = "Applicant registered failed";
 	public final static String APPLICANT_LOGGED_IN_SUCCESSFULLY = "Applicant Logged In";
 	public final static String INVALID_CREDENTIALS = "Invalid Credentials";

@@ -4,7 +4,6 @@ package com.sd.sls.loan.application.factory;
  * @Author: Abhishek Vishwakarma
  */
 
-
 import java.util.Map;
 import java.util.Objects;
 
@@ -23,7 +22,12 @@ import com.sd.sls.loan.application.status.state.WithdrawState;
 
 @Component
 public class ApplicationStatusFactory {
-	
+//	private final Map<String, IApplicationStatusState> states;
+//
+//	public ApplicationStatusFactory(Map<String, IApplicationStatusState> states) {
+//		this.states = states;
+//	}
+
 	@Autowired
 	private ApprovedState approvedState;
 	
@@ -48,36 +52,43 @@ public class ApplicationStatusFactory {
 	@Autowired
 	private WithdrawState withdrawState;
 	
-	public IApplicationStatusState getApplicationStatusFactory (Map<String, Object> userValues)
-	{
+	public IApplicationStatusState getApplicationStatusFactory(Map<String, Object> userValues) {
+//		if (userValues == null || !userValues.containsKey("action")) {
+//			throw new IllegalArgumentException("Invalid userValues: action key is required");
+//		}
+//		String action = Objects.toString(userValues.get("action"));
+//		IApplicationStatusState state = states.get(action + "State");
+//		if (state == null) {
+//			throw new IllegalArgumentException("Unexpected value: " + action);
+//		}
+//		return state;
 		switch (Objects.toString(userValues.get("action"))) {
-			case "approved": 
-				return approvedState;
-				
-			case "disbursed": 
-				return disbursedState;
-				
-			case "draft": 
-				return draftState;
-				
-			case "reject": 
-				return rejectedState;
-				
-			case "sanctioned": 
-				return sanctionedState;
-				
-			case "submitted": 
-				return submittedState;
-				
-			case "underReview": 
-				return underReviewState;
-				
-			case "withdraw": 
-				return withdrawState;
-			
-			default:
-				throw new IllegalArgumentException("Unexpected value: " + userValues.get("action"));
+		case "approved":
+			return approvedState;
+
+		case "disbursed":
+			return disbursedState;
+
+		case "draft":
+			return draftState;
+
+		case "reject":
+			return rejectedState;
+
+		case "sanctioned":
+			return sanctionedState;
+
+		case "submitted":
+			return submittedState;
+
+		case "underReview":
+			return underReviewState;
+
+		case "withdraw":
+			return withdrawState;
+
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + userValues.get("action"));
 		}
-		
 	}
 }

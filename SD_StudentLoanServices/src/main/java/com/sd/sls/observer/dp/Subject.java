@@ -4,7 +4,8 @@ package com.sd.sls.observer.dp;
  */
 import java.util.Map;
 
-public interface Subject {
+public interface Subject 
+{
 	public void addObserver(Observer observer);
 	
 	public void removeObserver(Observer observer);
