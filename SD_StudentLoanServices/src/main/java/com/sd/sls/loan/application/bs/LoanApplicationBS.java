@@ -18,7 +18,7 @@ public class LoanApplicationBS implements ILoanApplicationBS
 	private ILoanApplicationBL loanApplicationBL;
 	
 	@Override
-	public Map<String, Boolean> submitApplication(Map<String, Object> userValues) 
+	public Map<String, Object> submitApplication(Map<String, Object> userValues) 
 	{
 		return loanApplicationBL.submitApplication(userValues);
 	}

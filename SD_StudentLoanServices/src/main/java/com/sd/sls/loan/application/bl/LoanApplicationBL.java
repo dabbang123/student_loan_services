@@ -17,6 +17,7 @@ import com.sd.sls.applicant.model.Applicant;
 import com.sd.sls.guarantor.model.Guarantor;
 import com.sd.sls.interceptor.dp.Context;
 import com.sd.sls.interceptor.dp.InterceptorDispatcher;
+import com.sd.sls.interceptor.dp.InterceptorFramework;
 import com.sd.sls.interceptor.dp.LoggingInterceptor;
 import com.sd.sls.loan.application.constants.LoanApplicationConstants;
 import com.sd.sls.loan.application.dao.ILoanApplicationDAO;
@@ -36,16 +37,10 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	@Autowired
 	private ApplicationStatusContext applicationStatusContext;
 	
-	@Autowired
-	private InterceptorDispatcher dispatcher;
-	
-	@Autowired
-	private LoggingInterceptor interceptor;
-	
 	@Override
-	public Map<String, Boolean> submitApplication (Map<String, Object> userValues)
+	public Map<String, Object> submitApplication (Map<String, Object> userValues)
 	{
-		Map<String, Boolean> returnMap = new HashMap<>();
+		Map<String, Object> returnMap = new HashMap<>();
 		LoanApplication loanApplication = createLoanApplication(userValues);
 		if (checkIfLoanExistWithApplicant(loanApplication))
 		{
@@ -58,13 +53,7 @@ public class LoanApplicationBL implements ILoanApplicationBL
 			Applicant applicant = loanApplication.getApplicant();
 			loanApplication = loanApplicationDAO.getLoanApplication(loanApplication.getApplicant().getApplicantId(), loanApplication.getLoanAmount());
 			loanApplication.setApplicant(applicant);
-			returnMap.put(LoanApplicationConstants.LOAN_SUBMITTED_SUCCESSFULLY + loanApplication.getApplicationId(), true);
-			
-			//Intercepter Design Pattern
-			dispatcher.attach(interceptor);
-			Context context = new Context();
-			context.put("applicationDetails", loanApplication);
-			dispatcher.dispatchEvent(context);
+			returnMap.put(LoanApplicationConstants.LOAN_SUBMITTED_SUCCESSFULLY, loanApplication);
 		}
 		
 		return returnMap;
