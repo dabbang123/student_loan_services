@@ -1,6 +1,13 @@
 package com.sd.sls.user.model;
 
-public class User {
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
+import java.io.Serializable;
+
+public class User implements Serializable 
+{
 	private int userId;
 
 	private String userName;

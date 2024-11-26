@@ -1,5 +1,9 @@
 package com.sd.sls.user.dao;
 
+/*
+ * @Author: Abhishek Vishwakarma
+ */
+
 import com.sd.sls.user.model.User;
 
 public interface IUserDAO {
@@ -7,5 +11,9 @@ public interface IUserDAO {
 
 	public boolean checkIfUserAlreadyExists(User user);
 
-	public User findByUserName(String email);
+	public User findUserByEmail(String email);
+	
+	public User findUserForNotification(String message);
+	
+	public int updateprofile(User user);
 }
