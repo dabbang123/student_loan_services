@@ -20,15 +20,14 @@ public class DemoController {
 
 	@GetMapping("/test")
 	public ResponseEntity<String> testMethod() {
-//		if (demoService.testMethod()) 
-//		{
-//			return ResponseEntity.ok("Demo is Working");
-//		} 
-//		else 
-//		{
-//			return new ResponseEntity<>("Demo Not Found", HttpStatus.BAD_REQUEST);
-//		}
-		return ResponseEntity.ok("Demo is Working");
+		if (demoService.testMethod()) 
+		{
+			return ResponseEntity.ok("Demo is Working");
+		} 
+		else 
+		{
+			return new ResponseEntity<>("Demo Not Found", HttpStatus.BAD_REQUEST);
+		}
 
 	}
 
