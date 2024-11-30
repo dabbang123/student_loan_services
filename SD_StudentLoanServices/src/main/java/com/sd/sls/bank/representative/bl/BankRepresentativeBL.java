@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.sd.sls.bank.representative.constant.BankRepresentativeConstants;
 import com.sd.sls.bank.representative.dao.IBankRepresentativeDAO;
 import com.sd.sls.bank.representative.model.BankRepresentative;
+import com.sd.sls.command.dp.GuarantorReviewCommand;
+import com.sd.sls.command.factory.dp.GuarantorReviewCommandFactory;
 import com.sd.sls.external.db.dao.IExternalDbDAO;
 import com.sd.sls.guarantor.constants.GuarantorConstants;
 import com.sd.sls.guarantor.dao.IGuarantorDAO;
@@ -25,11 +27,8 @@ import com.sd.sls.loan.application.status.context.ApplicationStatusContext;
  */
 
 @Service
-public class BankRepresentativeBL implements IBankRepresentativeBL {
-	
-	@Autowired
-	private ILoanApplicationDAO loanApplicationDAO;
-	
+public class BankRepresentativeBL implements IBankRepresentativeBL 
+{
 	@Autowired
 	private IBankRepresentativeDAO bankRepresentativeDAO;
 	
@@ -41,6 +40,9 @@ public class BankRepresentativeBL implements IBankRepresentativeBL {
 	
 	@Autowired
 	private ApplicationStatusContext applicationStatusContext;
+	
+	@Autowired
+	private GuarantorReviewCommandFactory reviewCommandFactory;
 
 	@Override
 	public Map<String, Boolean> assignApplication(Map<String, Object> userValues)  
@@ -78,32 +80,10 @@ public class BankRepresentativeBL implements IBankRepresentativeBL {
 		 * S3: If the Occupation of Guarantor is BUSINESS then, get the list of ITR for the last consecutive 3 years
 		 * S4: If the Occupation of Guarantor is SALARIED then, check whether guarantor has filled ITR for the latest month. 
 		 */
-		
-		Map<String, Boolean> returnMap = new HashMap<>();
-		LoanApplication application = loanApplicationDAO.getApplicationById(applicationId);
+		//Changed by Abhishek
 		Guarantor guarantor = guarantorDAO.getGuarantorByAppId(applicationId); 
-		if(guarantor.getOccupation().equals(GuarantorConstants.BUSINESS))
-		{
-			if(externalDbDAO.checkItrForBusiness(guarantor.getUinNo()))
-			{
-				returnMap.put(BankRepresentativeConstants.GUARANTOR_REVIEWED_SUCCESSFULLY, true);
-			}
-			else
-			{
-				returnMap.put(BankRepresentativeConstants.GUARANTOR_REVIEWED_FAILED, false);
-			}
-		}
-		else
-		{
-			if(externalDbDAO.checkItrForSalaried(guarantor.getUinNo()))
-			{
-				returnMap.put(BankRepresentativeConstants.GUARANTOR_REVIEWED_SUCCESSFULLY, true);				
-			}
-			else
-			{
-				returnMap.put(BankRepresentativeConstants.GUARANTOR_REVIEWED_FAILED, false);
-			}
-		}
-		return returnMap;
+		//Using Command Design Pattern
+	    GuarantorReviewCommand command = reviewCommandFactory.getCommand(guarantor.getOccupation());
+		return command.execute(guarantor);
 	}
 }

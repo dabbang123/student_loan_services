@@ -90,7 +90,7 @@ public class BankAdminController {
 	}
 
 	@PostMapping("/generateOffer/{applicationId}")
-	public ResponseEntity<String> generateOffer(@PathVariable("applicationId") int applicationId,  @RequestBody Map<String, Object> userValues) {
+	public ResponseEntity<String> generateOffer(@PathVariable("applicationId") Long applicationId,  @RequestBody Map<String, Object> userValues) {
 		userValues.put("applicationId", applicationId);
 		Map<String, Boolean> resultMap = loanOfferBS.generateOffer(userValues);
 
