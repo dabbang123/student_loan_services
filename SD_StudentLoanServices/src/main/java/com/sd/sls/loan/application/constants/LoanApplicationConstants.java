@@ -17,8 +17,15 @@ public class LoanApplicationConstants {
 	public final static String APPLICATION_ID  = "applicationId";
 	public final static String ACTION  = "action";
 	public final static String WITHDRAW  = "withdraw";
+	public final static String APPROVED = "approved";
+	public final static String REJECT = "reject";
+	public final static String UNDER_REVIEW = "underReview";
 	public final static String LOAN_APPLICATION_WITHDRAWN  = "Loan Application Withdrawn";
+	public final static String LOAN_APPLICATION_REJECTED = "Loan Application Rejected";
+	public final static String LOAN_APPLICATION_APPROVED = "Loan Application Approved";
+	public final static String LOAN_APPLICATION_APPROVED_FAILED = "Loan Application Approval Failed";
 	public final static String LOAN_APPLICATION_WITHDRAW_FAILED  = "Loan Application Withdraw Failed";
+	public final static String LOAN_APPLICATION_REJECTION_FAILED = "Loan Application Rejection Failed";
 	public final static String APPLICATION_UPDATED_SUCCESSFULLY  = "Application Updated Successfully";
 	public final static String APPLICATION_UPDATION_FAILED  = "Application Updation Failed";
 	public final static String NULL  = "null";

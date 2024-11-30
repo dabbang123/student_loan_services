@@ -68,4 +68,12 @@ public class ApplicantDAO implements IApplicantDAO
 	{
 		return jdbcTemplate.update(ISQLStatements.DELETE_APPLICANT_FROM_DRAFT, new Object[] {userId});
 	}
+	
+	// Get Applicant By Application Id
+	@Override
+	public Applicant getApplicantDetailsByApplId(int applicationId)
+	{
+		List<Applicant> applicantList = jdbcTemplate.query(ISQLStatements.GET_APPLICANT_BY_APPLICATION_ID, new BeanPropertyRowMapper<>(Applicant.class), new Object[] {applicationId});
+		return applicantList.size() > 0 ? applicantList.get(0) : null;
+	}
 }

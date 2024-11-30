@@ -89,4 +89,45 @@ public class LoanApplicationDAO implements ILoanApplicationDAO
 		
 		return updateQuery.toString();
 	}
+
+	@Override
+	public List<LoanApplication> getApprovedApplications() {
+		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_ALL_APPROVED_APPLICATIONS, new BeanPropertyRowMapper<>(LoanApplication.class));
+		return !loanApplicationList.isEmpty() ? loanApplicationList : null;
+	}
+	
+// Get all the loan Applications	
+	@Override
+	public List<LoanApplication> getAllLoanApplications() {
+		return jdbcTemplate.query(ISQLStatements.GET_ALL_LOAN_APPLICATIONS, new BeanPropertyRowMapper<>(LoanApplication.class));
+	}
+	
+// Get Application By Id
+	@Override
+	public LoanApplication getApplicationById (int applicationId)
+	{
+		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_LOAN_APPLICATION_BY_ID, new BeanPropertyRowMapper<>(LoanApplication.class), applicationId);
+		return loanApplicationList.size() > 0 ? loanApplicationList.get(0) : null;
+	}	
+
+// Approve Application	
+	@Override
+	public int approveApplication(Long applicationId)
+	{
+		return jdbcTemplate.update(ISQLStatements.UPDATE_LOAN_APPLICATION_STATUS, new Object[] {ApplicationStatus.APPROVED.getStatus(), applicationId});
+	}	
+	
+// Reject Application	
+	@Override
+	public int rejectApplication(Long applicationId)
+	{
+		return jdbcTemplate.update(ISQLStatements.UPDATE_LOAN_APPLICATION_STATUS, new Object[] {ApplicationStatus.REJECTED.getStatus(), applicationId});
+	}
+	
+// Change the Application to Under Review
+	@Override
+	public int underReviewApplication(Long applicationId)
+	{
+		return jdbcTemplate.update(ISQLStatements.UPDATE_LOAN_APPLICATION_STATUS, new Object[] {ApplicationStatus.UNDER_REVIEW.getStatus(), applicationId});
+	}	
 }

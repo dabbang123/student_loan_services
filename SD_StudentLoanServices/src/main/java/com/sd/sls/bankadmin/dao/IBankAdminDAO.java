@@ -1,9 +1,16 @@
 package com.sd.sls.bankadmin.dao;
 
-import java.util.List;
+/*
+ * @Author: Nikunj Panchal
+ */
 
-import com.sd.sls.notification.model.Notification;
+import com.sd.sls.bankadmin.model.BankAdmin;
+
+import java.util.List;
+import java.util.Map;
 
 public interface IBankAdminDAO {
-	
+    public List<BankAdmin> getBankAdmins ();
+
+    public boolean disburseLoanOffer (int offerID);
 }

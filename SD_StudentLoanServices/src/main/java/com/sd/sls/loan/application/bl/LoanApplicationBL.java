@@ -6,6 +6,7 @@ package com.sd.sls.loan.application.bl;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -15,10 +16,6 @@ import org.springframework.stereotype.Service;
 import com.sd.sls.applicant.bl.IApplicantBL;
 import com.sd.sls.applicant.model.Applicant;
 import com.sd.sls.guarantor.model.Guarantor;
-import com.sd.sls.interceptor.dp.Context;
-import com.sd.sls.interceptor.dp.InterceptorDispatcher;
-import com.sd.sls.interceptor.dp.InterceptorFramework;
-import com.sd.sls.interceptor.dp.LoggingInterceptor;
 import com.sd.sls.loan.application.constants.LoanApplicationConstants;
 import com.sd.sls.loan.application.dao.ILoanApplicationDAO;
 import com.sd.sls.loan.application.model.LoanApplication;
@@ -87,7 +84,7 @@ public class LoanApplicationBL implements ILoanApplicationBL
 		return applicationStatusContext.updateLoanApplicationStatus(Long.valueOf(Objects.toString(userValues.get(LoanApplicationConstants.APPLICATION_ID)))) == 1 ? LoanApplicationConstants.LOAN_APPLICATION_WITHDRAWN : LoanApplicationConstants.LOAN_APPLICATION_WITHDRAW_FAILED;
 	}
 	
-	private LoanApplication createLoanApplication (Map<String, Object> userValues)
+	public LoanApplication createLoanApplication (Map<String, Object> userValues)
 	{
 		LoanApplication loanApplication = new LoanApplication();
 		loanApplication.setApplicant(applicantBL.getApplicantDetailsByName(Objects.toString(userValues.get(LoanApplicationConstants.FIRST_NAME)), Objects.toString(userValues.get(LoanApplicationConstants.LAST_NAME))));
@@ -104,5 +101,36 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	private boolean checkIfLoanExistWithApplicant(LoanApplication loanApplication)
 	{
 		return loanApplicationDAO.checkIfLoanExistWithApplicant(loanApplication);
+	}
+
+	@Override
+	public List<LoanApplication> getApprovedApplications () {
+		return loanApplicationDAO.getApprovedApplications();
+	}
+	
+// Get all the applications - RB	
+	@Override
+	public List<LoanApplication> getAllLoanApplications() {
+		return loanApplicationDAO.getAllLoanApplications();
+	}
+
+// Approve the application - RB	
+	@Override
+	public String approveApplication (Map<String, Object> userValues)
+	{
+		//Used State Design Pattern to set the application status to Approved
+		applicationStatusContext.setState(userValues);
+		return applicationStatusContext.updateLoanApplicationStatus(Long.valueOf(Objects.toString(userValues.get(LoanApplicationConstants.APPLICATION_ID)))) == 1 ? LoanApplicationConstants.LOAN_APPLICATION_APPROVED : LoanApplicationConstants.LOAN_APPLICATION_APPROVED_FAILED;
+		
+	}	
+	
+// Reject the application - RB	
+	@Override
+	public String rejectApplication (Map<String, Object> userValues)
+	{
+		//Used State Design Pattern to set the application status to Rejected
+		applicationStatusContext.setState(userValues);
+		return applicationStatusContext.updateLoanApplicationStatus(Long.valueOf(Objects.toString(userValues.get(LoanApplicationConstants.APPLICATION_ID)))) == 1 ? LoanApplicationConstants.LOAN_APPLICATION_REJECTED : LoanApplicationConstants.LOAN_APPLICATION_REJECTION_FAILED;
+		
 	}
 }

@@ -1,8 +1,11 @@
 package com.sd.sls.bankadmin.model;
 
-import java.io.Serializable;
+/*
+ * @Author: Nikunj Panchal
+ */
 
 import com.sd.sls.user.model.User;
+import java.io.Serializable;
 
 public class BankAdmin implements Serializable
 {
@@ -23,9 +26,9 @@ public class BankAdmin implements Serializable
 		this.authorityLevel = authorityLevel;
 	}
 
-	public int getAdminId() {
-		return adminId;
-	}
+    public int getAdminId() {
+        return adminId;
+    }
 
 	public void setAdminId(int adminId) {
 		this.adminId = adminId;
