@@ -1,22 +1,23 @@
 package com.sd.sls.interceptor.dp;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+/*
+ * @Author: Abhishek Vishwakarma
+*/
 import org.springframework.stereotype.Service;
 
 @Service
-public class InterceptorFramework {
-	private final List<Interceptor> interceptors = new ArrayList<>();
-	
-	public void registerInterceptor(Interceptor interceptor) {
-        interceptors.add(interceptor);
-    }
+public class InterceptorFramework 
+{
+	@Autowired
+	private InterceptorDispatcher dispatcher;
 
-    public void triggerInterceptors(Context context) {
-        for (Interceptor interceptor : interceptors) {
-            interceptor.eventCallBack(context);
-        }
+    public void execute(Context context) 
+    {
+        dispatcher.dispatch(context);
     }
 	
+	public void registerInterceptor(Interceptor interceptor) 
+	{
+		dispatcher.addInterceptor(interceptor);
+    }
 }

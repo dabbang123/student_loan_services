@@ -1,27 +1,29 @@
 package com.sd.sls.interceptor.dp;
 
+/*
+ * @Author: Abhishek Vishwakarma
+*/
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 @Component
-public class InterceptorDispatcher {
-	private final InterceptorFramework framework;
+public class InterceptorDispatcher 
+{
+	private List<Interceptor> interceptors = new ArrayList<>();
 	
-	private Context context;
-	
-	public InterceptorDispatcher(InterceptorFramework framework) {
-		this.framework = framework;
-	}
-	
-	public void setContext(Context context)
+	public void addInterceptor(Interceptor interceptor) 
 	{
-		this.context = context;
-	}
+        interceptors.add(interceptor);
+    }
 
-	public void dispatchEvent(Context context) {
-		if (context == null)
-		{
-			throw new IllegalArgumentException("Context Not Found");
-		}
-		framework.triggerInterceptors(context);
-	}
+    public void dispatch(Context context) 
+    {
+        for (Interceptor interceptor : interceptors) 
+        {
+            interceptor.eventCallBack(context);
+        }
+    }
 }
