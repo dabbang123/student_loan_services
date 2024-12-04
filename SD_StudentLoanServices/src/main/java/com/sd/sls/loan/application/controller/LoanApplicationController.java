@@ -64,7 +64,7 @@ public class LoanApplicationController
 			interceptorFramework.registerInterceptor(interceptor);
 			Context context = new Context();
 			context.put("applicationDetails", application);
-			dispatcher.dispatchEvent(context);
+			interceptorFramework.execute(context);
 			return ResponseEntity.ok(key + application.getApplicationId());
 		}
 		return ResponseEntity.ok(key);
