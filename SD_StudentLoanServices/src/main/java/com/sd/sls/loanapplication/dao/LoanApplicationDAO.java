@@ -1,4 +1,4 @@
-package com.sd.sls.loan.application.dao;
+package com.sd.sls.loanapplication.dao;
 
 /*
  * @Author: Abhishek Vishwakarma
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.sd.sls.bankrepresentative.constant.BankRepresentativeConstants;
 import com.sd.sls.constants.ISQLStatements;
 import com.sd.sls.loan.application.model.LoanApplication;
-import com.sd.sls.loan.application.status.ApplicationStatus;
+import com.sd.sls.loanapplication.status.ApplicationStatus;
 
 @Repository
 public class LoanApplicationDAO implements ILoanApplicationDAO
@@ -140,5 +140,5 @@ public class LoanApplicationDAO implements ILoanApplicationDAO
 	public int underReviewApplication(Long applicationId)
 	{
 		return jdbcTemplate.update(ISQLStatements.UPDATE_LOAN_APPLICATION_STATUS, new Object[] {ApplicationStatus.UNDER_REVIEW.getStatus(), applicationId});
-	}
+	}	
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.sd.sls.applicant.bl.IApplicantBL;
 import com.sd.sls.applicant.model.Applicant;
+import com.sd.sls.bankrepresentative.constant.BankRepresentativeConstants;
 import com.sd.sls.guarantor.model.Guarantor;
 import com.sd.sls.loan.application.constants.LoanApplicationConstants;
 import com.sd.sls.loan.application.dao.ILoanApplicationDAO;
@@ -81,9 +82,7 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	{
 		//Using State Design Pattern to change the state and set the status of application to Withdraw State
 		applicationStatusContext.setState(userValues);
-		return applicationStatusContext.updateLoanApplicationStatus(Long.valueOf(Objects.toString(userValues.get(LoanApplicationConstants.APPLICATION_ID)))) == 1 ? 
-																												 LoanApplicationConstants.LOAN_APPLICATION_WITHDRAWN : 
-																											     LoanApplicationConstants.LOAN_APPLICATION_WITHDRAW_FAILED;
+		return applicationStatusContext.updateLoanApplicationStatus(Long.valueOf(Objects.toString(userValues.get(LoanApplicationConstants.APPLICATION_ID)))) == 1 ? LoanApplicationConstants.LOAN_APPLICATION_WITHDRAWN : LoanApplicationConstants.LOAN_APPLICATION_WITHDRAW_FAILED;
 	}
 	
 	public LoanApplication createLoanApplication (Map<String, Object> userValues)
@@ -110,7 +109,27 @@ public class LoanApplicationBL implements ILoanApplicationBL
 		return loanApplicationDAO.getApprovedApplications();
 	}
 	
-// Get all the applications - RB	
+	@Override
+	public Map<String, Boolean> assignApplication(Map<String, Object> userValues)  
+	{
+		Map<String, Boolean>returnMap = new HashMap<>();
+		if(loanApplicationDAO.assignApplication(userValues) == 1)
+		{
+			//Used State Pattern to Update the State to Under Review
+			applicationStatusContext.setState(userValues);
+			if(applicationStatusContext.updateLoanApplicationStatus(Long.valueOf(Objects.toString(userValues.get(LoanApplicationConstants.APPLICATION_ID)))) == 1 );
+			{
+				returnMap.put(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY, true);
+			}
+		}
+		else
+		{
+			returnMap.put(BankRepresentativeConstants.UPDATION_FAILED, false);
+		}
+		return returnMap;
+	}	
+	
+// Get all the applications
 	@Override
 	public List<LoanApplication> getAllLoanApplications() {
 		return loanApplicationDAO.getAllLoanApplications();

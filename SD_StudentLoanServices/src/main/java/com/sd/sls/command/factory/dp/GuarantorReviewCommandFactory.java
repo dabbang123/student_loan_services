@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sd.sls.command.dp.BusinessGuarantorReviewCommand;
-import com.sd.sls.command.dp.GuarantorReviewCommand;
+import com.sd.sls.command.dp.IGuarantorReviewCommand;
 import com.sd.sls.command.dp.SalariedGuarantorReviewCommand;
 import com.sd.sls.guarantor.constants.GuarantorConstants;
 
@@ -21,7 +21,7 @@ public class GuarantorReviewCommandFactory
 	@Autowired
 	private SalariedGuarantorReviewCommand salariedGuarantorReviewCommand;
 	
-	public GuarantorReviewCommand getCommand(String occupation) 
+	public IGuarantorReviewCommand getCommand(String occupation) 
 	{
         if (GuarantorConstants.BUSINESS.equals(occupation)) 
         {

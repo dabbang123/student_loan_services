@@ -1,13 +1,9 @@
-package com.sd.sls.loan.application.dao;
-
-/*
- * @Author: Abhishek Vishwakarma
- */
-
-import com.sd.sls.loan.application.model.LoanApplication;
+package com.sd.sls.loanapplication.dao;
 
 import java.util.List;
 import java.util.Map;
+
+import com.sd.sls.loan.application.model.LoanApplication;
 
 public interface ILoanApplicationDAO {
 	public int submitApplication (LoanApplication loanApplication);

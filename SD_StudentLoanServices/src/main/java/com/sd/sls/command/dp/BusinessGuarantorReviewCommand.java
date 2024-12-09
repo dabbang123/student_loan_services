@@ -10,12 +10,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.sd.sls.bank.representative.constant.BankRepresentativeConstants;
-import com.sd.sls.external.db.dao.ExternalDbDAO;
+import com.sd.sls.bankrepresentative.constant.BankRepresentativeConstants;
+import com.sd.sls.externaldb.dao.ExternalDbDAO;
 import com.sd.sls.guarantor.model.Guarantor;
 
 @Component
-public class BusinessGuarantorReviewCommand implements GuarantorReviewCommand 
+public class BusinessGuarantorReviewCommand implements IGuarantorReviewCommand 
 {
 	@Autowired
 	private ExternalDbDAO externalDbDAO;

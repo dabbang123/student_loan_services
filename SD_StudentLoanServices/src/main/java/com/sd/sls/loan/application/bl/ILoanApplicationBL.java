@@ -23,7 +23,9 @@ public interface ILoanApplicationBL {
 //Added the method in the Interface to access it from the Bank RepresentativeBL Class in order to update the application - RB 	
 	public LoanApplication createLoanApplication (Map<String, Object> userValues);
 		
-// Get All the Applications - RB		
+	public Map<String, Boolean> assignApplication(Map<String, Object> userValues); 
+	
+// Get All the Applications		
 	public List<LoanApplication> getAllLoanApplications();	
 	
 // Approve Loan Application - RB

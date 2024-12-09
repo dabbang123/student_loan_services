@@ -12,11 +12,10 @@ import com.sd.sls.loan.application.dao.ILoanApplicationDAO;
 public class WithdrawState implements IApplicationStatusState 
 {
 	@Autowired
-	private ILoanApplicationDAO loanApplicationDAO;
+	private ILoanApplicationDAO loanApplicationBS;
 
 	@Override
-	public int updateStatus(Long loanApplicationId) 
-	{
-		return loanApplicationDAO.withdrawApplication(loanApplicationId);
+	public int updateStatus(Long loanApplicationId) {
+		return loanApplicationBS.withdrawApplication(loanApplicationId);
 	}
 }
