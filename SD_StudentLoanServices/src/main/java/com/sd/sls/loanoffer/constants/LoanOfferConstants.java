@@ -5,9 +5,9 @@ package com.sd.sls.loanoffer.constants;
  */
 
 public class LoanOfferConstants {
-    public final static String OFFER_GENERATED_SUCCESSFULLY = "Loan Offer is generated successfully!! \n Loan Offer ID: ";
+    public final static String OFFER_GENERATED_SUCCESSFULLY = "Loan Offer is generated successfully!!";
 
-    public final static String LOAN_OFFER_EXISTS = "Loan Offer already exists. Check Offer ID: ";
+    public final static String LOAN_OFFER_EXISTS = "Loan Offer already exists. ";
 
     public static final String INTEREST_RATE = "10%";
 
@@ -22,4 +22,6 @@ public class LoanOfferConstants {
     public final static String APPLICATION_ID = "applicationId";
 
     public static final String APPLICATION_UPDATED = "Loan Application Updated Successfully!!";
+
+    public static final String DISBURSED = "disburse";
 }

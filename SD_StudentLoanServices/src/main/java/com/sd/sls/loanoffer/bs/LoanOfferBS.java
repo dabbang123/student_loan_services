@@ -19,8 +19,7 @@ public class LoanOfferBS implements ILoanOfferBS{
     private ILoanOfferBL loanOfferBL;
 
     @Override
-    public Map<String, Boolean> generateOffer(Map<String, Object> userValues)
-    {
+    public Map<String, Boolean> generateOffer(Map<String, Object> userValues) {
         return loanOfferBL.generateOffer(userValues);
     }
 

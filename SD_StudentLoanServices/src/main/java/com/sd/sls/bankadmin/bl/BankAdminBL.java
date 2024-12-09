@@ -9,10 +9,15 @@ import com.sd.sls.bankadmin.dao.IBankAdminDAO;
 import com.sd.sls.bankadmin.model.BankAdmin;
 import com.sd.sls.guarantor.dao.IGuarantorDAO;
 import com.sd.sls.guarantor.model.Guarantor;
+import com.sd.sls.loan.application.constants.LoanApplicationConstants;
+import com.sd.sls.loanapplication.status.context.ApplicationStatusContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.sd.sls.loanoffer.status.context.LoanOfferStatusContext;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -23,6 +28,12 @@ public class BankAdminBL implements IBankAdminBL {
 
     @Autowired
     private IGuarantorDAO guarantorDAO;
+
+    @Autowired
+    private LoanOfferStatusContext loanOfferStatusContext;
+
+    @Autowired
+    private ApplicationStatusContext applicationStatusContext;
 
     @Override
     public Double calculateSanctionAmount (int applicationId) {
@@ -44,7 +55,23 @@ public class BankAdminBL implements IBankAdminBL {
     }
 
     @Override
-    public boolean disburseLoanOffer (int offerID) {
-        return bankAdminDAO.disburseLoanOffer(offerID);
+    public String disburseLoanOffer (Map<String, Object> userValues) {
+//        return bankAdminDAO.disburseLoanOffer(offerID);
+
+        //Used State Design Pattern here to set the status of loan offer to Disbursed
+        loanOfferStatusContext.setState(userValues);
+
+        boolean x = loanOfferStatusContext.updateLoanOfferStatus(
+                (Integer) userValues.get(BankAdminConstants.OFFER_ID)) == 1;
+
+        userValues.replace(BankAdminConstants.ACTION, LoanApplicationConstants.DISBURSED);
+        applicationStatusContext.setState(userValues);
+
+        boolean y = applicationStatusContext.updateLoanApplicationStatus((Long) userValues.get(BankAdminConstants.OFFER_ID)) == 1;
+
+        if (x && y) {
+            return BankAdminConstants.LOAN_OFFER_DISBURSED;
+        }
+        return BankAdminConstants.LOAN_OFFER_DISBURSED_FAILED;
     }
 }

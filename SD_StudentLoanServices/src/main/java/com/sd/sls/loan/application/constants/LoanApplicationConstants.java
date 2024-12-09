@@ -29,5 +29,8 @@ public class LoanApplicationConstants {
 	public final static String APPLICATION_UPDATED_SUCCESSFULLY  = "Application Updated Successfully";
 	public final static String APPLICATION_UPDATION_FAILED  = "Application Updation Failed";
 	public final static String NULL  = "null";
-
+	public static final String LOAN_APPLICATION_SANCTIONED = "Loan Application is Sanctioned!";
+    public static final String LOAN_APPLICATION_SANCTION_FAILED = "Failed to Sanction Loan Application!";
+    public static final String SANCTIONED = "sanctioned";
+	public static final String DISBURSED = "disbursed";
 }
