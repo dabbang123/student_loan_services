@@ -5,6 +5,6 @@ package com.sd.sls.guarantor.constants;
  */
 
 public class GuarantorConstants {
-	public final static String BUSINESS = "BUSINESS";
-	public final static String SALARIED = "SALARIED";
+	public final static String BUSINESS = "Business";
+	public final static String SALARIED = "Salaried";
 }

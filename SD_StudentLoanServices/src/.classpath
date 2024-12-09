@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="com/sd/sls/interceptor/dp/|com/sd/sls/util/" kind="src" path="main/java"/>
+	<classpathentry kind="src" path="main/java/com/sd/sls/interceptor/dp"/>
+	<classpathentry kind="src" path="main/java/com/sd/sls/util"/>
+	<classpathentry kind="src" path="test/java"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -8,14 +8,15 @@ import com.sd.sls.applicant.model.Applicant;
  */
 
 import com.sd.sls.bankadmin.bl.IBankAdminBL;
-import com.sd.sls.loan.application.dao.ILoanApplicationDAO;
-import com.sd.sls.loan.application.model.LoanApplication;
-import com.sd.sls.loan.offer.controller.decorator.GoldMemberShipDecorator;
-import com.sd.sls.loan.offer.controller.decorator.IInterestRate;
-import com.sd.sls.loan.offer.controller.decorator.NormalInterestRate;
-import com.sd.sls.loan.offer.controller.decorator.SilverMemberShipDecorator;
+import com.sd.sls.loanapplication.dao.ILoanApplicationDAO;
+import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.loanoffer.constants.LoanOfferConstants;
 import com.sd.sls.loanoffer.dao.ILoanOfferDAO;
+import com.sd.sls.loanoffer.decorator.GoldMemberShipDecorator;
+import com.sd.sls.loanoffer.decorator.IInterestRate;
+import com.sd.sls.loanoffer.decorator.NormalInterestRate;
+import com.sd.sls.loanoffer.decorator.SilverMemberShipDecorator;
+import com.sd.sls.loanoffer.factory.InterestRateFactory;
 import com.sd.sls.loanoffer.model.LoanOffer;
 import com.sd.sls.loanoffer.status.LoanOfferStatus;
 import com.sd.sls.membershiptype.MembershipType;
@@ -68,11 +69,13 @@ public class LoanOfferBL implements ILoanOfferBL{
     {
         LoanOffer loanOffer = new LoanOffer();
         LoanApplication loanApplication = loanApplicationDAO.getApplicationById((Integer) userValues.get("applicationId"));
-        //loanOffer.getLoanApplication().getApplicationId();
+        loanApplication.setApplicant(applicantDAO.getApplicantDetailsByApplId(loanApplication.getApplicationId()));
         loanOffer.setLoanApplication(loanApplication);
         loanOffer.setDisbursedDate(null);
-//        loanOffer.setInterestRate(Double.valueOf(Objects.toString(userValues.get(LoanOfferConstants.INTEREST_RATE))));
-        loanOffer.setInterestRate(fetchInterestRate(loanApplication.getApplicationId()));
+        
+        // Used Decorator Design Pattern to get the Interest Rate - RB
+        IInterestRate rate = InterestRateFactory.getInterestRateFactory(loanApplication.getApplicant().getMembershipType());
+        loanOffer.setInterestRate(rate.getRate());
         loanOffer.setSanctionedAmount(bankAdminBL.calculateSanctionAmount((Integer) userValues.get("applicationId")));
         loanOffer.setOfferStatus(LoanOfferStatus.GENERATED);
         return loanOffer;
@@ -129,24 +132,23 @@ public class LoanOfferBL implements ILoanOfferBL{
         returnMap.put(message, true);
     }
     
-    private double fetchInterestRate(int applicationId)
-    {
-    	Applicant applicant = applicantDAO.getApplicantDetailsByApplId(applicationId);
-    	if(applicant.getMembershipType().equals(MembershipType.GOLD.getMembershipType()))
-    	{
-    		IInterestRate interestRate = new GoldMemberShipDecorator(new NormalInterestRate());
-    		return interestRate.getRate();
-    	}
-    	else if(applicant.getMembershipType().equals(MembershipType.SILVER.getMembershipType()))
-    	{
-    		IInterestRate interestRate = new SilverMemberShipDecorator(new NormalInterestRate());
-    		return interestRate.getRate();
-    	}
-    	else
-    	{
-    		IInterestRate interestRate = new NormalInterestRate();
-    		return interestRate.getRate();
-    	}
-    	
-    }
+//    private double fetchInterestRate(int applicationId)
+//    {
+//    	Applicant applicant = applicantDAO.getApplicantDetailsByApplId(applicationId);
+//    	if(applicant.getMembershipType().equals(MembershipType.GOLD.getMembershipType()))
+//    	{
+//    		IInterestRate interestRate = new GoldMemberShipDecorator(new NormalInterestRate());
+//    		return interestRate.getRate();
+//    	}
+//    	else if(applicant.getMembershipType().equals(MembershipType.SILVER.getMembershipType()))
+//    	{
+//    		IInterestRate interestRate = new SilverMemberShipDecorator(new NormalInterestRate());
+//    		return interestRate.getRate();
+//    	}
+//    	else
+//    	{
+//    		IInterestRate interestRate = new NormalInterestRate();
+//    		return interestRate.getRate();
+//    	}
+//    }
 }

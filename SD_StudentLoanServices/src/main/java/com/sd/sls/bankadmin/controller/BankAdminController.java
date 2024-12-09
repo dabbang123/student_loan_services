@@ -11,8 +11,8 @@ import java.util.Objects;
 import com.sd.sls.bankadmin.bs.IBankAdminService;
 import com.sd.sls.bankadmin.constants.BankAdminConstants;
 import com.sd.sls.bankadmin.model.BankAdmin;
-import com.sd.sls.loan.application.bs.LoanApplicationBS;
-import com.sd.sls.loan.application.model.LoanApplication;
+import com.sd.sls.loanapplication.bs.LoanApplicationBS;
+import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.loanoffer.bs.ILoanOfferBS;
 import com.sd.sls.user.service.IUserBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +90,7 @@ public class BankAdminController {
 	}
 
 	@PostMapping("/generateOffer/{applicationId}")
-	public ResponseEntity<String> generateOffer(@PathVariable("applicationId") int applicationId,  @RequestBody Map<String, Object> userValues) {
+	public ResponseEntity<String> generateOffer(@PathVariable("applicationId") Long applicationId,  @RequestBody Map<String, Object> userValues) {
 		userValues.put("applicationId", applicationId);
 		Map<String, Boolean> resultMap = loanOfferBS.generateOffer(userValues);
 

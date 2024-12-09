@@ -16,7 +16,7 @@ public class LoggingInterceptor implements Interceptor {
 	{
 		try 
 		{
-			String fileDir = "D:/_temp/logfiles/student_loan_services.log";
+			String fileDir = "C:/Users/abhis/Masters/Modules/Sem 1/CS5721 Software Design/Project/student_loan_services.log";
 			
             FileHandler fileHandler = new FileHandler(fileDir, true);
             fileHandler.setFormatter(new SimpleFormatter());

@@ -1,12 +1,8 @@
 package com.sd.sls.loanoffer.model;
 
-/*
- * @Author: Nikunj Panchal
- */
-
-import com.sd.sls.loan.application.model.LoanApplication;
 import com.sd.sls.loanoffer.status.LoanOfferStatus;
 import com.sd.sls.bankadmin.model.BankAdmin;
+import com.sd.sls.loanapplication.model.LoanApplication;
 
 import java.io.Serializable;
 import java.sql.Date;
