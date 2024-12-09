@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sd.sls.applicant.bs.IApplicantBS;
 import com.sd.sls.applicant.constants.ApplicantConstants;
 import com.sd.sls.interceptor.dp.Context;
-import com.sd.sls.interceptor.dp.InterceptorDispatcher;
 import com.sd.sls.interceptor.dp.InterceptorFramework;
 import com.sd.sls.interceptor.dp.LoggingInterceptor;
 import com.sd.sls.loan.application.bs.ILoanApplicationBS;
@@ -51,9 +50,6 @@ public class ApplicantController {
 	private Subject subject;
 	
 	@Autowired
-	private InterceptorDispatcher dispatcher;
-	
-	@Autowired
 	private LoggingInterceptor interceptor;
 	
 	@Autowired
@@ -65,6 +61,7 @@ public class ApplicantController {
 		this.subject.addObserver(adminNotificationService);
 	}
 	
+	//Added by Ranatosh Sarkar
 	@PostMapping("/register")
 	public ResponseEntity<String> registerApplicant(@RequestBody Map<String, Object> userValues) 
 	{
@@ -89,6 +86,7 @@ public class ApplicantController {
 		}
 	}
 	
+	//Added by Ranatosh Sarkar
 	@PostMapping("/login")
 	public ResponseEntity<String> loginUser(@RequestBody Map<String, Object> userValues) {
 		String userName = Objects.toString(userValues.get(ApplicantConstants.EMAIL));

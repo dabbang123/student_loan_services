@@ -1,7 +1,7 @@
 package com.sd.sls.membershiptype;
 
 /*
- * @Author: Abhishek Vishwakarma
+ * @Author: Ranatosh Sarkar
  */
 
 public enum MembershipType {

@@ -1,5 +1,7 @@
 package com.sd.sls.notification.model;
-
+/*
+ * @Author: Ranatosh Sarkar
+ */
 import java.io.Serializable;
 import java.sql.Date;
 

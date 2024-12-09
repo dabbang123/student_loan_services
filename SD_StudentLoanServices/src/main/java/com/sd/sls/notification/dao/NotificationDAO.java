@@ -1,5 +1,7 @@
 package com.sd.sls.notification.dao;
-
+/*
+ * @Author: Ranatosh Sarkar
+ */
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

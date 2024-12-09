@@ -6,9 +6,12 @@ package com.sd.sls.applicant.dao;
 
 import com.sd.sls.applicant.model.Applicant;
 
-public interface IApplicantDAO {
+public interface IApplicantDAO 
+{
+	//Added by Ranatosh Sarkar
 	public int registerApplicant(Applicant applicant);
 	
+	//Added by Ranatosh Sarkar
 	public int registerApplicantDraft(Applicant applicant);
 	
 	public boolean checkIfApplicantAlreadyExists(Applicant applicant);

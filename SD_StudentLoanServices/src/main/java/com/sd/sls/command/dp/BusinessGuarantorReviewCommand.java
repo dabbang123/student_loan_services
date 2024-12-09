@@ -34,5 +34,4 @@ public class BusinessGuarantorReviewCommand implements GuarantorReviewCommand
         }
         return resultMap;
 	}
-
 }

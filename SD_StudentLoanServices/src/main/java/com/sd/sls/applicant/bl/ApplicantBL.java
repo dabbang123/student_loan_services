@@ -40,6 +40,7 @@ public class ApplicantBL implements IApplicantBL
 	@Autowired
 	private TransactionTemplate transactionTemplate;
 
+	//Added by Ranatosh Sarkar
 	@Override
 	public Map<String, Boolean> registerApplicantDraft(Map<String, Object> userValues) {
 		Map<String, Boolean> returnMap = new HashMap<>();
@@ -83,6 +84,7 @@ public class ApplicantBL implements IApplicantBL
 		return returnMap;
 	}
 	
+	//Added by Ranatosh Sarkar
 	@Override
 	public Map<String, Boolean> registerApplicant(Long userId) {
 		Map<String, Boolean> returnMap = new HashMap<>();

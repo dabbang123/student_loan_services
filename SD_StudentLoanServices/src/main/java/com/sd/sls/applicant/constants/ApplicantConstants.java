@@ -4,7 +4,8 @@ package com.sd.sls.applicant.constants;
  * @Author: Abhishek Vishwakarma
  */
 
-public class ApplicantConstants {
+public class ApplicantConstants 
+{
 	public final static String APPLICANT_ALREADY_REGISTERED = "Applicant is already registered";
 	public final static String APPLICANT_REGISTERED = "Applicant registered";
 	public final static String APPLICANT_REGISTERED_SUCCESSFULLY = "Applicant registered successfully\nAdmin has been notified, please wait for your registration approval";

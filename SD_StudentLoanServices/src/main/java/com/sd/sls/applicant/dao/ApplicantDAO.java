@@ -25,12 +25,14 @@ public class ApplicantDAO implements IApplicantDAO
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	//Added by Ranatosh Sarkar
 	@Override
 	public int registerApplicant(Applicant applicant)
 	{
 		return jdbcTemplate.update(ISQLStatements.REGISTER_APPLICANT, new Object[] {applicant.getUser().getUserId(), applicant.getFirstName(), applicant.getLastName(), applicant.getDateOfBirth(), applicant.getAddress(), applicant.getEducationDetails(), applicant.getMembershipType(), applicant.getEmail()});
 	}
 	
+	//Added by Ranatosh Sarkar
 	@Override
 	public int registerApplicantDraft(Applicant applicant)
 	{

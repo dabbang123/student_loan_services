@@ -36,9 +36,6 @@ public class BankRepresentativeBL implements IBankRepresentativeBL
 	private IGuarantorDAO guarantorDAO;
 	
 	@Autowired
-	private IExternalDbDAO externalDbDAO;
-	
-	@Autowired
 	private ApplicationStatusContext applicationStatusContext;
 	
 	@Autowired

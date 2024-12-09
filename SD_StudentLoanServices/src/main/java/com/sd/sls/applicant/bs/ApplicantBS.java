@@ -23,6 +23,7 @@ public class ApplicantBS implements IApplicantBS, Subject {
 	@Autowired
 	private IApplicantBL applicantBL;
 
+	//Added by Ranatosh Sarkar
 	@Override
 	public Map<String, Boolean> registerApplicantDraft(Map<String, Object> userValues) 
 	{
@@ -31,23 +32,27 @@ public class ApplicantBS implements IApplicantBS, Subject {
 		return registerApplicantMap;
 	}
 
+	//Added by Ranatosh Sarkar
 	public Map<String, Boolean> registerApplicant(Long userId)
 	{
 		return applicantBL.registerApplicant(userId);
 	}
 	
+	//Added by Ranatosh Sarkar
 	@Override
 	public void addObserver(Observer observer) 
 	{
 		observers.add(observer);
 	}
 
+	//Added by Ranatosh Sarkar
 	@Override
 	public void removeObserver(Observer observer) 
 	{
 		observers.remove(observer);
 	}
 
+	//Added by Ranatosh Sarkar
 	@Override
 	public void notifyObserver(Map<String, Object> values) 
 	{

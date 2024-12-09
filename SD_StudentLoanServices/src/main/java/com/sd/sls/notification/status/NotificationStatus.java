@@ -1,5 +1,7 @@
 package com.sd.sls.notification.status;
-
+/*
+ * @Author: Ranatosh Sarkar
+ */
 public enum NotificationStatus {
 	SENT("S"),
 	READ("R");

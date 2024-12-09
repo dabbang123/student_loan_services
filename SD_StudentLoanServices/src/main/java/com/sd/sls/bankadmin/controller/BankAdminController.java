@@ -47,12 +47,14 @@ public class BankAdminController {
 	@Autowired
 	private LoanApplicationBS loanApplicationBS;
 	
+	//Added by Ranatosh Sarkar
 	@GetMapping("/checkNotifications")
 	public ResponseEntity<List<Notification>> checkNotifications()
 	{
 		return ResponseEntity.ok(notificationBS.checkNotifications());
 	}
 	
+	//Added by Ranatosh Sarkar
 	@PostMapping("/approveRegisteration/{userId}")
 	public ResponseEntity<String> approveRegisterationsForApplicant(@PathVariable("userId") Long userId)
 	{
