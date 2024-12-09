@@ -4,9 +4,13 @@ package com.sd.sls.user.model;
  * @Author: Abhishek Vishwakarma
  */
 
-import java.io.Serializable;
+import org.springframework.security.core.GrantedAuthority;
 
-public class User implements Serializable 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+
+public class User implements Serializable
 {
 	private int userId;
 
@@ -59,6 +63,17 @@ public class User implements Serializable
 		return password;
 	}
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"userId=" + userId +
+				", userName='" + userName + '\'' +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", phoneNumber=" + phoneNumber +
+				'}';
+	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -71,9 +86,4 @@ public class User implements Serializable
 		this.phoneNumber = phoneNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", email=" + email + ", password=" + password
-				+ ", phoneNumber=" + phoneNumber + "]";
-	}
 }

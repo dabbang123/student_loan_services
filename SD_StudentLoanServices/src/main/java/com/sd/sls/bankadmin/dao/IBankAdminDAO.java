@@ -12,5 +12,5 @@ import java.util.Map;
 public interface IBankAdminDAO {
     public List<BankAdmin> getBankAdmins ();
 
-    public boolean disburseLoanOffer (int offerID);
+    public int disburseLoanOffer (int offerID);
 }

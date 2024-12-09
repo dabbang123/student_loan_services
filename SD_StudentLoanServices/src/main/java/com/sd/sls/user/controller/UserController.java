@@ -44,6 +44,16 @@ public class UserController {
 		}
 	}
 
+//	@PostMapping("register")
+//	public ResponseEntity<AuthenticationResponse> register (@RequestBody User user) {
+//		return ResponseEntity.ok(userBusinessService.registerUser(user));
+//	}
+//
+//	@PostMapping("/authenticate")
+//	public ResponseEntity<AuthenticationResponse> register (@RequestBody User user) {
+//		return ResponseEntity.ok(userBusinessService.authenticateUser(user));
+//	}
+
 	@PostMapping("/login")
 	public ResponseEntity<String> loginUser(@RequestBody Map<String, Object> userValues) {
 		String userName = Objects.toString(userValues.get(UserConstants.EMAIL));

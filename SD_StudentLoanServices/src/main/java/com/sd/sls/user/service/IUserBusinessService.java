@@ -16,4 +16,6 @@ public interface IUserBusinessService {
 	public Map<String, Boolean> updateprofile(Map<String, Object> userValues);
 	
 	public User findUserByEmail(String email);
+
+//	public String authenticateUser(String email, String password);
 }

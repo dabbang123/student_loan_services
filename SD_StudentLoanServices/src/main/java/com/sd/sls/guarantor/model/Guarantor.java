@@ -7,7 +7,7 @@ package com.sd.sls.guarantor.model;
 import java.io.Serializable;
 
 import com.sd.sls.applicant.model.Applicant;
-import com.sd.sls.loan.application.model.LoanApplication;
+import com.sd.sls.loanapplication.model.LoanApplication;
 
 public class Guarantor implements Serializable 
 {
@@ -27,7 +27,7 @@ public class Guarantor implements Serializable
 	
 	private String address;
 	
-	private String uniNo;
+	private String uinNo;
 	
 	private Long monthlyExpense;
 	
@@ -36,7 +36,7 @@ public class Guarantor implements Serializable
 	}
 
 	public Guarantor(int guarantorId, Applicant applicant, LoanApplication application, String name,
-			String relationShip, String occupation, Long annualIncome, String address, String uniNo,
+			String relationShip, String occupation, Long annualIncome, String address, String uinNo,
 			Long monthlyExpense) {
 		super();
 		this.guarantorId = guarantorId;
@@ -47,7 +47,7 @@ public class Guarantor implements Serializable
 		this.occupation = occupation;
 		this.annualIncome = annualIncome;
 		this.address = address;
-		this.uniNo = uniNo;
+		this.uinNo = uinNo;
 		this.monthlyExpense = monthlyExpense;
 	}
 
@@ -115,12 +115,12 @@ public class Guarantor implements Serializable
 		this.address = address;
 	}
 
-	public String getUniNo() {
-		return uniNo;
+	public String getUinNo() {
+		return uinNo;
 	}
 
-	public void setUniNo(String uniNo) {
-		this.uniNo = uniNo;
+	public void setUinNo(String uinNo) {
+		this.uinNo = uinNo;
 	}
 
 	public Long getMonthlyExpense() {
@@ -135,7 +135,7 @@ public class Guarantor implements Serializable
 	public String toString() {
 		return "Guarantor [guarantorId=" + guarantorId + ", applicant=" + applicant + ", application=" + application
 				+ ", name=" + name + ", relationShip=" + relationShip + ", occupation=" + occupation + ", annualIncome="
-				+ annualIncome + ", address=" + address + ", uniNo=" + uniNo + ", monthlyExpense=" + monthlyExpense
+				+ annualIncome + ", address=" + address + ", uinNo=" + uinNo + ", monthlyExpense=" + monthlyExpense
 				+ "]";
 	} 
 }

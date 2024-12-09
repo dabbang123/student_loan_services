@@ -1,0 +1,302 @@
+https://
+
+@startuml
+top to bottom direction
+package "com.sd.sls" {
+    package "applicant" {
+        package "bl" {
+            class ApplicantBL
+            interface IApplicantBL
+        }
+        package "bs" {
+            class ApplicantBS
+            interface IApplicantBS
+        }
+        package "constants" {
+            class ApplicantConstants
+        }
+        package "controller" {
+            class ApplicantController
+        }
+        package "dao" {
+            class ApplicantDAO
+            interface IApplicantDAO
+        }
+        package "model" {
+            class Applicant
+        }
+    }
+
+    package "bankrepresentative" {
+        package "bl" {
+            class BankRepresentativeBL
+            interface IBankRepresentativeBL
+        }
+        package "bs" {
+            class BankRepresentativeBS
+            interface IBankRepresentativeBS
+        }
+        package "constants" {
+            class BankRepresentativeConstants
+        }
+        package "controller" {
+            class BankRepresentativeController
+        }
+        package "dao" {
+            class BankRepresentativeDAO
+            interface IBankRepresentativeDAO
+        }
+        package "model" {
+            class BankRepresentative
+        }
+    }
+
+    package "bankadmin" {
+        package "bl" {
+            class BankAdminBL
+            interface IBankAdminBL
+        }
+        package "bs" {
+            class BankAdminBS
+            interface IBankAdminBS
+        }
+        package "constants" {
+            class BankAdminConstants
+        }
+        package "controller" {
+            class BankAdminController
+        }
+        package "dao" {
+            class BankAdminDAO
+            interface IBankAdminDAO
+        }
+        package "model" {
+            class BankAdmin
+        }
+    }
+
+    package "command" {
+        package "dp" {
+            class BusinessGuarantorReviewCommand
+            interface GuarantorReviewCommand
+            class SalariedGuarantorReviewCommand
+        }
+        package "factory" {
+            package "dp" {
+                class GuarantorReviewCommandFactory
+            }
+        }
+    }
+
+    package "config" {
+       class SecurityConfig
+    }
+
+    package "constants" {
+        class ISQLStatements
+    }
+
+    package "externaldb" {
+        package "dao" {
+            class ExternalDbDAO
+            interface IExternalDbDAO
+        }
+        package "model" {
+            class ExternalDb
+        }
+    }
+
+    package "guarantor" {
+        package "constants" {
+            class GuarantorConstants
+        }
+        package "dao" {
+            class GuarantorDAO
+            interface IGuarantorDAO
+        }
+        package "model" {
+            class Guarantor
+        }
+    }
+
+    package "interceptor" {
+        package "dp" {
+            class Context
+            interface Interceptor
+            class InterceptorConfig
+            class InterceptorDispatcher
+            class InterceptorFramework
+            class LoggingInterceptor
+        }
+    }
+
+    package "loanapplication" {
+        package "bl" {
+            class LoanApplicationBL
+            interface ILoanApplicationBL
+        }
+        package "bs" {
+            class LoanApplicationBS
+            interface ILoanApplicationBS
+        }
+        package "constants" {
+            class LoanApplicationConstants
+        }
+        package "controller" {
+            class LoanApplicationController
+        }
+        package "dao" {
+            class LoanApplicationDAO
+            interface ILoanApplicationDAO
+        }
+        package "factory" {
+            class ApplicationStatusFactory
+        }
+        package "model" {
+            class LoanApplication
+        }
+        package "status" {
+            package "context" {
+                class ApplicationStatusContext
+            }
+            package "state" {
+                class "ApprovedState"
+                class "DisbursedState"
+                class "DraftState"
+                interface "IApplicationStatusState"
+                class "RejectedState"
+                class "SanctionedState"
+                class "SubmittedState"
+                class "UnderReviewState"
+                class "WithdrawState"
+            }
+            enum "ApplicationStatus" {
+                DRAFT
+                SUBMITTED
+                UNDER_REVIEW
+                APPROVED
+                REJECTED
+                WITHDRAWN
+                SANCTIONED
+                DISBURSED
+            }
+        }
+    }
+
+    package "loanoffer" {
+        package "bl" {
+            class LoanOfferBL
+            interface ILoanOfferBL
+        }
+        package "bs" {
+            class LoanOfferBS
+            interface ILoanOfferBS
+        }
+        package "constants" {
+            class LoanOfferConstants
+        }
+        package "controller" {
+            class LoanOfferController
+        }
+        package "dao" {
+            class LoanOfferDAO
+        }
+        package "factory"{
+            class LoanOfferStatusFactory
+            class InterestRateFactory
+        }
+        package "model" {
+            class LoanOffer
+        }
+        package "decorator" {
+            class GoldMemberShipDecorator
+            interface IInterestRate
+            class InterestRateDecorator
+            class NormalInterestRate
+            class SilverMemberShipDecorator
+        }
+
+        package "status" {
+            package "context" {
+                class LoanOfferStatusContext
+            }
+            package "stateDP" {
+                interface ILoanOfferStatus
+                class OfferAcceptedState
+                class OfferDisbursedState
+                class OfferGeneratedState
+                class OfferRejectedState
+            }
+            enum LoanOfferStatus {
+                GENERATED
+                ACCEPTED
+                REJECTED
+                DISBURSED
+            }
+        }
+    }
+
+    package "membershiptype" {
+        enum MembershipType {
+            REGULAR
+            SILVER
+            GOLD
+        }
+    }
+
+    package "notification" {
+        package "bl" {
+            class NotificationBL
+            interface INotificationBL
+        }
+        package "bs" {
+            class NotificationBS
+            interface INotificationBS
+            class AdminNotificationService
+        }
+        package "dao" {
+            class NotificationDAO
+            interface INotificationDAO
+        }
+        package "model" {
+            class Notification
+        }
+        package "status" {
+            enum NotificationStatus {
+                SENT
+                READ
+            }
+        }
+    }
+    package "observer" {
+        package "dp" {
+            interface Observer
+            interface Subject
+        }
+    }
+
+    package "user" {
+        package "bl" {
+            class UserBusinessLogic
+            interface IUserBusinessLogic
+        }
+        package "service" {
+            class UserBusinessService
+            interface IUserBusinessService
+        }
+        package "constants" {
+            class UserConstants
+        }
+        package "controller" {
+            class UserController
+        }
+        package "dao" {
+            class "UserDAO"
+            interface "IUserDAO"
+        }
+        package "model" {
+            class User
+        }
+    }
+}
+@enduml

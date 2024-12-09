@@ -1,0 +1,67 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle uml2
+
+package "com.sd.sls" {
+  package "controller" {
+    [ApplicantController]
+    [AuthController]
+    [BankController]
+    [BankAdminController]
+    [CommandController]
+  }
+
+  package "model" {
+    [Applicant]
+    [User]
+    [Loan]
+    [BankAccount]
+  }
+
+  package "repository" {
+    [ApplicantRepository]
+    [UserRepository]
+    [LoanRepository]
+    [BankAccountRepository]
+  }
+
+  package "service" {
+    [ApplicantService]
+    [AuthService]
+    [LoanService]
+    [BankService]
+  }
+
+  package "config" {
+    [SecurityConfig]
+    [DataSourceConfig]
+    [ApplicationConfig]
+  }
+
+  package "util" {
+    [DateTimeUtils]
+    [StringUtils]
+  }
+}
+
+package "com.example.app.sls" {
+  [SDStudentLoanServices]
+}
+
+[ApplicantController] --> [ApplicantService]
+[AuthController] --> [AuthService]
+[BankController] --> [BankService]
+[Applicant] <--> [ApplicantRepository]
+[User] <--> [UserRepository]
+[Loan] <--> [LoanRepository]
+[BankAccount] <--> [BankAccountRepository]
+[ApplicantService] --> [ApplicantRepository]
+[AuthService] --> [UserRepository]
+[LoanService] --> [LoanRepository]
+[BankService] --> [BankAccountRepository]
+[SecurityConfig] --> [User]
+[DataSourceConfig] --> [BankAccount]
+[SDStudentLoanServices] --> [Applicant]
+[SDStudentLoanServices] --> [Loan]
+
+@enduml

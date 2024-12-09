@@ -23,8 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sd.sls.applicant.bs.IApplicantBS;
 import com.sd.sls.applicant.constants.ApplicantConstants;
-import com.sd.sls.loan.application.bs.ILoanApplicationBS;
-import com.sd.sls.loan.application.constants.LoanApplicationConstants;
+import com.sd.sls.interceptor.dp.Context;
+import com.sd.sls.interceptor.dp.InterceptorDispatcher;
+import com.sd.sls.interceptor.dp.InterceptorFramework;
+import com.sd.sls.interceptor.dp.LoggingInterceptor;
+import com.sd.sls.loanapplication.bs.ILoanApplicationBS;
+import com.sd.sls.loanapplication.constants.LoanApplicationConstants;
+import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.notification.bs.AdminNotificationService;
 import com.sd.sls.observer.dp.Subject;
 import com.sd.sls.user.service.IUserBusinessService;
@@ -44,6 +49,15 @@ public class ApplicantController {
 	
 	@Autowired
 	private Subject subject;
+	
+	@Autowired
+	private InterceptorDispatcher dispatcher;
+	
+	@Autowired
+	private LoggingInterceptor interceptor;
+	
+	@Autowired
+	private InterceptorFramework interceptorFramework;
 
 	@Autowired
 	public ApplicantController(Subject subject, AdminNotificationService adminNotificationService) {
@@ -87,11 +101,24 @@ public class ApplicantController {
 	@PostMapping("/submitApplication")
 	public ResponseEntity<String> submitApplication(@RequestBody Map<String, Object> userValues)
 	{
-		Map<String, Boolean> resultMap = loanApplicationBS.submitApplication(userValues);
+		Map<String, Object> resultMap = loanApplicationBS.submitApplication(userValues);
 		String key = "";
-		for (Map.Entry<String, Boolean> entry : resultMap.entrySet()) {
+		for (Map.Entry<String, Object> entry : resultMap.entrySet()) 
+		{
             key = entry.getKey();
         }
+		
+		if (key.equals(LoanApplicationConstants.LOAN_SUBMITTED_SUCCESSFULLY))
+		{
+			LoanApplication application = (LoanApplication) resultMap.get(LoanApplicationConstants.LOAN_SUBMITTED_SUCCESSFULLY);
+			
+			//Interceptor Design Pattern
+			interceptorFramework.registerInterceptor(interceptor);
+			Context context = new Context();
+			context.put("applicationDetails", application);
+			dispatcher.dispatchEvent(context);
+			return ResponseEntity.ok(key + application.getApplicationId());
+		}
 		return ResponseEntity.ok(key);
 	}
 	

@@ -1,0 +1,102 @@
+@startuml
+allowmixing
+top to bottom direction
+
+package "com.sd.sls" {
+    package "Applicant" {
+        package "bl" {
+            allowmixing
+            class ApplicantBL
+            interface IApplicantBL
+        }
+        package "bs" {
+            allowmixing
+            class ApplicantBS
+            interface IApplicantBS
+        }
+        package "constants" {
+            class ApplicantConstants
+        }
+        package "controller" {
+            class ApplicantController
+        }
+        package "dao" {
+            allowmixing
+            class ApplicantDAO
+            interface IApplicantDAO
+        }
+        package "model" {
+            class Applicant
+        }
+    }
+
+    package "BankRepresentative" {
+        class BankRepresentativeController
+        class BankRepresentativeBL
+        class BankRepresentativeDAO
+        class BankRepresentative
+    }
+
+    package "LoanApplication" {
+        class LoanApplicationController
+        class LoanApplicationBL
+        class LoanApplicationDAO
+        class LoanApplication
+
+        enum ApplicationStatus {
+            DRAFT
+            SUBMITTED
+            UNDER_REVIEW
+            APPROVED
+            REJECTED
+            WITHDRAWN
+            SANCTIONED
+            DISBURSED
+        }
+    }
+
+    package "LoanOffer" {
+        class LoanOfferController
+        class LoanOfferBL
+        class LoanOfferDAO
+        class LoanOffer
+
+        enum LoanOfferStatus {
+            GENERATED
+            ACCEPTED
+            REJECTED
+            DISBURSED
+        }
+    }
+
+    package "User" {
+        class UserController
+        class UserBusinessLogic
+        class UserDAO
+        class User
+    }
+
+    package "Notification" {
+        class NotificationController
+        class NotificationBL
+        class NotificationDAO
+        class Notification
+    }
+
+    package "Common" {
+        enum MembershipType {
+            REGULAR
+            SILVER
+            GOLD
+        }
+
+        class SecurityConfig
+        interface ISQLStatements
+    }
+
+    ' Optional: Add some relationships to show interactions
+    LoanApplication "1" -- "1" Applicant : associated with
+    LoanOffer "1" -- "1" LoanApplication : linked to
+    Notification "0..*" -- "1" User : generates
+}
+@enduml

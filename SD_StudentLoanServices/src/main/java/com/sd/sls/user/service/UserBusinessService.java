@@ -23,6 +23,10 @@ public class UserBusinessService implements IUserBusinessService {
 		return userBusinessLogic.registerUser(userValues);
 	}
 
+//	public String authenticateUser (String token) {
+//		return "";
+//	}
+
 	@Override
 	public boolean loginUser(String email, String password) 
 	{

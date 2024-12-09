@@ -1,0 +1,40 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle uml2
+
+node "Application Server" {
+  [Spring Boot Application]
+  database "Database" as db
+  artifact "Configuration Files" as config
+  artifact "Static Resources" as static
+  [Spring Boot Application] --> db
+  [Spring Boot Application] --> config
+  [Spring Boot Application] --> static
+}
+
+node "Load Balancer" {
+  [Load Balancer] --> [Spring Boot Application]
+}
+
+node "Client" {
+  [Web Browser]
+  [Mobile App]
+  [Web Browser] --> [Load Balancer]
+  [Mobile App] --> [Load Balancer]
+}
+
+node "Monitoring" {
+  [Logging Service]
+  [Tracing Service]
+  [Logging Service] <-- [Spring Boot Application]
+  [Tracing Service] <-- [Spring Boot Application]
+}
+
+node "CI/CD" {
+  [Build Server]
+  [Deployment Server]
+  [Build Server] --> [Spring Boot Application]
+  [Deployment Server] --> [Spring Boot Application]
+}
+
+@enduml

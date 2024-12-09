@@ -36,9 +36,9 @@ public class UserDAO implements IUserDAO {
 	public User findUserByEmail(String email) {
 		List<User> userList = jdbcTemplate.query(ISQLStatements.FIND_USER_BY_EMAIL,
 				new BeanPropertyRowMapper<>(User.class), email);
-		return userList.size() > 0 ? userList.get(0) : null;
+		return !userList.isEmpty() ? userList.get(0) : null;
 	}
-	
+
 	@Override
 	public User findUserForNotification(String message)
 	{

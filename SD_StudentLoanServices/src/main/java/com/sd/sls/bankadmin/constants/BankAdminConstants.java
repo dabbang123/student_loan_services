@@ -17,4 +17,13 @@ public class BankAdminConstants {
     public final static Double LOAN_TENURE = 5.0;
     public static final String BUSINESS = "BUSINESS";
     public static final String SALARY = "SALARY";
+    public static final String ACTION = "action";
+    public static final String DISBURSE = "disburse";
+    public static final String GENERATED = "generated";
+    public static final String ACCEPTED = "accepted";
+    public static final String REJECTED = "rejected";
+    public static final String OFFER_ID = "offerId";
+    public static final String LOAN_OFFER_DISBURSED = "Loan Disbursed Successfully!!";
+    public static final String LOAN_OFFER_DISBURSED_FAILED = "Loan Disbursed Failed!!";
+    public static final String APPLICATION_ID = "applicationId";
 }

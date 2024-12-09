@@ -4,7 +4,7 @@ package com.sd.sls.loanoffer.model;
  * @Author: Nikunj Panchal
  */
 
-import com.sd.sls.loan.application.model.LoanApplication;
+import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.loanoffer.status.LoanOfferStatus;
 import com.sd.sls.bankadmin.model.BankAdmin;
 
@@ -15,12 +15,12 @@ public class LoanOffer implements Serializable {
     private int OfferID;
     private Double sanctionedAmount;
     private Double interestRate;
-    private LoanOfferStatus loanOfferStatus;
+    private String loanOfferStatus;
     private Date disbursedDate;
     private BankAdmin bankAdmin;
     private LoanApplication loanApplication;
 
-    public LoanOffer(int offerID, Double sanctionedAmount, Double interestRate, LoanOfferStatus loanOfferStatus,
+    public LoanOffer(int offerID, Double sanctionedAmount, Double interestRate, String loanOfferStatus,
                      Date disbursedDate, BankAdmin bankAdmin, LoanApplication loanApplication) {
         super();
         this.OfferID = offerID;
@@ -73,11 +73,11 @@ public class LoanOffer implements Serializable {
         this.interestRate = interestRate;
     }
 
-    public LoanOfferStatus getOfferStatus() {
+    public String getOfferStatus() {
         return loanOfferStatus;
     }
 
-    public void setOfferStatus(LoanOfferStatus loanOfferStatus) {
+    public void setOfferStatus(String loanOfferStatus) {
         this.loanOfferStatus = loanOfferStatus;
     }
 

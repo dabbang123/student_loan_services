@@ -20,4 +20,7 @@ public interface IApplicantDAO {
 	public Applicant getApplicantDetailsByUserIdFromDraft (Long userId);
 	
 	public int deleteApplicantFromDraft(int userId);
+	
+// Get Applicant By Application Id
+	public Applicant getApplicantDetailsByApplId(int applicationId);
 }

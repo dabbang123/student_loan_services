@@ -4,16 +4,20 @@ package com.sd.sls.bankadmin.controller;
  * @Author: Nikunj Panchal
  */
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.sd.sls.bankadmin.bs.IBankAdminService;
+import com.sd.sls.bankadmin.bs.IBankAdminBS;
 import com.sd.sls.bankadmin.constants.BankAdminConstants;
 import com.sd.sls.bankadmin.model.BankAdmin;
-import com.sd.sls.loan.application.bs.LoanApplicationBS;
-import com.sd.sls.loan.application.model.LoanApplication;
+import com.sd.sls.loanapplication.bs.LoanApplicationBS;
+import com.sd.sls.loanapplication.constants.LoanApplicationConstants;
+import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.loanoffer.bs.ILoanOfferBS;
+import com.sd.sls.loanoffer.constants.LoanOfferConstants;
+import com.sd.sls.loanoffer.status.LoanOfferStatus;
 import com.sd.sls.user.service.IUserBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +43,7 @@ public class BankAdminController {
 	private IUserBusinessService userBusinessService;
 
 	@Autowired
-	IBankAdminService bankAdminService;
+	IBankAdminBS bankAdminService;
 
 	@Autowired
 	private ILoanOfferBS loanOfferBS;
@@ -90,10 +94,14 @@ public class BankAdminController {
 	}
 
 	@PostMapping("/generateOffer/{applicationId}")
-	public ResponseEntity<String> generateOffer(@PathVariable("applicationId") Long applicationId,  @RequestBody Map<String, Object> userValues) {
-		userValues.put("applicationId", applicationId);
-		Map<String, Boolean> resultMap = loanOfferBS.generateOffer(userValues);
+	public ResponseEntity<String> generateOffer(
+			@PathVariable("applicationId") int applicationId) {
 
+		Map<String, Object> userValues = new HashMap<>();
+		userValues.put(LoanApplicationConstants.APPLICATION_ID, applicationId);
+		userValues.put(BankAdminConstants.ACTION, BankAdminConstants.GENERATED);
+
+		Map<String, Boolean> resultMap = loanOfferBS.generateOffer(userValues);
 		String key = "";
 		for (Map.Entry<String, Boolean> entry : resultMap.entrySet()) {
 			key = entry.getKey();
@@ -105,7 +113,6 @@ public class BankAdminController {
 	public ResponseEntity<List<BankAdmin>> getBankAdmins() {
 		List<BankAdmin> bankAdminList = bankAdminService.getBankAdmins();
 		if (bankAdminList.isEmpty()) {
-
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		else {
@@ -113,16 +120,13 @@ public class BankAdminController {
 		}
 	}
 
-	@PutMapping("/disburseLoan/{offerID}")
-	public ResponseEntity<String> disburseLoanOffer (@PathVariable("offerID") Long offerID, @RequestBody Map<String, Object> userValues) {
-		userValues.put("offerID", offerID);
-		boolean resultMap = bankAdminService.disburseLoanOffer(userValues.size());
+	@PutMapping("/disburseLoan/{offerId}")
+	public ResponseEntity<String> disburseLoanOffer (
+			@PathVariable(BankAdminConstants.OFFER_ID) int offerId ) {
 
-		if (resultMap) {
-			return ResponseEntity.status(HttpStatus.OK).build();
-		}
-		else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
+		Map<String, Object> userValues = new HashMap<>();
+		userValues.put(BankAdminConstants.OFFER_ID, offerId);
+		userValues.put(BankAdminConstants.ACTION, LoanOfferConstants.DISBURSED);
+		return ResponseEntity.ok(bankAdminService.disburseLoanOffer(userValues));
 	}
 }
