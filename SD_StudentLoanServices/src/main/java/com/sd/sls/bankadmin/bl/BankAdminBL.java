@@ -15,6 +15,7 @@ import com.sd.sls.loanapplication.status.context.ApplicationStatusContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sd.sls.loanoffer.status.context.LoanOfferStatusContext;
+import com.sd.sls.user.dao.IUserDAO;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,9 @@ public class BankAdminBL implements IBankAdminBL {
 
     @Autowired
     private IGuarantorDAO guarantorDAO;
+    
+    @Autowired
+    private IUserDAO userDAO;
 
     @Autowired
     private LoanOfferStatusContext loanOfferStatusContext;
@@ -51,7 +55,12 @@ public class BankAdminBL implements IBankAdminBL {
 
     @Override
     public List<BankAdmin> getBankAdmins () {
-        return bankAdminDAO.getBankAdmins();
+    	List<BankAdmin> bankAdminList = bankAdminDAO.getBankAdmins();
+    	for (BankAdmin bankAdmin : bankAdminList) 
+    	{
+			bankAdmin.setUser(userDAO.findUserForBankAdmin(bankAdmin.getAdminId()));
+		}
+    	return bankAdminList;
     }
 
     @Override

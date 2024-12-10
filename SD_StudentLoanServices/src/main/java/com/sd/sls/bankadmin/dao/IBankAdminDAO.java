@@ -13,4 +13,6 @@ public interface IBankAdminDAO {
     public List<BankAdmin> getBankAdmins ();
 
     public int disburseLoanOffer (int offerID);
+    
+    public BankAdmin getBankAdminForLoanApplication (int loanApplicationId);
 }

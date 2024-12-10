@@ -1,6 +1,7 @@
 package com.sd.sls.applicant.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 /*
  * @Author: Abhishek Vishwakarma
@@ -29,6 +30,8 @@ import com.sd.sls.interceptor.dp.LoggingInterceptor;
 import com.sd.sls.loanapplication.bs.ILoanApplicationBS;
 import com.sd.sls.loanapplication.constants.LoanApplicationConstants;
 import com.sd.sls.loanapplication.model.LoanApplication;
+import com.sd.sls.loanoffer.bs.ILoanOfferBS;
+import com.sd.sls.loanoffer.model.LoanOffer;
 import com.sd.sls.notification.bs.AdminNotificationService;
 import com.sd.sls.observer.dp.Subject;
 import com.sd.sls.user.service.IUserBusinessService;
@@ -45,6 +48,9 @@ public class ApplicantController {
 	
 	@Autowired
 	private ILoanApplicationBS loanApplicationBS;
+	
+	@Autowired
+	private ILoanOfferBS loanOfferBS;
 	
 	@Autowired
 	private Subject subject;
@@ -141,5 +147,36 @@ public class ApplicantController {
 		userValues.put(ApplicantConstants.APPLICATION_ID, applicationId);
 		userValues.put(LoanApplicationConstants.ACTION, LoanApplicationConstants.WITHDRAW);
 		return ResponseEntity.ok(loanApplicationBS.withdrawApplication(userValues));
+	}
+	
+	@GetMapping("/checkGeneratedOffers/{applicationId}")
+	public ResponseEntity<Object> checkGeneratedOffers(@PathVariable(ApplicantConstants.APPLICATION_ID) Long applicationId)
+	{
+		List<LoanOffer> offerList = loanOfferBS.checkGeneratedOffers(applicationId);
+		return offerList != null ? new ResponseEntity<>(offerList.get(0), HttpStatus.OK) : new ResponseEntity<>("No Offers Generated", HttpStatus.NOT_FOUND);
+	}
+	
+	@PutMapping("/acceptOffer/{applicationId}")
+	public ResponseEntity<String> acceptOffer(@PathVariable(ApplicantConstants.APPLICATION_ID) Long applicationId)
+	{
+		Map<String, Object> userValues = new HashMap<String, Object>();
+		userValues.put(ApplicantConstants.APPLICATION_ID, applicationId);
+		userValues.put(LoanApplicationConstants.ACTION, "ACCEPTED");
+		return loanOfferBS.updateOfferStatusFromApplicant(userValues) == true ? new ResponseEntity<>("Loan Offer Accepted", HttpStatus.OK) : new ResponseEntity<>("Loan Offer Acceptence Failed", HttpStatus.BAD_REQUEST);
+	}
+	
+	@PutMapping("/rejectOffer/{applicationId}")
+	public ResponseEntity<String> rejectOffer(@PathVariable(ApplicantConstants.APPLICATION_ID) Long applicationId)
+	{
+		Map<String, Object> userValues = new HashMap<String, Object>();
+		userValues.put(ApplicantConstants.APPLICATION_ID, applicationId);
+		userValues.put(LoanApplicationConstants.ACTION, "REJECTED");
+		return loanOfferBS.updateOfferStatusFromApplicant(userValues) == true ? new ResponseEntity<>("Loan Offer Rejected", HttpStatus.OK) : new ResponseEntity<>("Loan Offer Rejection Failed", HttpStatus.BAD_REQUEST);
+	}
+	
+	@PostMapping("/user/register")
+	public void registeruser(@RequestBody Map<String, Object> userValues)
+	{
+		userBusinessService.registerUser(userValues);
 	}
 }

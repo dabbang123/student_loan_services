@@ -86,7 +86,7 @@ public class BankRepresentativeController {
 		Map<String, Boolean> resultMap = loanApplicationBS.assignApplication(userValues);
 		if(resultMap.containsKey(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY))
 		{
-			return ResponseEntity.ok(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY);
+			return ResponseEntity.ok(BankRepresentativeConstants.APPLICATION_ASSIGNED_SUCCESSFULLY);
 		}
 		else
 		{
@@ -118,7 +118,7 @@ public class BankRepresentativeController {
 		Map<String, Boolean> resultMap = loanApplicationBS.assignApplication(userValues);
 		if(resultMap.containsKey(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY))
 		{
-			return ResponseEntity.ok(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY);
+			return ResponseEntity.ok(BankRepresentativeConstants.APPLICATION_APPROVED_SUCCESSFULLY);
 		}
 		else
 		{

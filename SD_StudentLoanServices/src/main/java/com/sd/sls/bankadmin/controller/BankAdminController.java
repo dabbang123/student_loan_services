@@ -10,6 +10,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.sd.sls.applicant.bs.IApplicantBS;
+import com.sd.sls.applicant.constants.ApplicantConstants;
 import com.sd.sls.bankadmin.bs.IBankAdminBS;
 import com.sd.sls.bankadmin.constants.BankAdminConstants;
 import com.sd.sls.bankadmin.model.BankAdmin;
@@ -18,17 +31,10 @@ import com.sd.sls.loanapplication.constants.LoanApplicationConstants;
 import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.loanoffer.bs.ILoanOfferBS;
 import com.sd.sls.loanoffer.constants.LoanOfferConstants;
-import com.sd.sls.loanoffer.status.LoanOfferStatus;
-import com.sd.sls.user.service.IUserBusinessService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import com.sd.sls.applicant.bs.IApplicantBS;
-import com.sd.sls.applicant.constants.ApplicantConstants;
+import com.sd.sls.loanoffer.model.LoanOffer;
 import com.sd.sls.notification.bs.INotificationBS;
 import com.sd.sls.notification.model.Notification;
+import com.sd.sls.user.service.IUserBusinessService;
 
 @RequestMapping("/bankadmin")
 @RestController
@@ -132,4 +138,15 @@ public class BankAdminController {
 		userValues.put(BankAdminConstants.ACTION, LoanOfferConstants.DISBURSED);
 		return ResponseEntity.ok(bankAdminService.disburseLoanOffer(userValues));
 	}
+	
+	@GetMapping("/getAllOffers")
+    public ResponseEntity<List<LoanOffer>> getAllOffers () {
+        List<LoanOffer> loanOfferList = loanOfferBS.getAllOffers();
+        if (!loanOfferList.isEmpty()) {
+            return ResponseEntity.ok(loanOfferList);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }

@@ -29,5 +29,17 @@ public class LoanOfferBS implements ILoanOfferBS{
     {
         return loanOfferBL.getAllOffers();
     }
+    
+    @Override
+    public List<LoanOffer> checkGeneratedOffers (Long applicationId)
+    {
+    	return loanOfferBL.checkGeneratedOffers(applicationId);
+    }
+    
+    @Override
+    public boolean updateOfferStatusFromApplicant(Map<String, Object> userValues)
+    {
+    	return loanOfferBL.updateOfferStatusFromApplicant(userValues);
+    }
 }
 

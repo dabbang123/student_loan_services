@@ -26,4 +26,8 @@ public interface IApplicantDAO
 	
 // Get Applicant By Application Id
 	public Applicant getApplicantDetailsByApplId(int applicationId);
+	
+	public Applicant getApplicantDetailsByLoanApplication(int loanApplicationId);
+	
+		public boolean checkIfApplicantExists(int applicantId);
 }

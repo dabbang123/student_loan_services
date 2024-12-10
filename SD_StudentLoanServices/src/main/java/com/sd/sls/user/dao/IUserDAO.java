@@ -16,4 +16,8 @@ public interface IUserDAO {
 	public User findUserForNotification(String message);
 	
 	public int updateprofile(User user);
+	
+	public User findUserForBankRepresentative(int employeeId);
+	
+	public User findUserForBankAdmin(int adminId);
 }

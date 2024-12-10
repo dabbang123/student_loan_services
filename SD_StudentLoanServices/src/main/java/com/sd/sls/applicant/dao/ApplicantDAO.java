@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sd.sls.applicant.model.Applicant;
 import com.sd.sls.constants.ISQLStatements;
+import com.sd.sls.user.dao.IUserDAO;
 
 @Repository
 public class ApplicantDAO implements IApplicantDAO
@@ -24,6 +25,9 @@ public class ApplicantDAO implements IApplicantDAO
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private IUserDAO userDAO;
 	
 	//Added by Ranatosh Sarkar
 	@Override
@@ -75,7 +79,22 @@ public class ApplicantDAO implements IApplicantDAO
 	@Override
 	public Applicant getApplicantDetailsByApplId(int applicationId)
 	{
-		List<Applicant> applicantList = jdbcTemplate.query(ISQLStatements.GET_APPLICANT_BY_APPLICATION_ID, new BeanPropertyRowMapper<>(Applicant.class), new Object[] {applicationId});
+		List<Applicant> applicantList = jdbcTemplate.query(ISQLStatements.GET_APPLICANT_BY_APPLICANT_ID, new BeanPropertyRowMapper<>(Applicant.class), new Object[] {applicationId});
 		return applicantList.size() > 0 ? applicantList.get(0) : null;
+	}
+	
+	public Applicant getApplicantDetailsByLoanApplication(int loanApplicationId)
+	{
+		List<Applicant> applicantList = jdbcTemplate.query(ISQLStatements.GET_APPLICANT_BY_LOAN_APPLICATION, new BeanPropertyRowMapper<>(Applicant.class), new Object[] {loanApplicationId});
+		for (Applicant applicant : applicantList) {
+			applicant.setUser(userDAO.findUserByEmail(applicant.getEmail()));
+		}
+		return applicantList.size() > 0 ? applicantList.get(0) : null;
+	}
+	
+	@Override
+	public boolean checkIfApplicantExists(int applicantId)
+	{
+		return jdbcTemplate.queryForList(ISQLStatements.GET_APPLICANT_BY_ID, new Object[] {applicantId}).size() > 0 ? true : false;
 	}
 }

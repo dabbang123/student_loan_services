@@ -17,4 +17,10 @@ public interface ILoanOfferDAO {
     public int disburseLoanOffer(int applicationID);
 
     public int generateLoanOfferStatus (int applicationID);
+    
+    public List<LoanOffer> checkGeneratedOffers (Long applicationId);
+    
+    public int updateOfferStatusFromApplicant (Map<String, Object> userValues);
+    
+    public int getLoanApplicationId (int offerId);
 }

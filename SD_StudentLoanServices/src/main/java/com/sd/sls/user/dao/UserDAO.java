@@ -45,6 +45,20 @@ public class UserDAO implements IUserDAO {
 		List<User> userList = jdbcTemplate.query(ISQLStatements.GET_USER_FOR_NOTIFICATION, new BeanPropertyRowMapper<>(User.class), new Object[] {message});
 		return userList.size() > 0 ? userList.get(0) : null;
 	}
+	
+	@Override
+	public User findUserForBankRepresentative(int employeeId)
+	{
+		List<User> userList = jdbcTemplate.query(ISQLStatements.GET_ALL_USER_FROM_BANK_REPRESENTATIVE, new BeanPropertyRowMapper<>(User.class), new Object[] {employeeId});
+		return userList.size() > 0 ? userList.get(0) : null;
+	}
+	
+	@Override
+	public User findUserForBankAdmin(int adminId)
+	{
+		List<User> userList = jdbcTemplate.query(ISQLStatements.GET_USER_FOR_BANK_ADMIN, new BeanPropertyRowMapper<>(User.class), new Object[] {adminId});
+		return userList.size() > 0 ? userList.get(0) : null;
+	}
 
 	@Override
 	public int updateprofile(User user) {

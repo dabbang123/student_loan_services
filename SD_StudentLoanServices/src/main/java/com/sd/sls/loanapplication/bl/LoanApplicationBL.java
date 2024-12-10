@@ -14,8 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sd.sls.applicant.bl.IApplicantBL;
+import com.sd.sls.applicant.dao.IApplicantDAO;
 import com.sd.sls.applicant.model.Applicant;
+import com.sd.sls.bankadmin.dao.IBankAdminDAO;
+import com.sd.sls.bankadmin.model.BankAdmin;
 import com.sd.sls.bankrepresentative.constant.BankRepresentativeConstants;
+import com.sd.sls.guarantor.dao.IGuarantorDAO;
 import com.sd.sls.guarantor.model.Guarantor;
 import com.sd.sls.loanapplication.constants.LoanApplicationConstants;
 import com.sd.sls.loanapplication.dao.ILoanApplicationDAO;
@@ -31,6 +35,15 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	
 	@Autowired
 	private IApplicantBL applicantBL;
+	
+	@Autowired
+	private IApplicantDAO applicantDAO;
+	
+	@Autowired
+	private IBankAdminDAO bankAdminDAO;
+	
+	@Autowired
+	private IGuarantorDAO guarantorDAO;
 	
 	@Autowired
 	private ApplicationStatusContext applicationStatusContext;
@@ -106,7 +119,13 @@ public class LoanApplicationBL implements ILoanApplicationBL
 
 	@Override
 	public List<LoanApplication> getApprovedApplications () {
-		return loanApplicationDAO.getApprovedApplications();
+		List<LoanApplication> loanApplicationList = loanApplicationDAO.getApprovedApplications();
+		for (LoanApplication loanApplication : loanApplicationList) {
+			loanApplication.setApplicant(applicantDAO.getApplicantDetailsByLoanApplication(loanApplication.getApplicationId()));
+			loanApplication.setGuarantor(guarantorDAO.getGuarantorByAppId(loanApplication.getApplicationId()));
+			loanApplication.setAssigneId((BankAdmin) bankAdminDAO.getBankAdminForLoanApplication(loanApplication.getApplicationId()));
+		}
+		return loanApplicationList;
 	}
 	
 	@Override
@@ -132,7 +151,13 @@ public class LoanApplicationBL implements ILoanApplicationBL
 // Get all the applications
 	@Override
 	public List<LoanApplication> getAllLoanApplications() {
-		return loanApplicationDAO.getAllLoanApplications();
+		List<LoanApplication> loanApplications = loanApplicationDAO.getAllLoanApplications();
+		for (LoanApplication loanApplication : loanApplications) 
+		{
+			loanApplication.setApplicant(applicantDAO.getApplicantDetailsByLoanApplication(loanApplication.getApplicationId()));
+			loanApplication.setGuarantor(guarantorDAO.getGuarantorByAppId(loanApplication.getApplicationId()));
+		}
+		return loanApplications;
 	}
 
 // Approve the application

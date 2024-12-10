@@ -9,6 +9,8 @@ public class BankRepresentativeConstants {
 	public final static String EMAIL = "email";
 	public final static String PASSWORD = "password";
 	public final static String APPLICATION_UPDATED_SUCCESSFULLY = "Application Updated Successfully";
+	public final static String APPLICATION_APPROVED_SUCCESSFULLY = "Application approved successfully and assigned to bank admin";
+	public final static String APPLICATION_ASSIGNED_SUCCESSFULLY = "Application is assigned to bank representative and is under review stage.";
 	public final static String UPDATION_FAILED = "Bank Representative Updation Failed";
 	public final static String ASSIGNEE_ID = "assigneeId";
 	public final static String APPLICATION_ID = "applicationId";

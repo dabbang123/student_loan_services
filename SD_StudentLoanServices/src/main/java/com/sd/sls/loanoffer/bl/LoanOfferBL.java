@@ -1,5 +1,14 @@
 package com.sd.sls.loanoffer.bl;
 
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.sd.sls.applicant.dao.IApplicantDAO;
 import com.sd.sls.applicant.model.Applicant;
 
@@ -15,23 +24,13 @@ import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.loanapplication.status.context.ApplicationStatusContext;
 import com.sd.sls.loanoffer.constants.LoanOfferConstants;
 import com.sd.sls.loanoffer.dao.ILoanOfferDAO;
-import com.sd.sls.loanoffer.decorator.GoldMemberShipDecorator;
 import com.sd.sls.loanoffer.decorator.IInterestRate;
-import com.sd.sls.loanoffer.decorator.NormalInterestRate;
-import com.sd.sls.loanoffer.decorator.SilverMemberShipDecorator;
 import com.sd.sls.loanoffer.factory.InterestRateFactory;
 import com.sd.sls.loanoffer.model.LoanOffer;
-import com.sd.sls.loanoffer.status.LoanOfferStatus;
-import com.sd.sls.loanoffer.status.context.LoanOfferStatusContext;
-import com.sd.sls.membershiptype.MembershipType;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import com.sd.sls.notification.bl.INotificationBL;
+import com.sd.sls.notification.dao.INotificationDAO;
+import com.sd.sls.notification.model.Notification;
+import com.sd.sls.notification.status.NotificationStatus;
 
 @Service
 public class LoanOfferBL implements ILoanOfferBL{
@@ -49,14 +48,17 @@ public class LoanOfferBL implements ILoanOfferBL{
     private IApplicantDAO applicantDAO;
 
     @Autowired
-    private LoanOfferStatusContext loanOfferStatusContext;
-
-    @Autowired
     private ApplicationStatusContext applicationStatusContext;
 
     @Override
     public List<LoanOffer> getAllOffers () {
-        return loanOfferDAO.getAllOffers();
+    	List<LoanOffer> loanOfferList = loanOfferDAO.getAllOffers();
+    	for (LoanOffer loanOffer : loanOfferList) {
+    		LoanApplication loanApplication = loanApplicationDAO.getApplicationById(Integer.valueOf(loanOfferDAO.getLoanApplicationId(loanOffer.getOfferID())));
+            loanApplication.setApplicant(applicantDAO.getApplicantDetailsByLoanApplication(loanApplication.getApplicationId()));
+            loanOffer.setLoanApplication(loanApplication);
+		}
+    	return loanOfferList;
     }
 
     private LoanOffer createLoanOffer (Map<String, Object> userValues)
@@ -64,7 +66,7 @@ public class LoanOfferBL implements ILoanOfferBL{
         LoanOffer loanOffer = new LoanOffer();
         LoanApplication loanApplication = loanApplicationDAO
                 .getApplicationById((Integer) userValues.get(LoanApplicationConstants.APPLICATION_ID));
-        loanApplication.setApplicant(applicantDAO.getApplicantDetailsByApplId(loanApplication.getApplicationId()));
+        loanApplication.setApplicant(applicantDAO.getApplicantDetailsByLoanApplication(loanApplication.getApplicationId()));
         loanOffer.setLoanApplication(loanApplication);
         loanOffer.setDisbursedDate(null);
         
@@ -92,9 +94,6 @@ public class LoanOfferBL implements ILoanOfferBL{
         return returnMap;
     }
 
-    private boolean checkIfOfferExists(Map<String, Object> userValues) {
-        return loanOfferDAO.checkIfOfferExists(userValues);
-    }
 
     public void handleLoanOffer(LoanOffer loanOffer, Map<String, Object> userValues, Map<String, Boolean> returnMap) {
         try {
@@ -112,6 +111,28 @@ public class LoanOfferBL implements ILoanOfferBL{
         }
     }
 
+    @Override
+    public List<LoanOffer> checkGeneratedOffers (Long applicationId)
+    {
+    	List<LoanOffer> offerList = loanOfferDAO.checkGeneratedOffers(applicationId);
+    	for (LoanOffer loanOffer : offerList) {
+    		LoanApplication loanApplication = loanApplicationDAO.getApplicationById(Integer.valueOf(Objects.toString(applicationId)));
+            loanApplication.setApplicant(applicantDAO.getApplicantDetailsByLoanApplication(loanApplication.getApplicationId()));
+            loanOffer.setLoanApplication(loanApplication);
+		}
+    	return offerList;
+    }
+    
+    @Override
+    public boolean updateOfferStatusFromApplicant(Map<String, Object> userValues)
+    {
+    	return loanOfferDAO.updateOfferStatusFromApplicant(userValues) == 1 ? true : false; 
+    }
+    
+    private boolean checkIfOfferExists(Map<String, Object> userValues) {
+    	return loanOfferDAO.checkIfOfferExists(userValues);
+    }
+    
     private boolean generateOffer(LoanOffer loanOffer) {
         try {
             return loanOfferDAO.generateOffer(loanOffer) == 1;
