@@ -5,14 +5,13 @@ package com.sd.sls.bankrepresentative.dao;
  */
 
 import java.util.Map;
-import java.util.List;
 
 import com.sd.sls.bankrepresentative.model.BankRepresentative;
+
+import java.util.List;
 
 public interface IBankRepresentativeDAO {
 	
 	public List<BankRepresentative> getAllBankRepresentatives();
-	
-	public int assignApplication(Map<String, Object> userValues);
 	
 }

@@ -55,13 +55,12 @@ public class ISQLStatements {
 	
 	public static final String DELETE_APPLICANT_FROM_DRAFT = "DELETE FROM APPLICANT_DRAFT WHERE APPLICANT_ID = ?";
 
-// Get all the loan applications which are in the Submitted status - RB
-//	public static final String GET_ALL_LOAN_APPLICATIONS = "SELECT LOAN_APPLICATION.APPLICATION_ID, APPLICANT.APPLICANT_ID, LOAN_APPLICATION.APPLICATION_DATE, LOAN_APPLICATION.APPLICATION_STATUS AS status, LOAN_APPLICATION.LOAN_AMOUNT, LOAN_APPLICATION.PURPOSE, LOAN_APPLICATION.ASSIGNEE_ID APPLICANT FROM LOAN_APPLICATION, APPLICANT WHERE LOAN_APPLICATION.APPLICANT_ID = applicant.applicant_id AND LOAN_APPLICATION.APPLICATION_STATUS IN ('DR', 'UR')";
-
-	public static final String GET_ALL_LOAN_APPLICATIONS = "SELECT APPLICANT_ID, GUARANTOR_NAME, APPLICATION_DATE, APPLICATION_STATUS, LOAN_AMOUNT, PURPOSE, ASSIGNEE_ID FROM LOAN_APPLICATION WHERE APPLICATION_STATUS IN IN ('DR', 'UR')";
-
-// Get all the Bank Representatives - RB
-	public static final String GET_ALL_BANK_REPRESENTATIVE = "SELECT * FROM BANK_REPRESENTATIVE"; 
+// Get all the loan applications which are in the Submitted status
+//	public static final String GET_ALL_LOAN_APPLICATIONS = "SELECT APPLICATION_ID, APPLICANT_ID, APPLICATION_DATE, APPLICATION_STATUS, LOAN_AMOUNT, PURPOSE, ASSIGNEE_ID FROM LOAN_APPLICATION WHERE APPLICATION_STATUS IN ('DR', 'UR')";
+	public static final String GET_ALL_LOAN_APPLICATIONS = "SELECT APPLICATION_ID AS \"applicationId\", APPLICATION_DATE AS \"applicationDate\", APPLICATION_STATUS AS \"status\", LOAN_AMOUNT AS \"loanAmount\", PURPOSE AS \"purpose\", ASSIGNEE_ID AS \"assigneId\" FROM LOAN_APPLICATION WHERE APPLICATION_STATUS IN ('DR', 'UR')";		
+	
+	// Get all the Bank Representatives
+	public static final String GET_ALL_BANK_REPRESENTATIVE = "SELECT EMPLOYEE_ID AS \"employeeId\" FROM BANK_REPRESENTATIVE "; 
 
 // Update Application with Bank Representative Id - RB
 	public static final String ASSIGN_APPLICATION = "UPDATE \"LOAN_APPLICATION\" SET ASSIGNEE_ID = ? WHERE APPLICATION_ID = ?";
@@ -73,16 +72,16 @@ public class ISQLStatements {
 	public static final String FIND_GUARANTOR_BY_APPL_ID = "SELECT GURANTOR_ID AS \"guarantorId\", NAME AS \"name\", RELATIONSHIP AS \"relationship\", OCCUPATION AS \"occupation\", ANNUAL_INCOME AS \"annualIncome\", ADDRESS AS \"address\", UIN_NO AS \"uinNo\", MONTHLY_EXPENSE AS \"monthlyExpense\" FROM GUARANTOR WHERE APPLICATION_ID = ?";
 
 // Get Application By Id
-	public static final String GET_LOAN_APPLICATION_BY_ID = "SELECT * FROM LOAN_APPLICATION WHERE APPLICATION_ID = ?";
+	public static final String GET_LOAN_APPLICATION_BY_ID = "SELECT APPLICATION_ID AS \"applicationId\", APPLICANT_ID AS \"applicant\", GUARANTOR_NAME AS \"guarantor\", APPLICATION_DATE AS \"applicationDate\", APPLICATION_STATUS AS \"status\", LOAN_AMOUNT AS \"loanAmount\", PURPOSE AS \"purpose\", ASSIGNEE_ID AS \"assigneId\" FROM LOAN_APPLICATION WHERE APPLICATION_ID = ?";
 		
-// Get the last 3 years ITR for Business Person 
-	public static final String GET_ITR_FOR_BUSINESS = "SELECT UIN_NO AS \"uinNo\", ITR_NO AS \"itrNo\", OCCUPATION AS \"occupation\", ANNUAL_INCOME AS \"annualIncome\", SALARY_RECEIVED_DATE AS \"salaryReceivedDate\", CREDIT_SCORE AS \"creditScore\", REPO_RATE AS \"repoRate\", ITR_YEAR AS \"itrYear\" FROM EXTERNAL_DB a WHERE UIN_NO = ? AND EXISTS (SELECT * FROM EXTERNAL_DB b WHERE a.UIN_NO = b.UIN_NO AND a.ITR_YEAR = b.ITR_YEAR + 1) AND EXISTS ( SELECT * FROM EXTERNAL_DB c WHERE a.UIN_NO = c.UIN_NO AND a.ITR_YEAR = c.ITR_YEAR + 2 )";
-				
+// Get the last 3 years ITR for Business Person 	
+	public static final String GET_ITR_FOR_BUSINESS = "SELECT UIN_NO AS \"uinNo\" FROM EXTERNAL_DB a WHERE UIN_NO = ? AND ITR_YEAR BETWEEN ? AND ? GROUP BY UIN_NO HAVING COUNT(DISTINCT ITR_YEAR) = 3";
+
 // Get the current months ITR for Salaried Person
-	public static final String GET_ITR_FOR_SALARIED = "SELECT * FROM EXTERNAL_DB WHERE UIN_NO = ? AND SALARY_RECEIVED_DATE BETWEEN SYSDATE - 30 AND SYSDATE";
+	public static final String GET_ITR_FOR_SALARIED = "SELECT UIN_NO AS \"uinNo\", ITR_NO AS \"itrNo\", OCCUPATION AS \"occupation\", ANNUAL_INCOME AS \"annualIncome\", SALARY_RECEIVED_DATE AS \"salaryReceivedDate\", CREDIT_SCORE AS \"creditScore\", REPO_RATE AS \"repoRate\", ITR_YEAR AS \"itrYear\"  FROM EXTERNAL_DB WHERE UIN_NO = ? AND SALARY_RECEIVED_DATE BETWEEN SYSDATE - 30 AND SYSDATE";
 
 // Get Applicant by Application Id
-	public static final String GET_APPLICANT_BY_APPLICATION_ID = "SELECT * FROM APPLICANT WHERE APPLICANT_ID = ?";
+	public static final String GET_APPLICANT_BY_APPLICATION_ID = "SELECT APPLICANT_ID AS \"applicantId\", USER_ID AS \"user\", FIRST_NAME AS \"firstName\", LAST_NAME AS \"lastName\", DATE_OFBIRTH AS \"dateOfBirth\", ADDRESS AS \"address\", EDUCATION_DETAILS AS \"educationDetails\", MEMBERSHIP_TYPE AS \"membershipType\", EMAIL AS \"email\" FROM APPLICANT WHERE APPLICANT_ID = ?"; 
 
 	public static final String UPDATE_LOAN_OFFER_STATUS = "UPDATE LOAN_OFFER SET OFFER_STATUS = ? WHERE OFFER_ID = ?";
 

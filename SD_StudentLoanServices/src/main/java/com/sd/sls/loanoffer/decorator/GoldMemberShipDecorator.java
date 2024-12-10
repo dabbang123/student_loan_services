@@ -12,6 +12,6 @@ public class GoldMemberShipDecorator extends InterestRateDecorator{
 	
 	public double getRate()
 	{
-		return decoratedInterestRate.getRate() - 2.0;
+		return super.getRate() - 2.0;
 	}
 }

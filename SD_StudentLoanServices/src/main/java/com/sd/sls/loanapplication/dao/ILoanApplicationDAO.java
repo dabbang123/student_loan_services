@@ -22,16 +22,16 @@ public interface ILoanApplicationDAO {
 	
 	public int assignApplication(Map<String, Object> userValues);
 	
-// Get all the Loan Applications - RB	
+// Get all the Loan Applications	
 	public List<LoanApplication> getAllLoanApplications();
 			
-// Get Loan Application By Id - RB
+// Get Loan Application By Id
 	public LoanApplication getApplicationById (int applicationId);		
 	
-// Approve Application - RB
+// Approve Application
 	public int approveApplication(int applicationId);
 		
-// Reject Application - RB
+// Reject Application
 	public int rejectApplication(int applicationId);
 	
 // Change the Application Status to Under Review

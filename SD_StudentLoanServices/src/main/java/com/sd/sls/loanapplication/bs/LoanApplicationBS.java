@@ -48,20 +48,27 @@ public class LoanApplicationBS implements ILoanApplicationBS
 		return loanApplicationBL.getApprovedApplications();
 	}
 	
-// Get all Loan Applications - RB	
+// Assign Application 	
+	@Override
+	public Map<String, Boolean> assignApplication(Map<String, Object> userValues) 
+	{
+		return loanApplicationBL.assignApplication(userValues);
+	}
+	
+// Get all Loan Applications
 	@Override
 	public List<LoanApplication> getAllLoanApplications() {
 		return loanApplicationBL.getAllLoanApplications();
 	}
 	
-// Approve Loan Application - RB	
+// Approve Loan Application
 	@Override
 	public String approveApplication (Map<String, Object> userValues)
 	{
 		return loanApplicationBL.approveApplication(userValues);
 	}
 		
-// Reject Loan Application - RB	
+// Reject Loan Application
 	@Override
 	public String rejectApplication (Map<String, Object> userValues)
 	{

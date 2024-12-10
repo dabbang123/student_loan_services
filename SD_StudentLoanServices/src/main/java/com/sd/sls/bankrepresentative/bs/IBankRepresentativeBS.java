@@ -9,7 +9,6 @@ import java.util.List;
 import com.sd.sls.bankrepresentative.model.BankRepresentative;
 
 public interface IBankRepresentativeBS {
-	public Map<String, Boolean> assignApplication(Map<String, Object> userValues);
 	
 	public List<BankRepresentative> getAllBankRepresentatives();
 	

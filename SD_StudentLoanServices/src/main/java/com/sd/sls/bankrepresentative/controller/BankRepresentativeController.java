@@ -83,7 +83,7 @@ public class BankRepresentativeController {
 	{
 		userValues.put(BankRepresentativeConstants.APPLICATION_ID, applicationId);
 		userValues.put(LoanApplicationConstants.ACTION, LoanApplicationConstants.UNDER_REVIEW);
-		Map<String, Boolean> resultMap = bankRepresentativeBS.assignApplication(userValues);
+		Map<String, Boolean> resultMap = loanApplicationBS.assignApplication(userValues);
 		if(resultMap.containsKey(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY))
 		{
 			return ResponseEntity.ok(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY);
@@ -115,7 +115,7 @@ public class BankRepresentativeController {
 	{
 		userValues.put(BankRepresentativeConstants.APPLICATION_ID, applicationId);
 		userValues.put(LoanApplicationConstants.ACTION, LoanApplicationConstants.APPROVED);
-		Map<String, Boolean> resultMap = bankRepresentativeBS.assignApplication(userValues);
+		Map<String, Boolean> resultMap = loanApplicationBS.assignApplication(userValues);
 		if(resultMap.containsKey(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY))
 		{
 			return ResponseEntity.ok(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY);

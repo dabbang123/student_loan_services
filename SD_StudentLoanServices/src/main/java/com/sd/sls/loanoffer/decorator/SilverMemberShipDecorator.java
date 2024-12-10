@@ -9,6 +9,7 @@ public class SilverMemberShipDecorator extends InterestRateDecorator{
 	
 	public double getRate()
 	{
-		return decoratedInterestRate.getRate() - 1.0;
+		//return decoratedInterestRate.getRate() - 1.0;
+		return super.getRate() - 1.0;
 	}
 }

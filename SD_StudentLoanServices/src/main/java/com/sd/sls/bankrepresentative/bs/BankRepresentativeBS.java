@@ -20,12 +20,6 @@ public class BankRepresentativeBS implements IBankRepresentativeBS{
 	private IBankRepresentativeBL bankRepresentativeBL;
 	
 	@Override
-	public Map<String, Boolean> assignApplication(Map<String, Object> userValues) 
-	{
-		return bankRepresentativeBL.assignApplication(userValues);
-	}
-	
-	@Override
 	public List<BankRepresentative> getAllBankRepresentatives()
 	{
 		return bankRepresentativeBL.getAllBankRepresentatives();

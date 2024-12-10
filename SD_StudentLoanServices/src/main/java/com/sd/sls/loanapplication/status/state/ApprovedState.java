@@ -7,6 +7,7 @@ import com.sd.sls.loanapplication.dao.ILoanApplicationDAO;
 
 /*
  * @Author: Abhishek Vishwakarma
+ * @Author: Rushabh Botadra
  */
 @Component
 public class ApprovedState implements IApplicationStatusState {

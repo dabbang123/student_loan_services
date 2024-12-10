@@ -16,12 +16,15 @@ public interface ILoanApplicationBS {
 	
 	public List<LoanApplication> getApprovedApplications ();
 	
-// 	Get all the Applications - RB
+// Assign Application	
+	public Map<String, Boolean> assignApplication(Map<String, Object> userValues);
+	
+// 	Get all the Applications
 	public List<LoanApplication> getAllLoanApplications();	
 	
-//Approve the Application - RB
+//Approve the Application
 	public String approveApplication (Map<String, Object> userValues);
 	
-//Reject the Application - RB
+//Reject the Application
 	public String rejectApplication (Map<String, Object> userValues);
 }

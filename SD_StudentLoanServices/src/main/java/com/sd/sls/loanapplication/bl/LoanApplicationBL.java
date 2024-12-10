@@ -135,7 +135,7 @@ public class LoanApplicationBL implements ILoanApplicationBL
 		return loanApplicationDAO.getAllLoanApplications();
 	}
 
-// Approve the application - RB	
+// Approve the application
 	@Override
 	public String approveApplication (Map<String, Object> userValues)
 	{
