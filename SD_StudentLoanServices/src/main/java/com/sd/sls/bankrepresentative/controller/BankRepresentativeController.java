@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sd.sls.bankrepresentative.bs.IBankRepresentativeBS;
 import com.sd.sls.bankrepresentative.constant.BankRepresentativeConstants;
 import com.sd.sls.bankrepresentative.model.BankRepresentative;
-import com.sd.sls.loan.application.bl.ILoanApplicationBL;
-import com.sd.sls.loan.application.constants.LoanApplicationConstants;
-import com.sd.sls.loan.application.model.LoanApplication;
+import com.sd.sls.loanapplication.bs.ILoanApplicationBS;
+import com.sd.sls.loanapplication.constants.LoanApplicationConstants;
+import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.user.service.IUserBusinessService;
 
 
@@ -36,7 +36,7 @@ public class BankRepresentativeController {
 	private IUserBusinessService userBusinessService;
 	
 	@Autowired
-	private ILoanApplicationBL loanApplicationBS;
+	private ILoanApplicationBS loanApplicationBS;
 	
 	@Autowired
 	private IBankRepresentativeBS bankRepresentativeBS;
@@ -83,7 +83,7 @@ public class BankRepresentativeController {
 	{
 		userValues.put(BankRepresentativeConstants.APPLICATION_ID, applicationId);
 		userValues.put(LoanApplicationConstants.ACTION, LoanApplicationConstants.UNDER_REVIEW);
-		Map<String, Boolean> resultMap = loanApplicationBS.assignApplication(userValues);
+		Map<String, Boolean> resultMap = bankRepresentativeBS.assignApplication(userValues);
 		if(resultMap.containsKey(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY))
 		{
 			return ResponseEntity.ok(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY);
@@ -115,7 +115,7 @@ public class BankRepresentativeController {
 	{
 		userValues.put(BankRepresentativeConstants.APPLICATION_ID, applicationId);
 		userValues.put(LoanApplicationConstants.ACTION, LoanApplicationConstants.APPROVED);
-		Map<String, Boolean> resultMap = loanApplicationBS.assignApplication(userValues);
+		Map<String, Boolean> resultMap = bankRepresentativeBS.assignApplication(userValues);
 		if(resultMap.containsKey(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY))
 		{
 			return ResponseEntity.ok(BankRepresentativeConstants.APPLICATION_UPDATED_SUCCESSFULLY);

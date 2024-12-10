@@ -3,7 +3,7 @@ package com.sd.sls.loanapplication.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.sd.sls.loan.application.model.LoanApplication;
+import com.sd.sls.loanapplication.model.LoanApplication;
 
 public interface ILoanApplicationDAO {
 	public int submitApplication (LoanApplication loanApplication);
@@ -16,7 +16,7 @@ public interface ILoanApplicationDAO {
 	
 	public int updateApplication (LoanApplication application);
 	
-	public int withdrawApplication (Long applicationId);
+	public int withdrawApplication (int applicationId);
 
 	public List<LoanApplication> getApprovedApplications();
 	
@@ -29,11 +29,15 @@ public interface ILoanApplicationDAO {
 	public LoanApplication getApplicationById (int applicationId);		
 	
 // Approve Application - RB
-	public int approveApplication(Long applicationId);
+	public int approveApplication(int applicationId);
 		
 // Reject Application - RB
-	public int rejectApplication(Long applicationId);
+	public int rejectApplication(int applicationId);
 	
 // Change the Application Status to Under Review
-	public int underReviewApplication(Long applicationId);
+	public int underReviewApplication(int applicationId);
+
+	public int sanctionLoanApplication(int applicationId);
+
+	public int disburseLoanApplication(int applicationId);
 }

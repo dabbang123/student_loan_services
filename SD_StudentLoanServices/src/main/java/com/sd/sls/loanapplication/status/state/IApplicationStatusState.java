@@ -6,5 +6,5 @@ package com.sd.sls.loanapplication.status.state;
 
 public interface IApplicationStatusState 
 {
-	public int updateStatus(Long loanApplicationId);
+	public int updateStatus(int loanApplicationId);
 }

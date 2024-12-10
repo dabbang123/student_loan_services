@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sd.sls.loanapplication.factory.ApplicationStatusFactory;
+import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.loanapplication.status.state.IApplicationStatusState;
 
 /*
@@ -26,7 +27,7 @@ public class ApplicationStatusContext
 		this.applicationStatusState = applicationStatusFactory.getApplicationStatusFactory(userValues);
 	}
 	
-	public int updateLoanApplicationStatus(Long loanApplicationId)
+	public int updateLoanApplicationStatus(int loanApplicationId)
 	{
 		if (applicationStatusState == null)
 		{

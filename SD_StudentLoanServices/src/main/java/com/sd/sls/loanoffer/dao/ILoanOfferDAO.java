@@ -1,13 +1,9 @@
 package com.sd.sls.loanoffer.dao;
 
-/**
- * Author: Nikunj Panchal
- */
-
-import com.sd.sls.loanoffer.model.LoanOffer;
-
 import java.util.List;
 import java.util.Map;
+
+import com.sd.sls.loanoffer.model.LoanOffer;
 
 public interface ILoanOfferDAO {
     public int generateOffer (LoanOffer loanOffer);

@@ -1,9 +1,9 @@
 package com.sd.sls.loanoffer.bs;
 
-import com.sd.sls.loanoffer.model.LoanOffer;
-
 import java.util.List;
 import java.util.Map;
+
+import com.sd.sls.loanoffer.model.LoanOffer;
 
 public interface ILoanOfferBS {
     public Map<String, Boolean> generateOffer(Map<String, Object> userValues);

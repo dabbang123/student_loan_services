@@ -7,17 +7,16 @@ import com.sd.sls.loanapplication.dao.ILoanApplicationDAO;
 
 /*
  * @Author: Abhishek Vishwakarma
- * @Author: Rushabh Botadra
  */
 @Component
 public class RejectedState implements IApplicationStatusState {
-	
+
 	@Autowired
 	private ILoanApplicationDAO loanApplicationDAO;
 	
 	@Override
-	public int updateStatus(Long loanApplicationId) {
-		return loanApplicationDAO.rejectApplication(loanApplicationId);
+	public int updateStatus(int userValues) {
+		return loanApplicationDAO.rejectApplication(userValues);
 	}
 
 }

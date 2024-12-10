@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class SubmittedState implements IApplicationStatusState {
 
 	@Override
-	public int updateStatus(Long loanApplicationId) {
+	public int updateStatus(int loanApplicationId) {
 		return 0;
 	}
 

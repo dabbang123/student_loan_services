@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sd.sls.bankrepresentative.constant.BankRepresentativeConstants;
 import com.sd.sls.constants.ISQLStatements;
-import com.sd.sls.loan.application.model.LoanApplication;
+import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.loanapplication.status.ApplicationStatus;
 
 @Repository
@@ -57,7 +57,7 @@ public class LoanApplicationDAO implements ILoanApplicationDAO
 	}
 	
 	@Override
-	public int withdrawApplication (Long applicationId)
+	public int withdrawApplication (int applicationId)
 	{
 		return jdbcTemplate.update(ISQLStatements.UPDATE_LOAN_APPLICATION_STATUS, new Object[] {ApplicationStatus.WITHDRAWN.getStatus(), applicationId});
 	}
@@ -109,8 +109,11 @@ public class LoanApplicationDAO implements ILoanApplicationDAO
 // Get all the loan Applications	
 	@Override
 	public List<LoanApplication> getAllLoanApplications() {
-		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_ALL_LOAN_APPLICATIONS, new BeanPropertyRowMapper<>(LoanApplication.class));
-		return loanApplicationList.size() > 0 ? loanApplicationList : null;
+		List<LoanApplication> loanApplicationList = jdbcTemplate.query(
+				ISQLStatements.GET_ALL_LOAN_APPLICATIONS, new BeanPropertyRowMapper<>(LoanApplication.class)
+		);
+
+		return !loanApplicationList.isEmpty() ? loanApplicationList : null;
 	}
 	
 // Get Application By Id
@@ -123,22 +126,32 @@ public class LoanApplicationDAO implements ILoanApplicationDAO
 
 // Approve Application	
 	@Override
-	public int approveApplication(Long applicationId)
+	public int approveApplication(int applicationId)
 	{
 		return jdbcTemplate.update(ISQLStatements.UPDATE_LOAN_APPLICATION_STATUS, new Object[] {ApplicationStatus.APPROVED.getStatus(), applicationId});
 	}	
 	
 // Reject Application	
 	@Override
-	public int rejectApplication(Long applicationId)
+	public int rejectApplication(int applicationId)
 	{
 		return jdbcTemplate.update(ISQLStatements.UPDATE_LOAN_APPLICATION_STATUS, new Object[] {ApplicationStatus.REJECTED.getStatus(), applicationId});
 	}
 	
 // Change the Application to Under Review
 	@Override
-	public int underReviewApplication(Long applicationId)
+	public int underReviewApplication(int applicationId)
 	{
 		return jdbcTemplate.update(ISQLStatements.UPDATE_LOAN_APPLICATION_STATUS, new Object[] {ApplicationStatus.UNDER_REVIEW.getStatus(), applicationId});
-	}	
+	}
+
+	@Override
+	public int sanctionLoanApplication(int applicationId) {
+		return jdbcTemplate.update(ISQLStatements.UPDATE_LOAN_APPLICATION_STATUS, new Object[] {ApplicationStatus.SANCTIONED.toString(), applicationId});
+	}
+
+	@Override
+	public int disburseLoanApplication(int applicationId) {
+		return jdbcTemplate.update(ISQLStatements.DISBURSE_LOAN_APPLICATION, new Object[] {ApplicationStatus.DISBURSED.toString(), applicationId});
+	}
 }

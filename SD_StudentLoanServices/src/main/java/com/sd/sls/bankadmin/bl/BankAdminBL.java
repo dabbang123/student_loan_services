@@ -9,9 +9,9 @@ import com.sd.sls.bankadmin.dao.IBankAdminDAO;
 import com.sd.sls.bankadmin.model.BankAdmin;
 import com.sd.sls.guarantor.dao.IGuarantorDAO;
 import com.sd.sls.guarantor.model.Guarantor;
-import com.sd.sls.loan.application.constants.LoanApplicationConstants;
+import com.sd.sls.loanapplication.constants.LoanApplicationConstants;
+import com.sd.sls.loanapplication.status.ApplicationStatus;
 import com.sd.sls.loanapplication.status.context.ApplicationStatusContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sd.sls.loanoffer.status.context.LoanOfferStatusContext;
@@ -67,7 +67,8 @@ public class BankAdminBL implements IBankAdminBL {
         userValues.replace(BankAdminConstants.ACTION, LoanApplicationConstants.DISBURSED);
         applicationStatusContext.setState(userValues);
 
-        boolean y = applicationStatusContext.updateLoanApplicationStatus((Long) userValues.get(BankAdminConstants.OFFER_ID)) == 1;
+        boolean y = applicationStatusContext.updateLoanApplicationStatus(
+                (Integer) userValues.get(BankAdminConstants.OFFER_ID)) == 1;
 
         if (x && y) {
             return BankAdminConstants.LOAN_OFFER_DISBURSED;

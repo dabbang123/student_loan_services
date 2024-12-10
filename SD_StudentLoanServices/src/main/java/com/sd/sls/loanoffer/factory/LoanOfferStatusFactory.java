@@ -8,6 +8,8 @@ import com.sd.sls.loanoffer.status.stateDP.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.sd.sls.loanoffer.status.stateDP.*;
+
 import java.util.Map;
 import java.util.Objects;
 

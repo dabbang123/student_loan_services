@@ -12,12 +12,12 @@ import com.sd.sls.loanapplication.dao.ILoanApplicationDAO;
 @Component
 public class UnderReviewState implements IApplicationStatusState{
 
+
 	@Autowired
 	private ILoanApplicationDAO loanApplicationDAO;
 	
 	@Override
-	public int updateStatus(Long loanApplicationId) {
+	public int updateStatus(int loanApplicationId) {
 		return loanApplicationDAO.underReviewApplication(loanApplicationId);
 	}
-
 }

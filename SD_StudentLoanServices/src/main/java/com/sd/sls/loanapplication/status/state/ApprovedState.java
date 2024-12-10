@@ -7,7 +7,6 @@ import com.sd.sls.loanapplication.dao.ILoanApplicationDAO;
 
 /*
  * @Author: Abhishek Vishwakarma
- * @Author: Rushabh Botadra
  */
 @Component
 public class ApprovedState implements IApplicationStatusState {
@@ -16,7 +15,7 @@ public class ApprovedState implements IApplicationStatusState {
 	private ILoanApplicationDAO loanApplicationDAO;
 	
 	@Override
-	public int updateStatus(Long loanApplicationId) {
+	public int updateStatus(int loanApplicationId) {
 		return loanApplicationDAO.approveApplication(loanApplicationId);
 	}
 

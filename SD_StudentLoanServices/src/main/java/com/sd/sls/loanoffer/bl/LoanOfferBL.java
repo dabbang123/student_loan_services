@@ -9,17 +9,17 @@ import com.sd.sls.applicant.model.Applicant;
 
 import com.sd.sls.bankadmin.bl.IBankAdminBL;
 import com.sd.sls.bankadmin.constants.BankAdminConstants;
-import com.sd.sls.loan.application.constants.LoanApplicationConstants;
-import com.sd.sls.loan.application.dao.ILoanApplicationDAO;
-import com.sd.sls.loan.application.model.LoanApplication;
-import com.sd.sls.loan.offer.decorator.GoldMemberShipDecorator;
-import com.sd.sls.loan.offer.decorator.IInterestRate;
-import com.sd.sls.loan.offer.decorator.NormalInterestRate;
-import com.sd.sls.loan.offer.decorator.SilverMemberShipDecorator;
-import com.sd.sls.loan.offer.factory.InterestRateFactory;
+import com.sd.sls.loanapplication.constants.LoanApplicationConstants;
+import com.sd.sls.loanapplication.dao.ILoanApplicationDAO;
+import com.sd.sls.loanapplication.model.LoanApplication;
 import com.sd.sls.loanapplication.status.context.ApplicationStatusContext;
 import com.sd.sls.loanoffer.constants.LoanOfferConstants;
 import com.sd.sls.loanoffer.dao.ILoanOfferDAO;
+import com.sd.sls.loanoffer.decorator.GoldMemberShipDecorator;
+import com.sd.sls.loanoffer.decorator.IInterestRate;
+import com.sd.sls.loanoffer.decorator.NormalInterestRate;
+import com.sd.sls.loanoffer.decorator.SilverMemberShipDecorator;
+import com.sd.sls.loanoffer.factory.InterestRateFactory;
 import com.sd.sls.loanoffer.model.LoanOffer;
 import com.sd.sls.loanoffer.status.LoanOfferStatus;
 import com.sd.sls.loanoffer.status.context.LoanOfferStatusContext;
@@ -132,7 +132,7 @@ public class LoanOfferBL implements ILoanOfferBL{
             applicationStatusContext.setState(userValues);
 
             return applicationStatusContext.updateLoanApplicationStatus(
-                    (Long) userValues.get(LoanApplicationConstants.APPLICATION_ID)) == 1;
+                    (Integer) userValues.get(LoanApplicationConstants.APPLICATION_ID)) == 1;
 //            return loanOfferDAO.updateApplicationStatus(loanOffer.getLoanApplication().getApplicationId());
         } catch (Exception e) {
             System.err.println("An error occurred while updating the application status: " + e.getMessage());

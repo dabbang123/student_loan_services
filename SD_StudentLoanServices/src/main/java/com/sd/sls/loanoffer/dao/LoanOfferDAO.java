@@ -5,8 +5,8 @@ package com.sd.sls.loanoffer.dao;
  */
 
 import com.sd.sls.constants.ISQLStatements;
-import com.sd.sls.loan.application.bs.LoanApplicationBS;
-import com.sd.sls.loan.application.constants.LoanApplicationConstants;
+import com.sd.sls.loanapplication.bs.LoanApplicationBS;
+import com.sd.sls.loanapplication.constants.LoanApplicationConstants;
 import com.sd.sls.loanoffer.model.LoanOffer;
 import com.sd.sls.loanoffer.status.LoanOfferStatus;
 

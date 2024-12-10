@@ -7,7 +7,7 @@ package com.sd.sls.guarantor.model;
 import java.io.Serializable;
 
 import com.sd.sls.applicant.model.Applicant;
-import com.sd.sls.loan.application.model.LoanApplication;
+import com.sd.sls.loanapplication.model.LoanApplication;
 
 public class Guarantor implements Serializable 
 {

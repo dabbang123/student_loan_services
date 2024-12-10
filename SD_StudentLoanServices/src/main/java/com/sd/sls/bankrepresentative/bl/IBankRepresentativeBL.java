@@ -5,12 +5,13 @@ package com.sd.sls.bankrepresentative.bl;
  */
 
 import java.util.Map;
+import java.util.List;
 
 import com.sd.sls.bankrepresentative.model.BankRepresentative;
 
-import java.util.List;
-
 public interface IBankRepresentativeBL {
+	
+	public Map<String, Boolean> assignApplication(Map<String, Object> userValues); 
 	
 	public List<BankRepresentative> getAllBankRepresentatives();
 	
