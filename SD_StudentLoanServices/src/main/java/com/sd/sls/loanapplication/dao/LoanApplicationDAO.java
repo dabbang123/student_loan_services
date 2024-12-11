@@ -96,7 +96,7 @@ public class LoanApplicationDAO implements ILoanApplicationDAO
 	@Override
 	public List<LoanApplication> getApprovedApplications() {
 		List<LoanApplication> loanApplicationList = jdbcTemplate.query(ISQLStatements.GET_ALL_APPROVED_APPLICATIONS, new BeanPropertyRowMapper<>(LoanApplication.class));
-		return !loanApplicationList.isEmpty() ? loanApplicationList : null;
+		return loanApplicationList;
 	}
 	
 // Update the Application with the Assignee Id  	
@@ -113,7 +113,7 @@ public class LoanApplicationDAO implements ILoanApplicationDAO
 				ISQLStatements.GET_ALL_LOAN_APPLICATIONS, new BeanPropertyRowMapper<>(LoanApplication.class)
 		);
 
-		return !loanApplicationList.isEmpty() ? loanApplicationList : null;
+		return loanApplicationList;
 	}
 	
 // Get Application By Id

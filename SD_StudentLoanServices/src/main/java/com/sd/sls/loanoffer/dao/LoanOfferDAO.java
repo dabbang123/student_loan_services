@@ -51,7 +51,7 @@ public class LoanOfferDAO implements ILoanOfferDAO{
     public List<LoanOffer> getAllOffers() {
         List<LoanOffer> loanOfferList = jdbcTemplate.query(
                 ISQLStatements.GET_ALL_LOAN_OFFERS, new BeanPropertyRowMapper<>(LoanOffer.class));
-        return !loanOfferList.isEmpty() ? loanOfferList : null;
+        return loanOfferList;
     }
 
     @Override
