@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sd.sls.applicant.bl.IApplicantBL;
+import com.sd.sls.applicant.constants.ApplicantConstants;
 import com.sd.sls.applicant.dao.IApplicantDAO;
 import com.sd.sls.applicant.model.Applicant;
 import com.sd.sls.bankadmin.dao.IBankAdminDAO;
@@ -53,6 +54,11 @@ public class LoanApplicationBL implements ILoanApplicationBL
 	{
 		Map<String, Object> returnMap = new HashMap<>();
 		LoanApplication loanApplication = createLoanApplication(userValues);
+		if (loanApplication.getApplicant() == null)
+		{
+			returnMap.put(ApplicantConstants.APPLICANT_DOES_NOT_EXISTS, true);
+			return returnMap;
+		}
 		if (checkIfLoanExistWithApplicant(loanApplication))
 		{
 			returnMap.put(loanApplication.getApplicant().getFirstName() + LoanApplicationConstants.EXISTING_LOAN_EXISTS, true);
@@ -134,7 +140,7 @@ public class LoanApplicationBL implements ILoanApplicationBL
 		Map<String, Boolean>returnMap = new HashMap<>();
 		if(loanApplicationDAO.assignApplication(userValues) == 1)
 		{
-			//Used State Pattern to Update the State to Under Review
+			//Used State Pattern to Update the State to Approved
 			applicationStatusContext.setState(userValues);
 			if(applicationStatusContext.updateLoanApplicationStatus(Integer.valueOf(Objects.toString(userValues.get(LoanApplicationConstants.APPLICATION_ID)))) == 1 );
 			{

@@ -112,6 +112,11 @@ public class ApplicantController {
             key = entry.getKey();
         }
 		
+		if (resultMap.containsKey(ApplicantConstants.APPLICANT_DOES_NOT_EXISTS))
+		{
+			return ResponseEntity.ok(ApplicantConstants.APPLICANT_DOES_NOT_EXISTS);
+		}
+		
 		if (key.equals(LoanApplicationConstants.LOAN_SUBMITTED_SUCCESSFULLY))
 		{
 			LoanApplication application = (LoanApplication) resultMap.get(LoanApplicationConstants.LOAN_SUBMITTED_SUCCESSFULLY);

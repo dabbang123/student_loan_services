@@ -26,4 +26,5 @@ public class ApplicantConstants
 	public final static String EDUCATION_DETAILS = "educationDetails";
 	public final static String MEMBERSHIP_TYPE = "membershipType";
 	public final static String APPLICATION_ID = "applicationId";
+	public final static String APPLICANT_DOES_NOT_EXISTS = "Applicant with the provided details does not exist";
 }

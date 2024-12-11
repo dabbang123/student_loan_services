@@ -8,7 +8,8 @@ import com.sd.sls.user.model.User;
  * Author: Rushabh Botadra
  */
 
-public class BankRepresentative {
+public class BankRepresentative implements Serializable
+{
 
 	private int employeeId;
 	

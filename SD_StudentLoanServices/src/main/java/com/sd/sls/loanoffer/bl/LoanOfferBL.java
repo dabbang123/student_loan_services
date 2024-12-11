@@ -1,6 +1,5 @@
 package com.sd.sls.loanoffer.bl;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sd.sls.applicant.dao.IApplicantDAO;
-import com.sd.sls.applicant.model.Applicant;
 
 /*
  * Author: Nikunj Panchal
@@ -27,10 +25,6 @@ import com.sd.sls.loanoffer.dao.ILoanOfferDAO;
 import com.sd.sls.loanoffer.decorator.IInterestRate;
 import com.sd.sls.loanoffer.factory.InterestRateFactory;
 import com.sd.sls.loanoffer.model.LoanOffer;
-import com.sd.sls.notification.bl.INotificationBL;
-import com.sd.sls.notification.dao.INotificationDAO;
-import com.sd.sls.notification.model.Notification;
-import com.sd.sls.notification.status.NotificationStatus;
 
 @Service
 public class LoanOfferBL implements ILoanOfferBL{
@@ -49,6 +43,9 @@ public class LoanOfferBL implements ILoanOfferBL{
 
     @Autowired
     private ApplicationStatusContext applicationStatusContext;
+    
+    @Autowired
+    private InterestRateFactory interestRateFactory;
 
     @Override
     public List<LoanOffer> getAllOffers () {
@@ -71,7 +68,7 @@ public class LoanOfferBL implements ILoanOfferBL{
         loanOffer.setDisbursedDate(null);
         
         // Used Decorator Design Pattern to get the Interest Rate - RB
-        IInterestRate rate = InterestRateFactory.getInterestRateFactory(loanApplication.getApplicant().getMembershipType());
+        IInterestRate rate = interestRateFactory.getInterestRateFactory(loanApplication.getApplicant().getMembershipType());
         loanOffer.setInterestRate(rate.getRate());
         loanOffer.setSanctionedAmount(bankAdminBL.calculateSanctionAmount((Integer) userValues.get(LoanApplicationConstants.APPLICATION_ID)));
 //        loanOffer.setOfferStatus(LoanOfferStatus.GENERATED);

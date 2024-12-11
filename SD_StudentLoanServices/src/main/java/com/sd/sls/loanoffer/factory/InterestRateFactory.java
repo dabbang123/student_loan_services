@@ -1,5 +1,7 @@
 package com.sd.sls.loanoffer.factory;
 
+import org.springframework.stereotype.Component;
+
 /*
  * Author: Rushabh Botadra
  */
@@ -9,9 +11,10 @@ import com.sd.sls.loanoffer.decorator.NormalInterestRate;
 import com.sd.sls.loanoffer.decorator.SilverMemberShipDecorator;
 import com.sd.sls.membershiptype.MembershipType;
 
+@Component
 public class InterestRateFactory {
 	
-	public static IInterestRate getInterestRateFactory(String membershipType)
+	public IInterestRate getInterestRateFactory(String membershipType)
 	{
 		if(membershipType.equals(MembershipType.GOLD.getMembershipType()))
 		{
