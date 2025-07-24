@@ -7,12 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/dabbang123/student_loan_services.git'
-            }
-        }
-
         stage('Build with Maven') {
 			steps {
 				sh 'mvn clean package -DskipTests'
