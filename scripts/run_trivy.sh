@@ -1,0 +1,1 @@
+#!/bin/bashecho "[*] Running Trivy file system scan..."trivy fs . --format json -o trivy-fs-report.json || trueecho "[*] Running Trivy Docker image scan..."trivy image student-loan-app:latest --format json -o trivy-image-report.json || true
