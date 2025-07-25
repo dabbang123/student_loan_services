@@ -9,20 +9,22 @@ pipeline {
     stages {
         stage('Build with Maven') {
 			steps {
-				sh 'mvn clean package -DskipTests'
+				dir('student_loan_services') {
+					sh 'mvn clean package -DskipTests'
+				}
 			}
-        }
+		}
 
         stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t $IMAGE_NAME:$DOCKER_TAG .'
-            }
-        }
+			steps {
+				sh 'docker build -t $IMAGE_NAME:$DOCKER_TAG -f Dockerfile student_loan_services'
+			}
+		}
 
         stage('Run Trivy Scans') {
             steps {
                 sh 'chmod +x scripts/run_trivy.sh'
-                sh './scripts/run_trivy.sh'
+                sh './scripts/run_trivy.sh student_loan_services'
             }
         }
 
