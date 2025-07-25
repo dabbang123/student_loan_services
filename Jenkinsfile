@@ -1,5 +1,5 @@
 pipeline {
-    agent any  // Run on any available Jenkins agent
+    agent any
 
     environment {
         IMAGE_NAME = "student-loan-app"
@@ -8,23 +8,23 @@ pipeline {
 
     stages {
         stage('Build with Maven') {
-			steps {
-				dir('student_loan_services') {
-					sh 'mvn clean package -DskipTests'
-				}
-			}
-		}
+            steps {
+                dir('SD_StudentLoanServices') {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
 
         stage('Build Docker Image') {
-			steps {
-				sh 'docker build -t $IMAGE_NAME:$DOCKER_TAG -f Dockerfile student_loan_services'
-			}
-		}
+            steps {
+                sh 'docker build -t $IMAGE_NAME:$DOCKER_TAG -f Dockerfile SD_StudentLoanServices'
+            }
+        }
 
         stage('Run Trivy Scans') {
             steps {
                 sh 'chmod +x scripts/run_trivy.sh'
-                sh './scripts/run_trivy.sh student_loan_services'
+                sh './scripts/run_trivy.sh SD_StudentLoanServices'
             }
         }
 
