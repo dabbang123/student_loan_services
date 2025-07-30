@@ -8,12 +8,15 @@ pipeline {
 
     stages {
         stage('Build with Maven') {
-            steps {
-                dir('SD_StudentLoanServices') {
-                    sh 'mvn clean package -DskipTests'
-                }
-            }
-        }
+			steps {
+				dir('SD_StudentLoanServices') {
+					sh '''
+					export JAVA_OPTS="-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+					mvn clean package -DskipTests
+					'''
+				}
+			}
+		}
 
         stage('Build Docker Image') {
             steps {
