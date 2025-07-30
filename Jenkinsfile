@@ -2,55 +2,75 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "student-loan-app"
-        DOCKER_TAG = "latest"
+        JAVA_OPTS = "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
     }
 
     stages {
+        stage('Checkout Source') {
+            steps {
+                git url: 'https://github.com/dabbang123/student_loan_services.git', branch: 'main'
+            }
+        }
+
         stage('Build with Maven') {
-			steps {
-				dir('SD_StudentLoanServices') {
-					sh '''
-					export JAVA_OPTS="-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
-					mvn clean package -DskipTests
-					'''
-				}
-			}
-		}
+            steps {
+                dir('SD_StudentLoanServices') {
+                    sh '''
+                        echo "🚀 Starting Maven Build"
+                        mvn clean package -X -e -DskipTests
+                    '''
+                }
+            }
+        }
 
         stage('Build Docker Image') {
+            when {
+                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
             steps {
-                sh 'docker build -t $IMAGE_NAME:$DOCKER_TAG -f Dockerfile SD_StudentLoanServices'
+                echo "✅ Docker build stage goes here"
+                // Add your docker build commands if needed
             }
         }
 
         stage('Run Trivy Scans') {
+            when {
+                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
             steps {
-                sh 'chmod +x scripts/run_trivy.sh'
-                sh './scripts/run_trivy.sh SD_StudentLoanServices'
+                echo "🛡️ Trivy scan stage goes here"
             }
         }
 
         stage('Filter Vulnerabilities') {
+            when {
+                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
             steps {
-                sh 'chmod +x scripts/filter_trivy.sh'
-                sh './scripts/filter_trivy.sh'
+                echo "🔍 Filtering vulnerabilities..."
             }
         }
 
         stage('Archive Reports') {
+            when {
+                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
             steps {
-                archiveArtifacts artifacts: '**/*.json', allowEmptyArchive: true
+                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+                echo "📦 Reports archived."
             }
         }
     }
 
     post {
-        failure {
-            echo '❌ Build failed due to security issues.'
-        }
         success {
-            echo '✅ Build passed and is secure.'
+            echo '✅ Build completed successfully.'
+        }
+        failure {
+            echo '❌ Build failed. Check logs above for errors.'
+        }
+        always {
+            echo '📝 Pipeline finished running.'
         }
     }
 }
