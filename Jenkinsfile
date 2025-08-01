@@ -25,12 +25,10 @@ pipeline {
         stage('Build with Maven') {
             steps {
                 dir('SD_StudentLoanServices') {
-                    timeout(time: 10, unit: 'MINUTES') {
-                        sh '''
-                            echo "🚀 Starting Maven Build"
-                            mvn clean package -X -e -Dmaven.test.skip=true
-                        '''
-                    }
+                    sh '''
+                        echo "🚀 Starting Maven Build"
+                        mvn clean package -X -e -Dmaven.test.skip=true
+                    '''
                 }
             }
         }
