@@ -34,31 +34,25 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            when {
-                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
-            }
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    sh '''
-                        echo "🐳 Building Docker Image"
-                        docker build -t student-loan-service .
-                    '''
-                }
-            }
+				dir('SD_StudentLoanServices') {
+					sh '''
+					echo "🐳 Building Docker image"
+					docker build -t student-loan-service:latest .
+				'''
+				}
+			}
         }
 
         stage('Run Trivy Scans') {
-            when {
-                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
-            }
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    sh '''
-                        echo "🔍 Running Trivy Scan"
-                        trivy image --exit-code 0 --severity HIGH student-loan-service || true
-                    '''
-                }
-            }
+				dir('SD_StudentLoanServices') {
+					sh '''
+					echo "🔎 Running Trivy Scan"
+					trivy image --severity HIGH,CRITICAL student-loan-service:latest || true
+					'''
+				}
+			}
         }
 
         stage('Filter Vulnerabilities') {
