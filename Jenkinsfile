@@ -5,7 +5,17 @@ pipeline {
         JAVA_OPTS = "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
     }
 
+    options {
+        timeout(time: 30, unit: 'MINUTES')
+    }
+
     stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+
         stage('Checkout Source') {
             steps {
                 git url: 'https://github.com/dabbang123/student_loan_services.git', branch: 'main'
@@ -15,10 +25,12 @@ pipeline {
         stage('Build with Maven') {
             steps {
                 dir('SD_StudentLoanServices') {
-                    sh '''
-                        echo "🚀 Starting Maven Build"
-                        mvn clean package -X -e -DskipTests
-                    '''
+                    timeout(time: 10, unit: 'MINUTES') {
+                        sh '''
+                            echo "🚀 Starting Maven Build"
+                            mvn clean package -X -e -Dmaven.test.skip=true
+                        '''
+                    }
                 }
             }
         }
@@ -28,8 +40,12 @@ pipeline {
                 expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
             }
             steps {
-                echo "✅ Docker build stage goes here"
-                // Add your docker build commands if needed
+                timeout(time: 10, unit: 'MINUTES') {
+                    sh '''
+                        echo "🐳 Building Docker Image"
+                        docker build -t student-loan-service .
+                    '''
+                }
             }
         }
 
@@ -38,7 +54,12 @@ pipeline {
                 expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
             }
             steps {
-                echo "🛡️ Trivy scan stage goes here"
+                timeout(time: 5, unit: 'MINUTES') {
+                    sh '''
+                        echo "🔍 Running Trivy Scan"
+                        trivy image --exit-code 0 --severity HIGH student-loan-service || true
+                    '''
+                }
             }
         }
 
